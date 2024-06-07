@@ -87,7 +87,7 @@ def plot_svc_decision_boundary(svm_clf, xmin, xmax):
 
 
 # Define outlier data points
-X_outliers = np.array([[4.2, 1.1], [2.5, 0.7]])
+X_outliers = np.array([[4.2, 1.1], [3.27, 0.7]])
 y_outliers = np.array([0, 0])
 
 # Combine original data with the first outlier
