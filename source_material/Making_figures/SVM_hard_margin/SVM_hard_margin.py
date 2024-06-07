@@ -62,10 +62,7 @@ setosa_or_versicolor = (y == 0) | (y == 1)
 X = X[setosa_or_versicolor]
 y = y[setosa_or_versicolor]
 
-# SVM Classifier model
-svm_clf = sk.svm.SVC(kernel="linear", C=10000)
-svm_clf.fit(X, y)   
-    
+
 def plot_svc_decision_boundary(svm_clf, xmin, xmax):
     # Get the coefficients (weights) and intercept from the trained SVM model
     w = svm_clf.coef_[0]
@@ -81,10 +78,6 @@ def plot_svc_decision_boundary(svm_clf, xmin, xmax):
     gutter_up = decision_boundary + margin
     gutter_down = decision_boundary - margin
 
-    # Plot the support vectors
-    svs = svm_clf.support_vectors_
-    plt.scatter(svs[:, 0], svs[:, 1], s=180, facecolors=cc[6])
-
     # Plot the decision boundary and margins
     plt.plot(x0, decision_boundary, "k-", linewidth=2)  # Decision boundary
     plt.plot(x0, gutter_up, "k--", linewidth=2)  # Margin boundary (upper)
@@ -94,7 +87,7 @@ def plot_svc_decision_boundary(svm_clf, xmin, xmax):
 
 
 # Define outlier data points
-X_outliers = np.array([[3.4, 1.3], [3.2, 0.8]])
+X_outliers = np.array([[4.2, 1.1], [2.5, 0.7]])
 y_outliers = np.array([0, 0])
 
 # Combine original data with the first outlier
@@ -109,7 +102,10 @@ yo2 = np.concatenate([y, y_outliers[1:]], axis=0)
 svm_clf2 = SVC(kernel="linear", C=10**9)
 svm_clf2.fit(Xo2, yo2)
 
-# Create a figure for the plots
+
+
+
+#%% Create a figure for the plots
 plt.figure(figsize=(6.5, 3.0))
 
 # Plot the first dataset with one outlier (left subplot)

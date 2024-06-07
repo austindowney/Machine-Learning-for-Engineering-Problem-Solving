@@ -84,20 +84,18 @@ svm_clf.fit(X, y)
     
 # Bad models
 x0 = np.linspace(0, 5.5, 200)
-pred_1 = 1.5*x0 - 5
-pred_2 = x0 - 1.8
-pred_3 = 0.1 * x0 + 0.5
+pred_1 = x0 - 1.8
+pred_2 = 0.1 * x0 + 0.5
 
 
 
 plt.figure(figsize=(6.5,2.75))
 
 plt.subplot(121)
-plt.plot(x0, pred_1, "g--", linewidth=2,zorder=10)
-plt.plot(x0, pred_2, "m-", linewidth=2)
-plt.plot(x0, pred_3, "r-", linewidth=2)
-plt.plot(X[:, 0][y==0], X[:, 1][y==0], "o", label="Iris setosa")
-plt.plot(X[:, 0][y==1], X[:, 1][y==1], "s", label="Iris versicolor")
+plt.plot(X[:, 0][y==0], X[:, 1][y==0], "o", label="Setosa")
+plt.plot(X[:, 0][y==1], X[:, 1][y==1], "s", label="Versicolor")
+plt.plot(x0, pred_1, "--",)
+plt.plot(x0, pred_2, "--",)
 plt.xlabel("petal length (cm)")
 plt.ylabel("petal width (cm)")
 plt.legend(loc="upper left")
