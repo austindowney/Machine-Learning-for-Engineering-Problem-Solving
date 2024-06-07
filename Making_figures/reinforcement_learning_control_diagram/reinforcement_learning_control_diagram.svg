@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="6.5in"
+   height="1.45in"
+   viewBox="0 0 94.197751 21.819328"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   sodipodi:docname="reinforcement_learning_control_diagram.svg"
+   inkscape:export-filename="reinforcement_learning_control_diagram.jpg"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs2">
+    <rect
+       x="59.22633"
+       y="95.796516"
+       width="20.279282"
+       height="6.8247585"
+       id="rect738" />
+    <rect
+       x="11.641667"
+       y="139.57291"
+       width="123.16354"
+       height="45.905209"
+       id="rect4779" />
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker7240-8-9-3-8-1-1-7-9"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutL">
+      <path
+         transform="scale(0.8)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path7238-6-9-6-5-0-0-3-5"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker7240-8-9-3-8-1-1-7-9-0"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutL">
+      <path
+         transform="scale(0.8)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path7238-6-9-6-5-0-0-3-5-6"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker7240-8-9-3-8-1-1-7-9-0-1"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="TriangleOutL">
+      <path
+         transform="scale(0.8)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path7238-6-9-6-5-0-0-3-5-6-8"
+         inkscape:connector-curvature="0" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="1"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.1514423"
+     inkscape:cx="380.82674"
+     inkscape:cy="82.505223"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="1072"
+     inkscape:window-y="835"
+     inkscape:window-maximized="1"
+     inkscape:snap-global="false"
+     units="in"
+     showguides="false"
+     inkscape:guide-bbox="true"
+     inkscape:document-rotation="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:showpageshadow="0"
+     inkscape:deskcolor="#d1d1d1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-68.399983)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="244.73958"
+       y="-382.31772"
+       id="text7026" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot7116"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none"><flowRegion
+         id="flowRegion7118"><rect
+           id="rect7120"
+           width="284.28571"
+           height="251.42857"
+           x="2237.1428"
+           y="74.662537" /></flowRegion><flowPara
+         id="flowPara7122" /></flowRoot>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot18028"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.3333px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none"><flowRegion
+         id="flowRegion18030"><rect
+           id="rect18032"
+           width="680"
+           height="287.85715"
+           x="2460"
+           y="1651.0911" /></flowRegion><flowPara
+         id="flowPara18034" /></flowRoot>
+    <g
+       transform="matrix(0.26458333,0,0,0.26458333,69.404634,76.06532)"
+       inkscape:label="2"
+       id="layer2-2" />
+    <text
+       xml:space="preserve"
+       id="text4777"
+       style="font-size:10.5833px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';white-space:pre;shape-inside:url(#rect4779);display:inline" />
+    <text
+       xml:space="preserve"
+       id="text736"
+       style="font-size:6.26992px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';white-space:pre;shape-inside:url(#rect738);display:inline" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker7240-8-9-3-8-1-1-7-9)"
+       d="m 56.988887,72.083446 h 10.202707 v 14.40013 h -8.509489"
+       id="path5332-9-8-1-8-3-2-9-4"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="control_system_closed_loop_multivariable.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker7240-8-9-3-8-1-1-7-9-0)"
+       d="M 39.219991,88.185482 H 25.219759 V 70.917324 h 12.296753"
+       id="path5332-9-8-1-8-3-2-9-4-4"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="control_system_closed_loop_multivariable.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker7240-8-9-3-8-1-1-7-9-0-1)"
+       d="M 39.227896,85.278339 H 27.0566 v -11.57273 h 10.467817"
+       id="path5332-9-8-1-8-3-2-9-4-4-91"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="control_system_closed_loop_multivariable.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <text
+       xml:space="preserve"
+       style="font-size:2.50797px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';stroke-width:0.156748"
+       x="45.355293"
+       y="72.807098"
+       id="text680-2-1"
+       inkscape:export-filename="control_system_closed_loop_multivariable.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         id="tspan678-5-5"
+         x="45.355293"
+         y="72.807098"
+         style="font-size:2.50797px;stroke-width:0.156748">agent</tspan></text>
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.296217;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect3331-6-1-8-9"
+       width="17.867342"
+       height="6.9998136"
+       x="39.183697"
+       y="68.704689"
+       inkscape:export-filename="control_system_closed_loop_multivariable.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <text
+       xml:space="preserve"
+       style="font-size:2.50797px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';stroke-width:0.156748"
+       x="41.731106"
+       y="87.017197"
+       id="text680-2-1-0"
+       inkscape:export-filename="control_system_closed_loop_multivariable.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         id="tspan678-5-5-9"
+         x="41.731106"
+         y="87.017197"
+         style="font-size:2.50797px;stroke-width:0.156748">environment</tspan></text>
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.296217;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect3331-6-1-8-9-2"
+       width="17.867342"
+       height="6.9998136"
+       x="39.183697"
+       y="82.914787"
+       inkscape:export-filename="control_system_closed_loop_multivariable.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <g
+       id="g7553"
+       transform="translate(-0.49847604,-2.1906942)">
+      <text
+         xml:space="preserve"
+         style="font-size:2.50797px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';stroke-width:0.156748"
+         x="68.737801"
+         y="81.383911"
+         id="text680-2-1-0-3"
+         inkscape:export-filename="control_system_closed_loop_multivariable.png"
+         inkscape:export-xdpi="300"
+         inkscape:export-ydpi="300"><tspan
+           sodipodi:role="line"
+           id="tspan678-5-5-9-6"
+           x="68.737801"
+           y="81.383911"
+           style="font-size:2.50797px;stroke-width:0.156748">action</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.50797px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';stroke-width:0.156748"
+         x="70.892998"
+         y="83.955772"
+         id="text680-2-1-0-3-5"
+         inkscape:export-filename="control_system_closed_loop_multivariable.png"
+         inkscape:export-xdpi="300"
+         inkscape:export-ydpi="300"><tspan
+           sodipodi:role="line"
+           id="tspan678-5-5-9-6-7"
+           x="70.892998"
+           y="83.955772"
+           style="font-style:italic;font-size:2.50797px;stroke-width:0.156748">A<tspan
+   style="font-size:65%;baseline-shift:sub"
+   id="tspan7493">t</tspan></tspan></text>
+    </g>
+    <g
+       id="g9117"
+       transform="translate(-0.49847604,-2.8165334)">
+      <text
+         xml:space="preserve"
+         style="font-size:2.50797px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';stroke-width:0.156748"
+         x="28.176174"
+         y="82.137825"
+         id="text680-2-1-0-3-4-0"
+         inkscape:export-filename="control_system_closed_loop_multivariable.png"
+         inkscape:export-xdpi="300"
+         inkscape:export-ydpi="300"><tspan
+           sodipodi:role="line"
+           id="tspan678-5-5-9-6-5-4"
+           x="28.176174"
+           y="82.137825"
+           style="font-size:2.50797px;stroke-width:0.156748">reward</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.50797px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';stroke-width:0.156748"
+         x="30.687727"
+         y="84.453537"
+         id="text680-2-1-0-3-5-8"
+         inkscape:export-filename="control_system_closed_loop_multivariable.png"
+         inkscape:export-xdpi="300"
+         inkscape:export-ydpi="300"><tspan
+           sodipodi:role="line"
+           id="tspan678-5-5-9-6-7-6"
+           x="30.687727"
+           y="84.453537"
+           style="font-style:italic;font-size:2.50797px;stroke-width:0.156748">R<tspan
+   style="font-size:65%;baseline-shift:sub"
+   id="tspan10691">t</tspan><tspan
+   style="font-style:normal;font-size:65%;baseline-shift:sub"
+   id="tspan10689">+1</tspan></tspan></text>
+    </g>
+    <g
+       id="g9110"
+       transform="translate(-0.49847604,-2.7976647)">
+      <text
+         xml:space="preserve"
+         style="font-size:2.50797px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';stroke-width:0.156748"
+         x="20.217592"
+         y="82.137825"
+         id="text680-2-1-0-3-4"
+         inkscape:export-filename="control_system_closed_loop_multivariable.png"
+         inkscape:export-xdpi="300"
+         inkscape:export-ydpi="300"><tspan
+           sodipodi:role="line"
+           id="tspan678-5-5-9-6-5"
+           x="20.217592"
+           y="82.137825"
+           style="font-size:2.50797px;stroke-width:0.156748">state</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:2.50797px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';stroke-width:0.156748"
+         x="21.662521"
+         y="84.453537"
+         id="text680-2-1-0-3-5-1"
+         inkscape:export-filename="control_system_closed_loop_multivariable.png"
+         inkscape:export-xdpi="300"
+         inkscape:export-ydpi="300"><tspan
+           sodipodi:role="line"
+           id="tspan678-5-5-9-6-7-9"
+           x="21.662521"
+           y="84.453537"
+           style="font-style:italic;font-size:2.50797px;stroke-width:0.156748">S<tspan
+   style="font-size:65%;baseline-shift:sub"
+   id="tspan10687">t</tspan><tspan
+   style="font-style:normal;font-size:65%;baseline-shift:sub"
+   id="tspan10685">+1</tspan></tspan></text>
+    </g>
+  </g>
+  <style
+     id="style5799">text.intmath,text.intmathItalic{stroke:none;fill:#000;font-weight:400}@font-face{font-family:MathJax_Math-italic;src:url(/includes/cssjs/katex/fonts/MathJax_Math-Italic.woff2) format('woff2'),url(/includes/cssjs/katex/fonts/MathJax_Math-Italic.woff) format('woff')}@font-face{font-family:MathJax_Main;src:url(/includes/cssjs/katex/fonts/MathJax_Main-Regular.woff2) format('woff2'),url(/includes/cssjs/katex/fonts/MathJax_Main-Regular.woff) format('woff')}path.grids{shape-rendering:crispEdges}text.intmath{font-size:14.4px;font-family:MathJax_Main,'Times New Roman',Times,serif}text.intmathItalic{font-size:16px;font-style:normal;font-family:MathJax_Math-italic,'Times New Roman',Times,serif}</style>
+</svg>
