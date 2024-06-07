@@ -1,0 +1,252 @@
+\documentclass[12pt,letter]{article}
+\usepackage{../downey_format}
+
+\begin{document}
+
+	% set the section number, along with figure and equation numbers
+	\setcounter{section}{3}	
+	\setcounter{figure}{0}   
+	\renewcommand\thefigure{\thesection.\arabic{figure}}
+	\setcounter{equation}{\thesection}   
+	\renewcommand\theequation{\thesection.\arabic{equation}}
+
+\section{Regression-Based Classification}
+
+Certain regression algorithms can also serve for classification purposes (and vice versa). These methods can add more explainability and tunable parameters then is available using purely classification algorithms. 
+
+\subsection{Logistic Regression}
+
+Logistic Regression (also known as Logit Regression) is a binary classifier and is frequently utilized to estimate the probability that an instance belongs to a particular class (e.g., the probability that an email is spam). If the estimated probability exceeds 50\%, the model predicts that the instance belongs to the positive class (labeled ``1''); otherwise, it predicts that it does not (i.e., it belongs to the negative class, labeled ``0''). Consequently, it functions as a binary classifier.
+
+First, let's define some terms:
+\begin{itemize}
+    \item $X$ represents the input to the system (i.e., the data).
+    \item $y$ denotes the output from the system (i.e., classified data used for training).
+    \item $\hat{p}$ signifies the estimated probability that an instance $x$ belongs to the positive class.
+    \item $\hat{y}$ denotes the predicted output based on the classified data.
+    \item $C(\theta)$ is a piecewise function for one data point.
+    \item $J(\theta)$ represents the cost function for the entire dataset.
+    \item $h_\theta$ signifies the hypothesis to be tested.
+    \item $\sigma(\cdot)$ stands for the sigmoid function, also referred to as the logistic function or logit.
+\end{itemize}
+
+The estimated probability can be computed as:
+\begin{equation}
+    \hat{p} = h_\theta(X) = \sigma(\theta^\text{T} \cdot X)
+\end{equation}
+
+Here, $\hat{p}$ denotes the estimated probability, $h_\theta(X)$ represents the hypothesis that $X$ belongs to a class given the parameters $\theta$, and $X$ denotes the matrix of input features plus a bias term. Lastly, the logistic function also termed the logit, denoted by $\sigma(\cdot)$, is a sigmoid function (i.e., S-shaped) that yields a value between 0 and 1. It is defined as illustrated in Equation~\ref{eq:logistic_function} and depicted in Figure~\ref{fig:sigmoid_function}.
+
+\begin{equation}
+    \sigma(x) = \frac{1}{1 + e^{-x} }
+    \label{eq:logistic_function}
+\end{equation}
+
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=6.1in]{../figures/sigmoid_function}
+			\caption{sigmoid function}
+			\label{fig:sigmoid_function}
+		\end{figure}
+
+
+Once the Logistic Regression model has estimated the probability $\hat{p} = h_\theta(X)$ that an instance $X$ belongs to the positive class, it can easily make its prediction $\hat{y}$ (see Equation~\ref{eq:model_prediction}).
+
+\begin{equation}
+  \hat{y} = 
+  \begin{cases}
+  0 & \text{if } \hat{p} < 0.5, \\
+  1 & \text{if } \hat{p} \ge 0.5.
+  \end{cases}
+\label{eq:model_prediction}
+\end{equation}
+Note that $\sigma(x) < 0.5$ when $x < 0$, and $\sigma(x) \ge 0.5$ when $x \ge 0$, so a Logistic Regression model predicts 1 if $\theta^\text{T} \cdot X$ is positive, and 0 if it is negative.
+
+Now that you comprehend how a Logistic Regression model estimates probabilities and makes predictions, let's look into an example of simplified Training and Cost Function. The objective of training is to adjust the parameter vector $\theta$ so that the model estimates high probabilities for positive instances ($y = 1$) and low probabilities for negative instances ($y = 0$). This principle is encapsulated by the cost function shown in Equation~\ref{eq:cost_function} for a single training instance $x$. To achieve this, we require a cost function, as described in Equation~\ref{eq:cost_function}. This can be plotted as shown in figure \ref{fig:Logistic_Regression_cost_function}.
+
+
+
+\begin{equation}
+  C(\theta) = 
+  \begin{cases}
+  - \log (\hat{p}) & \text{if } y=1, \\
+  - \log (1-\hat{p}) & \text{if } y=0.
+  \end{cases}
+\label{eq:cost_function}
+\end{equation}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=5.5in]{../figures/Logistic_Regression_cost_function.png}
+	\caption{classification threshold}
+	\label{fig:Logistic_Regression_cost_function}
+\end{figure}
+
+The cost function shown in equation~\ref{eq:cost_function} is logical because $-\log (\hat{p})$ increases significantly as $\hat{p}$ approaches 0, resulting in a large cost if the model estimates a probability close to 0 for a positive instance. Likewise, it also yields a large cost if the model estimates a probability close to 1 for a negative instance. Conversely, $-\log (\hat{p})$ approaches $0$ as $\hat{p}$ nears 1, leading to a cost close to 0 if the estimated probability is near 0 for a negative instance or near 1 for a positive instance, which aligns with our expectations.
+
+The overall cost function, denoted as $J(\theta)$ over the entire training set, represents the average cost across all training instances. It can be expressed in a single equation, known as the log loss, depicted in Equation~\ref{eq:log_loss}.
+
+\begin{equation}
+J(\theta) = -\frac{1}{m}\sum_{i=1}^{m}\big[y^{(i)} \log (\hat{p}^{(i)}) + (1 - y^{(i)} \log (1-\hat{p}^{(i)}) \big]
+\label{eq:log_loss}
+\end{equation}
+
+While there is no closed-form equation to compute the value of $\theta$ (embedded within $\hat{p}$ in the above equation) that minimizes this cost function (unlike the Normal Equation), the cost function is convex. Therefore, Gradient Descent (or any other optimization algorithm) is assured to discover the global minimum (provided the learning rate is not excessively large and sufficient time is allowed). The partial derivatives of the cost function with respect to the $j^\text{th}$ model parameter $\theta_j$ are expressed in Equation~\ref{eq:Logistic_cost_function_partial_derivatives}.
+
+\begin{equation}
+ \frac{\partial}{\partial \theta_j} = \frac{1}{m} \sum_{i=1}^{m} \big(\sigma ( \theta^\text{T} \cdot X^{(i)}) - y^{(i)} \big) x_j^{(i)}
+\label{eq:Logistic_cost_function_partial_derivatives}
+\end{equation}
+
+This equation bears resemblance to the equation for the partial derivative of the gradient descent. For each instance, it computes the prediction error, multiplies it by the $j^\text{th}$ feature value, and then calculates the average across all training instances. Armed with the gradient vector containing all the partial derivatives, you can employ it in the Batch Gradient Descent algorithm. That concludes the process of training a Logistic Regression model. For Stochastic Gradient Descent, you would handle one instance at a time, while for Mini-batch Gradient Descent, you would process a mini-batch at a time.
+
+
+
+\begin{data}
+Let's utilize the iris dataset to demonstrate Logistic Regression. This dataset is renowned and comprises the sepal and petal length and width of 150 iris flowers belonging to three distinct species: Iris-Setosa, Iris-Versicolor, and Iris-Virginica (refer to Figure~\ref{fig:iris_species}). Biologist Ronald Fisher introduced this dataset in his 1936 paper titled ``The use of multiple measurements in taxonomic problems'' as an illustration of linear discriminant analysis.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=5.5in]{../figures/iris_species.jpg}
+    \caption{Flowers representing three species of iris plants \protect\footnotemark[1]}
+    \label{fig:iris_species}
+\end{figure}
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=5.5in]{../figures/Iris_dataset_scatterplot.png}
+			\caption{Iris dataset scatterplot. }
+			\label{Iris_dataset_scatterplot}
+		\end{figure}
+
+\footnotetext[1]{Diego Mariano, CC BY-SA 4.0 $<$https://creativecommons.org/licenses/by-sa/4.0$>$, via Wikimedia Commons}
+\end{data}
+
+\begin{example}
+Let's perform an example using the Iris dataset. Figure~\ref{fig:iris_species} displays flowers of three distinct iris plant species. First, let's explore the dataset.
+\end{example}
+
+
+\subsubsection{1-D Decision Boundaries}
+
+Now, let's attempt to construct a classifier to identify the Iris-Virginica type solely based on the petal width feature. First, let's load the data:
+
+
+	\begin{figure}[H]
+			\centering
+			\includegraphics[width=6.5in]{../figures/Iris_dataset_decision_boundary_1D.png}
+			\caption{Decision boundary for the flowers of three Iris plant species with C set to $C=10^{10}$ .}
+			\label{fig:Iris_dataset_decision_boundary_1D}
+		\end{figure}
+
+
+
+The petal width of Iris-Virginica flowers typically falls between 1.4 cm and 2.5 cm, while other iris flowers generally exhibit a narrower range, from 0.1 cm to 1.8 cm. Although there is some overlap between these ranges, the classifier's confidence varies. Beyond approximately 2 cm, the classifier is highly confident in identifying the flower as an Iris-Virginica, whereas below 1 cm, it confidently categorizes it as not an Iris-Virginica (with a high probability for the ``Not Iris-Virginica'' class). In the intermediate range, the classifier is uncertain. When prompted to predict the class (using the \texttt{predict()} method instead of the \texttt{predict\_proba()} method), it returns the class deemed most likely. Hence, a decision boundary emerges around 1.6 cm where both probabilities reach 50\%: if the petal width exceeds 1.6 cm, the classifier predicts that the flower is an Iris-Virginica; otherwise, it predicts otherwise, even if the confidence level is low.
+
+\begin{example}
+Do example on Iris data set 1D decision boundary example
+\end{example}
+
+\subsubsection{2-D Decision Boundaries}
+
+Figure~\ref{fig:Iris_dataset_decision_boundary_2D} depicts the same dataset, presenting two features: petal width and length. Following training, the Logistic Regression classifier gauges the probability of a new flower being an Iris-Virginica based on these attributes. The dashed line delineates the points where the model assesses a 50\% probability, indicating the decision boundary. It's worth emphasizing that this boundary is linear. Each parallel line denotes points where the model predicts specific probabilities, spanning from 10\% to 90\%. Flowers situated beyond the top-right line exhibit a probability exceeding 90\% of being classified as Iris-Virginica by the model.
+
+
+
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=6.5in]{../figures/Iris_dataset_decision_boundary_2D.png}
+			\caption{A 2D decision boundary for the Iris dataset.}
+			\label{fig:Iris_dataset_decision_boundary_2D}
+		\end{figure}
+
+\begin{example}
+Do example on Iris data set 2D decision boundary example.
+
+Let's attempt to construct a classifier to identify the Iris-Virginica species solely based on the petal width feature.
+
+\end{example}
+
+
+\subsection{Softmax Regression}
+
+The Logistic Regression model can be extended to support multiple classes directly, eliminating the need to train and combine multiple binary classifiers. This is called Softmax Regression, also referred to as Multinomial Logistic Regression. Softmax Regression offers a method for multiclass regression-based classification. The principle is simple: given an instance $\pmb{\Theta}$, the Softmax Regression model calculates a score $s_k(\textbf{x})$ for each class $k$, and subsequently estimates the probability of each class by applying the softmax function (also known as the normalized exponential) to the scores. The formula for computing $s_k(\textbf{x})$ may seem familiar, resembling the equation used in Linear Regression prediction.
+\begin{equation}
+s_k(\textbf{x}) = \textbf{x}^\text{T}\pmb{\theta}^{(k)}
+\end{equation}
+Note that each class possesses its dedicated parameter vector $\pmb{\theta}^{(k)}$, typically stored as rows in a parameter matrix $\Theta$.
+
+Once the scores for every class have been computed for the instance $\textbf{x}$, the model estimates the probability $\hat{p}_k$ that the instance belongs to class $k$ by passing the scores through the softmax function (refer to Equation~\ref{eq:softmax}): it exponentiates every score and then normalizes them (by dividing each by the sum of all exponentials).
+
+\begin{equation}
+\hat{p}_k = \sigma\big(s(\textbf{x}) \big)_k = \frac{\exp \big(s_k(\textbf{x})\big)}{\sum_{j=1}^{K} \exp \big(s_j(\textbf{x}) \big)}
+\label{eq:softmax}
+\end{equation}
+
+Here:
+\begin{itemize}
+\item $K$ denotes the number of classes.
+\item $s(\textbf{x})$ represents a vector containing the scores of each class for the instance $\textbf{x}$.
+\item $\sigma \big(s(\textbf{x})\big)_k$ signifies the estimated probability that the instance $\textbf{x}$ belongs to class $k$, given the scores of each class for that instance.
+\end{itemize}
+
+Similar to the Logistic Regression classifier, the Softmax Regression classifier predicts the class with the highest estimated probability (which corresponds to the class with the highest score).
+
+\begin{equation}
+\hat{y} = \mathop{\text{argmax}}_{k} \sigma \big(s(\textbf{x})\big)_k = \mathop{\text{argmax}}_{k} s_k(\textbf{x}) = \mathop{\text{argmax}}_{k} \big( (\theta^{(k)})^\text{T} \cdot \textbf{x} \big)
+\end{equation}
+
+\begin{mdframed}[middlelinewidth=0.5mm]
+\begin{center}
+\bl{NOTE}
+\end{center}
+The argmax operator identifies the value of a variable that maximizes a function. In this context, it returns the value of $k$ that maximizes the estimated probability $\sigma(s(x))_k$ within the equation.
+
+\end{mdframed}
+Now that the estimation of probabilities and prediction process have been explained, let's look into training. The objective is to develop a model that assigns a high probability to the target class (and, consequently, a low probability to the other classes). Minimizing the cost function, depicted in Equation~\ref{eq:cross_entropy_cost_function} and referred to as the cross entropy, is expected to achieve this goal as it penalizes the model for estimating a low probability for the target class. Cross entropy is commonly utilized to gauge how well a set of estimated class probabilities align with the target classes (and will be employed multiple times in subsequent chapters).
+
+\begin{equation}
+J(\Theta) = -\frac{1}{m} \sum_{i=1}^{m} \sum_{k=1}^{K} y_k^{(i)} \log (\hat{p}_k^{(i)})
+\label{eq:cross_entropy_cost_function}
+\end{equation}
+
+\begin{mdframed}[middlelinewidth=0.5mm]
+\begin{center}
+\bl{NOTE}
+\end{center}
+In the equation, $y_k^{(i)}$ takes the value of 1 if the target class for the $i^\text{th}$ instance belongs to class $k$; otherwise, it takes the value of 0.
+
+\end{mdframed}
+When considering only two classes ($K = 2$), it's important to highlight that this cost function aligns with the Logistic Regression's cost function, commonly referred to as log loss (refer to Equation~\ref{eq:log_loss}).
+
+
+The gradient vector of the cross-entropy cost function with respect to $\pmb{\theta}(k)$ is expressed as:
+\begin{equation}
+\nabla_{\theta^{(k)}}J(\Theta) = \frac{1}{m} \sum_{i=1}^{m} (\hat{p}_k^{(i)}-y_k^{(i)} X^{(i)})
+\end{equation}
+This enables the computation of the gradient vector for every class, facilitating the utilization of Gradient Descent or any other optimization algorithm to determine the parameter matrix $\Theta$ that minimizes the cost function.
+
+Applying Softmax Regression to classify iris flowers into all three classes involves setting Scikit-Learn's LogisticRegression to default to one-versus-all for more than two classes. However, you can switch to Softmax Regression by configuring the \texttt{multi\_class} hyperparameter to ``multinomial''. Additionally, selecting a solver supporting Softmax Regression, such as the ``lbfgs'' solver, is essential (refer to Scikit-Learn's documentation for more details). By default, it incorporates $\ell$2 regularization, adjustable using the hyperparameter C. For instance, when encountering an iris with 5 cm long and 2 cm wide petals, querying the model reveals a 94.2\% probability of it being Iris-Virginica (class 2), or a 5.8\% probability of being Iris-Versicolor.
+
+Figure~\ref{fig:Softmax_classification} visually represents the resulting decision boundaries, distinguished by background colors. Notably, these boundaries are linear between any two classes. Additionally, the figure displays the probabilities for the Iris-Versicolor class, delineated by curved lines. Remarkably, the model can predict a class with an estimated probability below 50\%, as observed at the intersection of all decision boundaries, where all classes have an equal estimated probability of 33\%.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=5.5in]{../figures/Softmax_classification.png}
+	\caption{Softmax classification for the three three iris plant species.}
+	\label{fig:Softmax_classification}
+\end{figure}
+
+
+
+\begin{example}
+	Do example on softmax classification.
+\end{example}
+
+
+
+\end{document}
+
