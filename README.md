@@ -19,7 +19,7 @@ This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 Intern
 ## Citation
 
 Cite as  
-@Misc{DowneyOpenVibrations,  
+@Misc{DowneyMachineLearningEngineering,  
   author = {Austin Downey},  
   title  = {Machine Learning for Engineering Problem Solving},  
   url    = {https://github.com/austindowney/Machine-Learning-for-Engineering-Problem-Solving},  
