@@ -6,7 +6,7 @@ A free text focused on introducing classical machine learning techniques using t
 <img src="source_material/figures/x_y_plot_linear_classifier.png" alt="drawing" width="300"/>
 </p>
 
-A current PDF version of the text can be found in the releases tab of the GitHub page or by clicking <a href="https://github.com/austindowney/Open-Vibrations/blob/main/Open_Vibrations.pdf">here</a>.
+A current PDF version of the text can be found in the releases tab of the GitHub page or by clicking <a href="https://github.com/austindowney/Machine-Learning-for-Engineering-Problem-Solving/blob/main/Machine_Learning_for_Engineering_Problem_Solving.pdf">here</a>.
 
 
 ## License
