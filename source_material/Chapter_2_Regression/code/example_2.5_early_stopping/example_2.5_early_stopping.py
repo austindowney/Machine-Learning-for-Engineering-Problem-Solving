@@ -3,9 +3,10 @@
 """
 Example 2.5
 Early Stopping
-Created for EMCH 504 at the UofSC
+Machine Learning for Engineering Problem Solving
 @author: Austin Downey
 """
+
 import IPython as IP
 IP.get_ipython().run_line_magic('reset', '-sf')
 

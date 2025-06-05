@@ -3,7 +3,7 @@
 """
 Example 2.2
 Polynomial regression 
-Created for EMCH 504 at the USC
+Machine Learning for Engineering Problem Solving
 @author: Austin Downey
 """
 

@@ -228,7 +228,7 @@ The gradient vector of the cross-entropy cost function with respect to $\pmb{\th
 \end{equation}
 This enables the computation of the gradient vector for every class, facilitating the utilization of Gradient Descent or any other optimization algorithm to determine the parameter matrix $\Theta$ that minimizes the cost function.
 
-Applying Softmax Regression to classify iris flowers into all three classes involves setting Scikit-Learn's LogisticRegression to default to one-versus-all for more than two classes. However, you can switch to Softmax Regression by configuring the \texttt{multi\_class} hyperparameter to ``multinomial''. Additionally, selecting a solver supporting Softmax Regression, such as the ``lbfgs'' solver, is essential (refer to Scikit-Learn's documentation for more details). By default, it incorporates $\ell$2 regularization, adjustable using the hyperparameter C. For instance, when encountering an iris with 5 cm long and 2 cm wide petals, querying the model reveals a 94.2\% probability of it being Iris-Virginica (class 2), or a 5.8\% probability of being Iris-Versicolor.
+Applying Softmax Regression to classify iris flowers into all three classes involves setting Scikit-Learn's LogisticRegression to default to one-versus-all for more than two classes. However, you can switch to Softmax Regression by configuring the \texttt{multi\_class} hyperparameter to ``multinomial''. Additionally, selecting a solver supporting Softmax Regression, such as the ``lbfgs'' solver, is essential (refer to Scikit-Learn's documentation for more details). By default, it incorporates $\ell$2 regularization, adjustable using the hyperparameter $C$. For instance, when encountering an iris with 5 cm long and 2 cm wide petals, querying the model reveals a 94.2\% probability of it being Iris-Virginica (class 2), or a 5.8\% probability of being Iris-Versicolor.
 
 Figure~\ref{fig:Softmax_classification} visually represents the resulting decision boundaries, distinguished by background colors. Notably, these boundaries are linear between any two classes. Additionally, the figure displays the probabilities for the Iris-Versicolor class, delineated by curved lines. Remarkably, the model can predict a class with an estimated probability below 50\%, as observed at the intersection of all decision boundaries, where all classes have an equal estimated probability of 33\%.
 
@@ -236,7 +236,7 @@ Figure~\ref{fig:Softmax_classification} visually represents the resulting decisi
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=5.5in]{../figures/Softmax_classification.png}
-	\caption{Softmax classification for the three three iris plant species.}
+	\caption{Softmax classification for the three iris plant species.}
 	\label{fig:Softmax_classification}
 \end{figure}
 

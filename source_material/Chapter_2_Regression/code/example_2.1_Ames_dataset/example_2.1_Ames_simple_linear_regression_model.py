@@ -3,7 +3,7 @@
 """
 Example 2.1
 Linear Regression
-Created for EMCH 504 at the UofSC
+Machine Learning for Engineering Problem Solving
 @author: Austin Downey
 """
 

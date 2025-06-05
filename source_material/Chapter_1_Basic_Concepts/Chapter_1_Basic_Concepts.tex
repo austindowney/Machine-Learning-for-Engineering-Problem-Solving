@@ -108,7 +108,9 @@ Machine Learning, as a subset of AI, involves algorithms that improve automatica
 
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=5.5in]{../figures/imageNet_classificatoin_paper}
+			\vspace{-2ex}
+			\includegraphics[width=4.5in]{../figures/imageNet_classificatoin_paper}
+			\vspace{-4ex}
 			\caption{Geoffrey's 2012 paper ``ImageNet Classification with Deep Convolutional Neural Networks''.\protect\footnotemark[1]}
 			\label{fig:imageNet_classificatoin_paper}
 		\end{figure}
@@ -137,7 +139,9 @@ Machine Learning, as a subset of AI, involves algorithms that improve automatica
 
 
 	\subsection{Definition of Machine Learning}
-		
+
+	The definitions and conventions that follow provide a common language and point of reference for all subsequent material:
+
 		\begin{itemize}
 			\item	Machine Learning is the science (and art) of programming computers so they can learn from data. Here is a slightly more general and more engineering-oriented definitions:
 			\begin{itemize}
@@ -146,7 +150,7 @@ Machine Learning, as a subset of AI, involves algorithms that improve automatica
 			\end{itemize}
 			\item The use of $X$ and $Y$ for variables. 
 			\begin{itemize}
-				\item From Hands on ML with sk learn: ``x(i) is a vector of all the feature values (excluding the label) of the $i$\textsuperscript{th} instance in the dataset, and y(i) is its label (the desired output value for that instance).''
+				\item For the $i^{\text{th}}$ sample, $x^{(i)}$ contains all its input features (excluding the target), while $y^{(i)}$ denotes the corresponding target value.
 				\item General definition:	``Machine learning algorithms are described as learning a target function ($f$) that best maps input variables ($X$) to an output variable ($Y$).''
 			\end{itemize}
 		\end{itemize}
@@ -155,14 +159,14 @@ Machine Learning, as a subset of AI, involves algorithms that improve automatica
 			Y = f(X)
 		\end{equation}
 		
-		This is described as a standard learning challenge where the goal is to predict future values \(Y\) using new samples of input variables \(X\). The function \(f\) that relates inputs to outputs is not known. If it were, direct application would be possible, eliminating the necessity for learning it via machine learning methods. This process is more complex than it may initially seem. Furthermore, there is an error \(e\) associated with this task that is independent of the input data \(X\).
+		\noindent This is described as a standard learning challenge where the goal is to predict future values $Y$ using new samples of input variables $X$. The function $f$ that relates inputs to outputs is not known. If it were, direct application would be possible, eliminating the necessity for learning it via machine learning methods. This process is more complex than it may initially seem. Furthermore, there is an error $e$ associated with this task that is independent of the input data $X$.
 
 	
 		\begin{equation}
 			Y = f(X) + e
 		\end{equation}
 		
-	
+		\noindent This yields two primary phases in the machine-learning workflow:
 		\begin{itemize}
 			\item Training: Creating the model is a compute-intensive process often run in a data center
 			\item Inference: Using the model can be computationally cheap and even performed ``at the edge''
@@ -178,6 +182,7 @@ Machine Learning, as a subset of AI, involves algorithms that improve automatica
 			\end{figure}
 
 		\footnotetext[1]{Langs, G., Röhrich, S., Hofmanninger, J. et al., CC BY 4.0 $<$https://creativecommons.org/licenses/by/4.0$>$, via Wikimedia Commons}
+
 
 	\subsection{Supervision in Machine Learning}
 
@@ -196,14 +201,7 @@ Machine Learning, as a subset of AI, involves algorithms that improve automatica
 			In supervised learning, the training data provided to the algorithm includes the desired solutions, known as labels. A common task within this type of learning is classification. An example of classification is a spam filter, which is trained using numerous emails that are each labeled as either spam or ham. The objective for the spam filter is to learn how to accurately classify new emails based on this training.
 
 			
-			\begin{figure}[t]
-				\centering
-				\includegraphics[width=\linewidth]{../figures/Supervised_machine_learning_in_a_nutshell.png}
-				\caption{Supervised machine learning in a nutshell\protect\footnotemark[1].}
-				\label{fig:training_set}
-			\end{figure}
 
-		\footnotetext[1]{EpochFail, CC BY-SA 4.0 $<$https://creativecommons.org/licenses/by-sa/4.0$>$, via Wikimedia Commons}
 
 
 
@@ -266,7 +264,7 @@ In unsupervised learning, the training data is unlabeled, and the system endeavo
 \end{itemize}
 
 			
-Visualization algorithms serve as an instance of unsupervised learning algorithms: they take in extensive, complex, and unlabeled data and produce a 2D or 3D representation that can be conveniently visualized. These algorithms strive to maintain as much of the original data structure as possible (for example, ensuring that distinct clusters in the input space do not merge in the visual output). This helps in comprehending the organizational structure of the data and potentially uncovering hidden patterns.
+Visualization algorithms such as that in Figure~\ref{fig:data_visualization}) serve as an instance of unsupervised learning algorithms: they take in extensive, complex, and unlabeled data and produce a 2D or 3D representation that can be conveniently visualized. These algorithms strive to maintain as much of the original data structure as possible (for example, ensuring that distinct clusters in the input space do not merge in the visual output). This helps in comprehending the organizational structure of the data and potentially uncovering hidden patterns.
 
 
 			\begin{itemize}
@@ -288,13 +286,15 @@ Visualization algorithms serve as an instance of unsupervised learning algorithm
 
 
 
-			\begin{figure}[t]
-				\centering
-				\includegraphics[width=2in]{../figures/iris_no_label}
-				\caption{iris flower that will be used throughout this class  \protect\footnotemark[1]}
-				\label{fig:iris}
-			\end{figure}			
-		\footnotetext[1]{No machine-readable author provided. Dlanglois assumed (based on copyright claims)., CC BY-SA 3.0 $<$http://creativecommons.org/licenses/by-sa/3.0/$>$, via Wikimedia Commons }	
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=5.5in]{../figures/iris_species.jpg}
+    \caption{Flowers representing three species of iris plants \protect\footnotemark[1]}
+    \label{fig:iris_species}
+\end{figure}
+
+\footnotetext[1]{Diego Mariano, CC BY-SA 4.0 $<$https://creativecommons.org/licenses/by-sa/4.0$>$, via Wikimedia Commons}
 
 
 	
@@ -309,12 +309,19 @@ Visualization algorithms serve as an instance of unsupervised learning algorithm
 
 		\footnotetext[1]{Agor153, CC BY-SA 3.0 $<$https://creativecommons.org/licenses/by-sa/3.0$>$, via Wikimedia Commons}
 
+%			\begin{figure}[H]
+%				\centering
+%				\includegraphics[width=3.5in]{../figures/iris_k-means.png}
+%				\caption{Classification for the Iris data set \protect\footnotemark[1]}
+%				\label{fig:iris_k-means}
+%			\end{figure}	
+
 			\begin{figure}[H]
 				\centering
-				\includegraphics[width=3.5in]{../figures/iris_k-means.png}
-				\caption{Principal tree for Iris data set \protect\footnotemark[1]}
-				\label{fig:iris_k-means}
-			\end{figure}	
+				\includegraphics[width=5.5in]{../figures/Softmax_classification.png}
+				\caption{Classification of the three species for the Iris data set.}
+				\label{fig:Softmax_classification}
+			\end{figure}
 
 		\footnotetext[1]{Diego Mariano, CC BY-SA 4.0 $<$https://creativecommons.org/licenses/by-sa/4.0$>$, via Wikimedia Commons }	
 
@@ -372,14 +379,30 @@ Visualization algorithms serve as an instance of unsupervised learning algorithm
 			
 			A policy specifies the action that an agent should take when presented with a particular situation.
 			
+			\begin{ML_case_study}
+				
+			\textbf{Jean-Baptiste Mouret}
+				
 			\begin{itemize}
 				\item	Teaching creatures to walk
 				\item	\url{https://youtu.be/kQ2bqz3HPJE?t=58}
 				\item	Jean-Baptiste Mouret (2015) has been developing robots that give me nightmares. 
 				\item	The robot learns how to walk by ``searching'' a space to decide how to walk. 
+			\end{itemize}
+				
+			\end{ML_case_study}
+
+			\begin{ML_case_study}
+	
+			\textbf{Walking robots}
+				
+			\begin{itemize}
 				\item	\url{https://youtu.be/T-c17RKh3uE?t=23}
 				\item	It takes about 40 seconds for the robot to re-learn how to walk. It can be 96\% as fast with a broken leg. 
 			\end{itemize}
+						
+		\end{ML_case_study}		
+
 			
 			
 			\begin{figure}[H]
@@ -504,17 +527,17 @@ In a landmark study released in 2001, Microsoft researchers Michele Banko and Er
 
 			\begin{figure}[H]
 			\centering
-				\includegraphics[width=4in]{../figures/data_versus_algorithms.png}
-				\caption{Learning Curves for four algorithms showing the importance of data versus algorithms.  \protect\footnotemark[1]}
+				\includegraphics[width=6.5in]{../figures/data_versus_algorithms.png}
+				\caption{Learning curves for four algorithms studied in Banko and Brill showing the importance of the amount of data when compared to algorithm selection.  }
 				\label{fig:data_versus_algorithms}
 			\end{figure}
 
 
-			As the authors put it: ``these results suggest that we may want to reconsider the tradeoff between spending time and money on algorithm development versus spending it on corpus development.''  ``The Unreasonable Effectiveness of Data'' \protect\footnotemark[2]. It's important to recognize, however, that small and medium-sized datasets remain prevalent, and acquiring additional training data is not always straightforward or economical. Therefore, the significance of algorithm selection should not be overlooked.
+			As the authors put it: ``these results suggest that we may want to reconsider the tradeoff between spending time and money on algorithm development versus spending it on corpus development.''  ``The Unreasonable Effectiveness of Data'' \protect\footnotemark[1]. It's important to recognize, however, that small and medium-sized datasets remain prevalent, and acquiring additional training data is not always straightforward or economical. Therefore, the significance of algorithm selection should not be overlooked.
 
-\footnotetext[2]{Image used under US Fair use polices, originally published by Michele Banko and Eric Brill in ``Scaling to very very large corpora for natural language disambiguation.'' Proceedings of the 39th annual meeting of the Association for Computational Linguistics. 2001.}
 
-\footnotetext[2]{Halevy, Alon, Peter Norvig, and Fernando Pereira. ``The unreasonable effectiveness of data.'' IEEE intelligent systems 24.2 (2009): 8-12.}
+
+\footnotetext[1]{Halevy, Alon, Peter Norvig, and Fernando Pereira. ``The unreasonable effectiveness of data.'' IEEE intelligent systems 24.2 (2009): 8-12.}
 
 
 \end{document}

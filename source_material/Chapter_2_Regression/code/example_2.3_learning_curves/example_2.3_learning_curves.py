@@ -3,7 +3,7 @@
 """
 Example 2.3
 Learning curves
-Created for EMCH 504 at the UofSC
+Machine Learning for Engineering Problem Solving
 @author: Austin Downey
 """
 
