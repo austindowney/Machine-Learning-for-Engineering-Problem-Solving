@@ -20,7 +20,7 @@ This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 Intern
 
 Cite as  
 @Misc{DowneyMachineLearningEngineering,  
-  author = {Austin Downey},  
+  author = {Austin {R.J.} Downey},  
   title  = {Machine Learning for Engineering Problem Solving},  
   url    = {https://github.com/austindowney/Machine-Learning-for-Engineering-Problem-Solving},  
 }  
