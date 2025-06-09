@@ -38,7 +38,7 @@ We will begin our exploration with the Linear Regression model, discussing two d
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=5in]{../figures/Ames_housing_correlation_matirx}
-		\caption{Correlation matirx for the 13 input parameters.}
+		\caption{Correlation matrix for the 13 input parameters.}
 		\label{fig:Ames_housing_correlation_matirx}
 	\end{figure}
 
@@ -606,7 +606,7 @@ This data can then be incorporated into two linear models, where the slopes of t
 
 
 \begin{example}
-example on Polynomial Regression
+Polynomial Regression
 \end{example}
 
 It is important to note that Polynomial Regression can identify interrelationships between features in cases where multiple features exist, a capability beyond the scope of simple Linear Regression. This enhancement is enabled by \texttt{PolynomialFeatures}, which includes all possible combinations of features up to the specified degree. For instance, with two features $a$ and $b$, and a degree of 3, \texttt{PolynomialFeatures} would add not only $a^2, a^3, b^2,$ and $b^3$ but also the combined terms $ab, a^2b,$ and $ab^2$.
@@ -743,7 +743,7 @@ Next, let's apply the code using a 2\textsuperscript{nd} order polynomial, which
 
 
 \begin{example}
-Example on learning curves
+Learning Curves
 \end{example}
 
 
@@ -804,7 +804,7 @@ Increasing $\alpha$ results in flatter (i.e., more reasonable and less extreme) 
 where $\alpha$ influences the regularization and $A$ is an $n \times n$ identity matrix with the top-left value replaced by 0 to exclude the bias term. When using Gradient Descent, the derivative of the cost function guides the adjustment toward optimal model parameters.
 
 \begin{example}
-An example of Ridge Regression. 
+Ridge Regression. 
 \end{example}
 
 %\subsubsection{Lasso Regression}
@@ -836,7 +836,7 @@ An alternative approach to regularizing iterative learning methods such as Gradi
 
 
 \begin{example}
-Example on Early Stopping.
+Early Stopping.
 \end{example}
 
 
