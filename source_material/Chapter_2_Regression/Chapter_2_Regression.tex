@@ -65,11 +65,9 @@ Consider the scenario where you wish to determine the value of a house in Ames u
 \end{figure}
 
 A clear trend is observable, despite the data's noise (i.e., partial randomness): the value of a house increases with the above ground living area. Therefore, the house value can be modeled as a linear function of the above ground living area:
-
 \begin{equation}
 \text{price\_model} = \theta_1 + \theta_2 \times \text{above\_ground\_living\_area}
 \end{equation}
-
 This model comprises two parameters, $\theta_1$ and $\theta_2$, which can be adjusted to represent any linear relationship.
 
 \begin{figure}[H]
@@ -235,7 +233,7 @@ Next, we will explore different methods for training a Linear Regression model t
 
 
 
-\subsection{Gradient Decent}
+\subsection{Gradient Descent}
 
 
 Gradient Descent is a versatile optimization algorithm capable of finding optimal solutions across a broad spectrum of problems. The core concept of Gradient Descent involves iteratively adjusting parameters to minimize a cost function \protect\footnotemark[1].
@@ -264,7 +262,7 @@ The process starts with random initialization of the parameter $\theta$, followe
     \centering
     \includegraphics[]{../figures/gradient_descent_1}
     \caption{Illustration of gradient descent.}
-    \label{fig:gradient_decent_1}
+    \label{fig:gradient_descent_1}
 \end{figure}
 
 A critical aspect of Gradient Descent is the step size, controlled by the learning rate hyperparameter. A small learning rate leads to a slow convergence, requiring many iterations.
@@ -304,16 +302,16 @@ These properties significantly benefit the optimization process: Gradient Descen
 
 
 
-\subsubsection{Comparison of Gradient Decent Methods}
+\subsubsection{Comparison of Gradient Descent Methods}
 
-Before looking into the mathematical details, let us examine how various gradient descent methods achieve the optimal solution, as illustrated in Figure~\ref{fig:Comparing_gradient_decent_methods}. Additionally, Table~\ref{table:Comparison_linear_regression} provides a comparative analysis of different gradient descent methods, highlighting their respective strengths and weaknesses.
+Before looking into the mathematical details, let us examine how various gradient descent methods achieve the optimal solution, as illustrated in Figure~\ref{fig:Comparing_gradient_descent_methods}. Additionally, Table~\ref{table:Comparison_linear_regression} provides a comparative analysis of different gradient descent methods, highlighting their respective strengths and weaknesses.
 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[]{../figures/comparing_gradient_decent_methods}
-	\caption{Comparing gradient decent methods.}
-	\label{fig:Comparing_gradient_decent_methods}
+	\includegraphics[]{../figures/comparing_gradient_descent_methods}
+	\caption{Comparing gradient descent methods.}
+	\label{fig:Comparing_gradient_descent_methods}
 \end{figure}
 
 
@@ -433,7 +431,7 @@ Interestingly, this process aligns perfectly with the results from the Normal Eq
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=6.5in]{../figures/Ames_learning_rates.png}
-			\caption{The effects of different learning rates on the gradient decent algorithms, showing: (a)~too high ($\eta = 5e-07$); (b)~about right ($\eta = 5e-08$), and; (c)~too low ($\eta = 5e-09$).}
+			\caption{The effects of different learning rates on the gradient descent algorithms, showing: (a)~too high ($\eta = 5e-07$); (b)~about right ($\eta = 5e-08$), and; (c)~too low ($\eta = 5e-09$).}
 			\label{fig:learning_rates}
 		\end{figure}
 
@@ -495,20 +493,20 @@ Due to its frequent and individual updates, SGD exhibits high variance in the ob
 
 The final Gradient Descent algorithm we will discuss is Mini-batch Gradient Descent. This method combines elements of both Batch and Stochastic Gradient Descent: rather than calculating gradients using the entire training set (as in Batch GD) or a single instance (as in Stochastic GD), Mini-batch GD computes gradients using small, randomly selected subsets of instances known as minibatches. One significant benefit of Mini-batch GD over Stochastic GD is the improved performance from hardware-optimized matrix operations, particularly on GPUs.
 
-Mini-batch GD's trajectory through parameter space tends to be more stable compared to the often erratic path of SGD, especially with larger minibatches. This stability typically brings Mini-batch GD closer to the minimum than SGD. However, Mini-batch GD might struggle more with escaping local minima in scenarios prone to such issues, which is less of a concern in Linear Regression. Figure~\ref{fig:Comparing_gradient_decent_methods} illustrates the trajectories of these three Gradient Descent techniques during training. While Batch GD precisely reaches the minimum, Stochastic GD and Mini-batch GD tend to oscillate nearby. It is important to note, however, that while Batch GD is slow in taking steps, both Stochastic GD and Mini-batch GD could also effectively reach the minimum with an appropriate learning rate schedule.
+Mini-batch GD's trajectory through parameter space tends to be more stable compared to the often erratic path of SGD, especially with larger minibatches. This stability typically brings Mini-batch GD closer to the minimum than SGD. However, Mini-batch GD might struggle more with escaping local minima in scenarios prone to such issues, which is less of a concern in Linear Regression. Figure~\ref{fig:Comparing_gradient_descent_methods} illustrates the trajectories of these three Gradient Descent techniques during training. While Batch GD precisely reaches the minimum, Stochastic GD and Mini-batch GD tend to oscillate nearby. It is important to note, however, that while Batch GD is slow in taking steps, both Stochastic GD and Mini-batch GD could also effectively reach the minimum with an appropriate learning rate schedule.
 
 
 
 
 \subsubsection{Feature Scaling}
 
-The cost function can resemble an elongated bowl if the feature scales vary significantly. Figure~\ref{fig:gradient_decent_5} illustrates the effect of feature scaling on Gradient Descent, comparing equal scaling of features (on the left) to disparate scaling (on the right).
+The cost function can resemble an elongated bowl if the feature scales vary significantly. Figure~\ref{fig:gradient_descent_5} illustrates the effect of feature scaling on Gradient Descent, comparing equal scaling of features (on the left) to disparate scaling (on the right).
 
 \begin{figure}[H]
     \centering
-    \includegraphics[]{../figures/gradient_decent_5.png }
+    \includegraphics[]{../figures/gradient_descent_5.png }
     \caption{Gradient descent on a 2D surface.}
-    \label{fig:gradient_decent_5}
+    \label{fig:gradient_descent_5}
 \end{figure}
 
 On the left, Gradient Descent progresses directly towards the minimum, reaching it swiftly. On the right, however, it initially moves almost orthogonally to the direction of the global minimum, followed by a lengthy traverse down a nearly flat valley, significantly delaying the convergence.
@@ -605,9 +603,7 @@ This data can then be incorporated into two linear models, where the slopes of t
 		\end{figure}
 
 
-\begin{example}
-Polynomial Regression
-\end{example}
+
 
 It is important to note that Polynomial Regression can identify interrelationships between features in cases where multiple features exist, a capability beyond the scope of simple Linear Regression. This enhancement is enabled by \texttt{PolynomialFeatures}, which includes all possible combinations of features up to the specified degree. For instance, with two features $a$ and $b$, and a degree of 3, \texttt{PolynomialFeatures} would add not only $a^2, a^3, b^2,$ and $b^3$ but also the combined terms $ab, a^2b,$ and $ab^2$.
 
@@ -620,7 +616,9 @@ It is important to note that Polynomial Regression can identify interrelationshi
 \texttt{PolynomialFeatures(degree=d)} expands an array with $n$ original features into one that includes $\frac{(n+d)!}{d!n!}$ features, accounting for all combinations of features up to the $d$-th degree. Here, $n!$ represents the factorial of $n$, calculated as $1 \times 2 \times 3 \times \cdots \times n$. Be cautious of the rapid increase in the number of features, known as combinatorial explosion!
 \end{mdframed}
 
-
+\begin{example}
+Polynomial Regression
+\end{example}
 
 
 \subsection{Training and Testing Data}
@@ -647,7 +645,7 @@ The function \texttt{sklearn.model\_selection.train\_test\_split} in scikit-lear
 
 
 
-\subsection{Pipeline}
+\subsection{Pipelines}
 
 
 Pipelines in scikit-learn streamline the process by sequentially applying a list of transformations followed by a final estimator to a dataset. Employing pipelines allows for the integration of multiple processing steps, which can then be cross-validated together while experimenting with various parameters. Fig.~\ref{fig:AutoML_diagram} illustrates a typical pipeline configuration in scikit-learn.
