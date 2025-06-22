@@ -91,8 +91,11 @@ Decision Trees can estimate the probability that an instance belongs to a specif
 Interestingly, the same estimated probabilities apply throughout the bottom-right rectangle of Figure~\ref{fig:decision_tree_boundaries}, even in a scenario where the petal dimensions are 6~cm by 1.5~cm where one might intuitively expect an Iris-Virginica classification.
 
 \begin{example}
-	Do Iris Dataset example. This was trained in sklearn and uses Graphviz to generate the figure, this online viewer is the easiest way to do that \url{https://dreampuf.github.io/GraphvizOnline/}.
+\textbf{Decision Tree Classifier}
+
+\noindent This example uses Scikit-Learn?s \texttt{DecisionTreeClassifier} to classify iris species based on petal features. The decision process is visualized using Graphviz, showing the structure of learned rules and how decisions are made based on feature thresholds.  This online viewer is the easiest way to do that \url{https://dreampuf.github.io/GraphvizOnline/}
 \end{example}
+
 
 \subsection{The CART Training Algorithm}
 
@@ -221,9 +224,13 @@ Similar to classification, Decision Trees for regression can overfit if not prop
 	\label{fig:decision_tree_regression_regularized}
 \end{figure}
 
+
 \begin{example}
-Do Iris regression example.
+\textbf{Decision Tree Regression}
+
+\noindent This example uses Scikit-Learn's \texttt{DecisionTreeRegressor} to fit a non-linear relationship between input and output data. A tree of depth 4 is trained on noisy quadratic data and visualized using Graphviz to show how the regression model partitions the input space.
 \end{example}
+
 
 
 \subsection{Instability}

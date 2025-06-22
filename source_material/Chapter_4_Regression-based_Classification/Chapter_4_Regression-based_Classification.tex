@@ -123,10 +123,13 @@ Let's utilize the iris dataset to demonstrate Logistic Regression. This dataset 
 \footnotetext[1]{Diego Mariano, CC BY-SA 4.0 $<$https://creativecommons.org/licenses/by-sa/4.0$>$, via Wikimedia Commons}
 \end{data}
 
-\begin{example}
-Let's perform an example using the Iris dataset. Figure~\ref{fig:iris_species} displays flowers of three distinct iris plant species. First, let's explore the dataset.
-\end{example}
 
+
+\begin{example}
+\textbf{Iris Dataset Exploration}
+
+\noindent This example introduces the Iris dataset (Figure~\ref{fig:iris_species}), originally compiled by Ronald Fisher. It demonstrates how to load the dataset, access feature and label information, and visualize the relationships between sepal and petal measurements across the three iris species.
+\end{example}
 
 \subsubsection{1-D Decision Boundaries}
 
@@ -145,7 +148,9 @@ Now, let's attempt to construct a classifier to identify the Iris-Virginica type
 The petal width of Iris-Virginica flowers typically falls between 1.4 cm and 2.5 cm, while other iris flowers generally exhibit a narrower range, from 0.1 cm to 1.8 cm. Although there is some overlap between these ranges, the classifier's confidence varies. Beyond approximately 2 cm, the classifier is highly confident in identifying the flower as an Iris-Virginica, whereas below 1 cm, it confidently categorizes it as not an Iris-Virginica (with a high probability for the ``Not Iris-Virginica'' class). In the intermediate range, the classifier is uncertain. When prompted to predict the class (using the \texttt{predict()} method instead of the \texttt{predict\_proba()} method), it returns the class deemed most likely. Hence, a decision boundary emerges around 1.6 cm where both probabilities reach 50\%: if the petal width exceeds 1.6 cm, the classifier predicts that the flower is an Iris-Virginica; otherwise, it predicts otherwise, even if the confidence level is low.
 
 \begin{example}
-Do example on Iris data set 1D decision boundary example
+\textbf{1D Logistic Regression}
+
+\noindent This example builds a logistic regression model to classify Iris-Virginica based on a single feature: petal width. It visualizes class probabilities and shows the decision boundary at the 50\% threshold.
 \end{example}
 
 \subsubsection{2-D Decision Boundaries}
@@ -163,11 +168,11 @@ Figure~\ref{fig:Iris_dataset_decision_boundary_2D} depicts the same dataset, pre
 		\end{figure}
 
 \begin{example}
-Do example on Iris data set 2D decision boundary example.
+\textbf{2D Decision Boundary}
 
-Let's attempt to construct a classifier to identify the Iris-Virginica species solely based on the petal width feature.
-
+\noindent This example uses logistic regression to classify the Iris-Virginica species based on petal length and width. A 2D decision boundary is visualized in the petal feature space, with prediction regions and probability contours illustrating classifier confidence.
 \end{example}
+
 
 
 \subsection{Softmax Regression}
@@ -243,8 +248,11 @@ Figure~\ref{fig:Softmax_classification} visually represents the resulting decisi
 
 
 \begin{example}
-	Do example on softmax classification.
+\textbf{Softmax Classification}
+
+\noindent This example applies softmax regression to classify all three iris species using petal length and width. It builds a multinomial logistic regression model and visualizes the decision boundaries along with confidence contours over the 2D petal feature space.
 \end{example}
+
 
 
 

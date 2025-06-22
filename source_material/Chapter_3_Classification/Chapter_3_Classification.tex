@@ -10,12 +10,38 @@
 	\setcounter{equation}{\thesection}   
 	\renewcommand\theequation{\thesection.\arabic{equation}}
 
-	\section{Introduction to Classification}
+	\section{Classification}
 
 In Chapter~1, we examined various tasks that machine learning excels at, such as regression (predicting values) and classification (identifying classes). Having explored linear and polynomial regression in Chapter~2, we now turn our attention to classification in this section.
 
 
 
+
+
+
+
+\subsection{Binary Classifier}
+
+A binary classifier is a model that assigns inputs to one of two distinct classes.
+Linear binary classification is a simple but powerful method used to separate data into two distinct classes by drawing a straight decision boundary---such as a line (in 2D) or hyperplane (in higher dimensions)---between them. It works by computing a weighted sum of the input features and applying a threshold to determine the output class. Mathematically, it learns a weight vector $\boldsymbol{\theta}$ and bias term $b$ such that the decision rule can be written as:
+\begin{equation}
+\hat{y} = \begin{cases}
+1 & \text{if } \boldsymbol{\theta}^\text{T} \mathbf{x} + b \geq 0 \\
+0 & \text{otherwise}
+\end{cases}
+\end{equation}
+where $\mathbf{x}$ is the input feature vector. During training, the weights are adjusted to minimize classification error, often using gradient descent on a suitable loss functions (e.g., hinge loss or logistic loss). 
+
+Despite its simplicity, the linear classifier is often surprisingly effective, especially when the data is linearly separable or nearly so. An example of such a case is shown in figure~\ref{fig:x_y_plot_linear_classifier} where the three models ($H_1$, $H_2$, and $H_3$) are linear models defined by the hyperparameters $ \boldsymbol{\theta}$ that each correctly classify the data. The challenge then becomes how does one obtain the hyperparameters $ \boldsymbol{\theta}$. To start, we will show that the hyperparameters $ \boldsymbol{\theta}$ can be obtained through gradient descent.
+
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[]{../figures/x_y_plot_linear_classifier}
+    \caption{Linear classifier that can be implemented with gradient descent.}
+    \label{fig:x_y_plot_linear_classifier}
+\end{figure}
 
 
 \begin{data}
@@ -46,17 +72,21 @@ Scikit-Learn includes a helper function that facilitates the downloading of the 
 \end{data}
 
 
-\begin{example}
-Do example on loading MNIST data set.
-\end{example}
-
-\subsection{Binary Classifier}
 To begin, we simplify our task by focusing on identifying all the ``5''s in the MNIST dataset. This task involves using a binary classifier that checks whether each digit is a 5. The number 5 is notoriously difficult to classify correctly within the MNIST dataset, making it a sensible starting point for binary classification.
 
-\subsubsection{Linear Classifier Solved with Stochastic Gradient Descent}
+
+\begin{example}
+\textbf{MNIST Dataset}
+
+\noindent This example demonstrates how to use \texttt{sklearn.datasets.fetch\_openml} to load the MNIST dataset. It also includes  visualization steps to display sample handwritten digits.
+\end{example}
+
+
+
+\subsubsection{Regularized Linear Classifier}
 %\todo{Consider adding mathematical detail, possibly involving the MSE error cost function.}
 
-A practical algorithm for building this ``5-detector'' is the Stochastic Gradient Descent (SGD) classifier. The SGD classifier offers an efficient and straightforward approach for discriminative learning of linear classifiers under convex loss functions, scaling well with large datasets and maintaining simplicity in implementation as it processes one training example at a time. The main advantages of the Stochastic Gradient Descent classifier include:
+A practical algorithm for building this ``5-detector'' is the Regularized Linear Classifier solved with Stochastic Gradient Descent (SGD) classifier. The SGD classifier offers an efficient and straightforward approach for discriminative learning of linear classifiers under convex loss functions, scaling well with large datasets and maintaining simplicity in implementation as it processes one training example at a time. The main advantages of the Stochastic Gradient Descent classifier include:
 
 \begin{itemize}
 \item Efficiency.
@@ -68,17 +98,29 @@ However, the Stochastic Gradient Descent classifier also presents certain disadv
 \item It is sensitive to feature scaling.
 \end{itemize}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=3.5in]{../figures/x_y_plot_linear_classifier}
-    \caption{Linear classifier that can be implemented with gradient descent.}
-    \label{fig:x_y_plot_linear_classifier}
-\end{figure}
+
+
+
+Given a labelled training set ${(\mathbf x^{(i)},y^{(i)})}_{i=1}^{m}$ with
+$y^{(i)}\in{+1,-1}$ ($+1$ marks the digit ``5''), the regularised linear ``5-detector'' learns a weight vector $\boldsymbol{\theta}\in\mathbb{R}^{n+1}$ (bias in the first entry) by minimising
+
+\begin{equation}
+\label{eq:svm_obj}
+J(\boldsymbol{\theta}) =
+\frac{1}{m}\sum_{i=1}^{m}
+\max \bigl(0,1-y^{(i)}\boldsymbol{\theta}^{\text{T}}\mathbf x^{(i)}\bigr)
++ \frac{\lambda}{2}\,\bigl\lVert\boldsymbol{\theta}_{1:}\bigr\rVert_2^{2},
+\end{equation}
+where the first term is the hinge loss enforcing a unit margin around the decision boundary, and the second term applies $\ell_2$-regularisation of strength $\lambda>0$ to all weights except the bias ($\boldsymbol{\theta}_{1:}$). Minimising \eqref{eq:svm_obj} with stochastic-gradient descent yields a sparse, margin-maximising classifier that generalises well to unseen handwritten digits.
+
 
 
 \begin{example}
-Implement an example of MNIST using Stochastic Gradient Descent.
+\textbf{Regularized Linear Classifier}
+
+\noindent This example trains a regularized linear classifier using \texttt{SGDClassifier} to distinguish the digit ``5'' from other digits in the MNIST dataset. It highlights how regularization helps improve generalization performance by penalizing large weights, and demonstrates basic prediction on a selected digit using a learned linear decision boundary.
 \end{example}
+
 
 
 \subsection{Performance Measures for Binary Classification}
@@ -100,7 +142,7 @@ These four cases from statistical testing can be combined into a single matrix k
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=5.5in]{../figures/confusion_matrix_binary.png}
+    \includegraphics[]{../figures/confusion_matrix_binary.png}
     \caption{Confusion matrix binary.}
     \label{fig:confusion_matrix_binary}
 \end{figure}
@@ -117,7 +159,7 @@ These four cases from statistical testing can be combined into a single matrix k
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=3.5in]{../figures/confusion_matrix_breakout.png}
+    \includegraphics[]{../figures/confusion_matrix_breakout.png}
     \caption{Confusion matrix breakout.}
     \label{fig:confusion_matrix_breakout}
 \end{figure}
@@ -131,8 +173,11 @@ Each row in the confusion matrix corresponds to an actual class, while each colu
 
 
 \begin{example}
-Do example binary confusion matrix 
+\textbf{Binary Confusion Matrix}
+
+\noindent This example evaluates a binary classifier trained to detect the digit ``5'' using a confusion matrix. The matrix summarizes the number of true positives, true negatives, false positives, and false negatives. It also visualizes specific misclassifications to help interpret where the model fails, such as incorrectly labeling a ``5'' as not a ``5'' (false negative) or misidentifying another digit as a ``5'' (false positive).
 \end{example}
+
 
 
 \subsubsection{Accuracy, Precision, and Recall}
@@ -145,7 +190,6 @@ Or:
 \begin{equation}
 \text{Accuracy} = \frac{TP+TN}{TP+TN+FP+FN}
 \end{equation}
-
 While accuracy offers valuable insights, it's essential to consider the number of falsely classified positive and negative predictions, especially within the context of the problem being addressed. For instance, a 99\% accuracy rate might seem satisfactory for predicting credit card fraud. However, what if a false negative indicates a severe virus or cancer? This is why we need to look deeper into the accuracy formula.
 
 
@@ -160,7 +204,7 @@ While these definitions may not be immediately intuitive, a visualizations such 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=6.5in]{../figures/piechart_TP_vs_FP.png}
+    \includegraphics[]{../figures/piechart_TP_vs_FP.png}
     \caption{Visual representation of relevant instances, showing their relation to True Positives (TP) and False Positives (FP). }
     \label{fig:piechart_TP_vs_FP}
 \end{figure}
@@ -195,7 +239,7 @@ Figure~\ref{fig:decision_threshold} illustrates this tradeoff using the SGDClass
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=6.5in]{../figures/decision_threshold.png}
+    \includegraphics[]{../figures/decision_threshold.png}
     \caption{Visualization of the F1 score.}
     \label{fig:decision_threshold}
 \end{figure}
@@ -216,11 +260,6 @@ To determine the optimal threshold, it's helpful to plot precision and recall ag
 
 As illustrated in Figure~\ref{fig:F1_score_plot}, it's relatively straightforward to develop a classifier with nearly any desired precision: simply adjust the threshold to a sufficiently high value. However, it's important to bear in mind that a high-precision classifier may not be very practical if its recall is too low. 
 
-
-\begin{example}
-Do example on precision, recall, and accuracy.
-\end{example}
-
 Figure~\ref{fig:precision_vs_recall} reports a precision vs recall curve that is obtained by changing the threshold of the trained model. At the leftmost part of the precision-recall curve (low recall), precision is highest because the model makes very few positive predictions, and those are likely true positives. As recall increases, the model starts predicting more positives, including more false positives, which reduces precision. The shape of the curve is also important; a steep drop-off indicates that the addition of false positives happens rapidly with increasing recall, whereas a more gradual decline suggests a better balance between precision and recall.
 
 		\begin{figure}[H]
@@ -232,6 +271,11 @@ Figure~\ref{fig:precision_vs_recall} reports a precision vs recall curve that is
 
 By analyzing the curve, one can choose a threshold that balances precision and recall according to the specific needs of the application. For instance, in medical diagnosis, high recall is crucial to ensure no cases are missed, even if precision is lower. Additionally, the area under the precision-recall curve (AUC-PR) can be used to compare models. A higher area indicates a model with better performance across all thresholds.
 
+\begin{example}
+\textbf{Accuracy, Precision, and Recall}
+
+\noindent This example computes and compares three key classification metrics (accuracy, precision, and recall) for a linear classifier trained to detect the digit ``5'' in the MNIST dataset. It shows both manual and \texttt{sklearn}-based calculations, introduces the F1 score, and visualizes how precision and recall vary with the classification threshold using a precision-recall curve.
+\end{example}
 
 
 \subsection{$k$-fold Cross-validation}
@@ -257,8 +301,12 @@ Of course, Scikit-Learn provides a cross-validation feature, known as \texttt{sk
 
 
 
+
+
 \begin{example}
-Do example on $k$-fold Cross-validation using \texttt{sk.model\_selection}
+\textbf{$k$-fold Cross-Validation}
+ 
+\noindent This example trains a binary classifier to detect the digit ``5'' from the MNIST dataset using Stochastic Gradient Descent (SGD). It first demonstrates how model performance can vary when trained multiple times on the same dataset. Then, by applying $k$-fold cross-validation using \texttt{sk.model\_selection.cross\_val\_predict}, it shows how splitting the data into $k$ subsets helps reduce this variation and provides a more reliable estimate of accuracy, precision, and recall.
 \end{example}
 
 \subsection{Multiclass Classification}
@@ -286,7 +334,9 @@ Previously, we explored binary classifiers, which distinguish between two classe
 Certain algorithms, such as Support Vector Machine classifiers, suffer from scalability issues with larger training sets. Consequently, OvO is preferred for such algorithms since it's faster to train numerous classifiers on small training sets compared to training a few classifiers on large training sets. However, for most binary classification algorithms, OvA is the preferred strategy. Nevertheless, some algorithms, such as Random Forest classifiers or naive Bayes classifiers, can handle multiple classes directly.
 
 \begin{example}
-Example of Multiclass Stochastic Gradient Descent.
+\textbf{Multiclass Regularized Linear Classifier}
+
+\noindent This example extends the use of \texttt{SGDClassifier} to multiclass classification on the MNIST dataset. It compares three approaches: One-vs-Rest (OvR), One-vs-One (OvO), and Scikit-Learn's default automatic strategy. Each method trains multiple binary classifiers to distinguish between the 10 digit classes.
 \end{example}
 
 
@@ -340,9 +390,6 @@ The refined plot facilitates a clear understanding of the classifier's error pat
 
 Analyzing the confusion matrix provides valuable insights for classifier enhancement. In this case, efforts should concentrate on improving the classification of 8s and 9s, along with addressing the specific 3/5 confusion. Potential strategies include gathering more training data for these digits, devising new features (e.g., counting closed loops), or preprocessing images to emphasize distinguishing patterns (e.g., using Scikit-Image, Pillow, or OpenCV).
 
-\begin{example}
-Do example on multiclass confusion matrix.
-\end{example}
 
 
 \subsubsection{Analyzing Individual Errors}
@@ -359,6 +406,12 @@ Analyzing individual errors provides valuable insights into the classifier's beh
 The two $5 \times 5$ blocks on the left depict digits classified as 3s, while those on the right show images classified as 5s. Some misclassified digits (e.g., in the bottom-left and top-right blocks) are poorly written, challenging even for human classification (e.g., the digit resembling a 3 in the 8th row and 1st column). However, most misclassifications seem obvious to humans, making it difficult to comprehend why the classifier erred. This is because a simple SGDClassifier, being a linear model, assigns weights per class to each pixel and sums up the weighted pixel intensities to score each class. Consequently, since 3s and 5s differ by few pixels, this model easily confuses them.
 
 The primary discrepancy between 3s and 5s lies in the position of the connecting line between the top line and bottom arc. Slight shifting or rotation of this junction can lead the classifier to misclassify a 3 as a 5, and vice versa. Thus, the classifier is sensitive to image shifting and rotation. To mitigate the 3/5 confusion, preprocessing the images to ensure proper centering and minimal rotation would be beneficial. This approach is likely to reduce other classification errors as well.
+
+\begin{example}
+\textbf{Multiclass Confusion Matrix}
+
+\noindent This example uses a One-vs-One classifier trained with Stochastic Gradient Descent to evaluate multiclass classification performance on the MNIST dataset. It constructs a confusion matrix using 3-fold cross-validation and visualizes both the raw classification counts and the normalized error rates, helping identify which digits are most commonly misclassified.
+\end{example}
 
 
 \end{document}

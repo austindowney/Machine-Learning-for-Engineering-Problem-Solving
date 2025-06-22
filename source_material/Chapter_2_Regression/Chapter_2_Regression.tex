@@ -12,12 +12,20 @@
 	\section{Regression}
 
 
+Regression is a fundamental tool in machine learning used to model the relationship between an independent variable (called data and denoted $x$) and a dependent variable (called target and denoted $y$). The goal is to learn a function that best predicts the target value from the input data. This relationship is shown in figure~\ref{fig:general_regression} .
 
 We will begin our exploration with the Linear Regression model, discussing two distinct training methodologies:
 \begin{enumerate}
 \item Employing a direct ``closed-form'' solution that computes the optimal model parameters to fit the training set directly. This involves finding parameters that minimize the cost function across the training set.
 \item Utilizing an iterative optimization technique known as Gradient Descent (GD), which incrementally adjusts the model parameters to reduce the cost function over the training set, ultimately converging to the optimal parameters as determined by the first method. We will explore several variants of Gradient Descent which are frequently used in neural network studies in Part II, including Batch GD, Mini-batch GD, and Stochastic GD.
 \end{enumerate}
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=4in]{../figures/polynomial_regression_3}
+			\caption{Polynomial model fit to a dataset. \gr{need to update figure, add labels on x and y, get some sor of s-shaped data.}}
+			\label{fig:general_regression}
+		\end{figure}
 
 
 \begin{data}
@@ -50,10 +58,7 @@ We will begin our exploration with the Linear Regression model, discussing two d
 
 \subsection{Linear Regression}
 
-\begin{example}
-Ames Simple Linear Regression Model
 
-\end{example}
 
 Consider the scenario where you wish to determine the value of a house in Ames using the Ames dataset included in sklearn. To illustrate this, let us plot the relationship between the above ground living area and the housing price.
 
@@ -230,10 +235,41 @@ Furthermore, once your Linear Regression model is trained (whether through the N
 
 Next, we will explore different methods for training a Linear Regression model that are more appropriate for scenarios with a large number of features, or when the training data exceeds memory capacity.
 
+\begin{example}
+\textbf{Linear Regression - Ames Housing Dataset}
 
+\noindent This example uses the Ames housing dataset to model the relationship between above-ground living area and house price using linear regression. It compares a manual fit, a closed-form solution, and gradient descent, alongside Scikit-Learn's \texttt{LinearRegression} and \texttt{SGDRegressor}, to illustrate how each method fits a line to the data.
 
+\end{example}
 
-\subsection{Gradient Descent}
+%\lstset{%
+%caption={Example functions for Python code.},
+%label={lst:functions},
+%language=Python,
+%basicstyle=\ttm,
+%morekeywords={self},              % Add keywords here
+%keywordstyle=\ttb\color{deepblue},
+%emph={MyClass,__init__},          % Custom highlighting
+%emphstyle=\ttb\color{deepred},    % Custom highlighting style
+%stringstyle=\color{deepgreen},
+%frame=tb,                         % Any extra options here
+%showstringspaces=false
+%}
+%\begin{lstlisting}
+%i=20
+%
+%class MyClass(Yourclass):
+%    def __init__(self, my, yours):
+%        bla = '5 1 2 3 4'
+%        print bla
+%
+%# this is a comment
+%for i in range(10):
+%	i=10
+%
+%
+%
+%\end{lstlisting}
 
 
 Gradient Descent is a versatile optimization algorithm capable of finding optimal solutions across a broad spectrum of problems. The core concept of Gradient Descent involves iteratively adjusting parameters to minimize a cost function \protect\footnotemark[1].
@@ -323,41 +359,15 @@ Before looking into the mathematical details, let us examine how various gradien
 \label{table:Comparison_linear_regression}
 \resizebox{\textwidth}{!}{\begin{tabular}{@{}lllllll@{}}
 \toprule
-\multicolumn{1}{c}{Algorithm} & {\begin{tabular}[c]{@{}c@{}}Large number of\\  instances ($m$) \end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}data must\\ fit in memory\end{tabular}} & {\begin{tabular}[c]{@{}c@{}}Large number of\\  features ($n$) \end{tabular}} & \multicolumn{1}{c}{Hyperparams} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Scaling\\ required\end{tabular}} & \multicolumn{1}{c}{Scikit-Learn} \\ \midrule
-Normal Equation & Fast & Yes & Slow & 0 & No & \texttt{LinearRegression} \\
-Batch GD & Slow & Yes & Fast & 2 & Yes & n/a \\
-Stochastic GD & Fast & No & Fast &  $\ge 2$ & Yes & \texttt{SGDRegressor} \\
-Mini-batch GD & Fast & No & Fast &  $\ge 2$ & Yes & n/a \\ \bottomrule
+\multicolumn{1}{c}{algorithm} & {\begin{tabular}[c]{@{}c@{}}large number of\\  instances ($m$) \end{tabular}} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}data must\\ fit in memory\end{tabular}} & {\begin{tabular}[c]{@{}c@{}}large number of\\  features ($n$) \end{tabular}} & \multicolumn{1}{c}{hyperparams} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}scaling\\ required\end{tabular}} & \multicolumn{1}{c}{Scikit-Learn} \\ \midrule
+normal equation & fast & yes & slow & 0 & no & \texttt{LinearRegression} \\
+batch GD & slow & yes & fast & 2 & yes & n/a \\
+stochastic GD & fast & no & fast &  $\ge 2$ & yes & \texttt{SGDRegressor} \\
+mini-batch GD & fast & no & fast &  $\ge 2$ & yes & n/a \\ \bottomrule
 \end{tabular}}
 \end{table}
 
 
-\lstset{%
-caption={Example functions for Python code.},
-label={lst:functions},
-language=Python,
-basicstyle=\ttm,
-morekeywords={self},              % Add keywords here
-keywordstyle=\ttb\color{deepblue},
-emph={MyClass,__init__},          % Custom highlighting
-emphstyle=\ttb\color{deepred},    % Custom highlighting style
-stringstyle=\color{deepgreen},
-frame=tb,                         % Any extra options here
-showstringspaces=false
-}
-\begin{lstlisting}
-i=20
-
-class MyClass(Yourclass):
-    def __init__(self, my, yours):
-        bla = '5 1 2 3 4'
-        print bla
-
-# this is a comment
-for i in range(10):
-	i=10
-
-\end{lstlisting}
 
 
 \begin{mdframed}[middlelinewidth=0.5mm]
@@ -617,8 +627,11 @@ It is important to note that Polynomial Regression can identify interrelationshi
 \end{mdframed}
 
 \begin{example}
-Polynomial Regression
+\textbf{Polynomial Regression}
+
+\noindent This example fits a non-linear dataset using polynomial regression by adding $x^2$ as an extra feature. It demonstrates how linear models can approximate curved relationships when polynomial terms are included, and shows the resulting fit compared to the original data.
 \end{example}
+
 
 
 \subsection{Training and Testing Data}
@@ -741,8 +754,11 @@ Next, let's apply the code using a 2\textsuperscript{nd} order polynomial, which
 
 
 \begin{example}
-Learning Curves
+\textbf{Learning Curves}
+
+\noindent This example compares learning curves for linear and polynomial regression models. By plotting training and validation errors as the training set grows, it illustrates how model complexity impacts bias and variance, and helps identify underfitting and overfitting behavior.
 \end{example}
+
 
 
 
@@ -802,8 +818,11 @@ Increasing $\alpha$ results in flatter (i.e., more reasonable and less extreme) 
 where $\alpha$ influences the regularization and $A$ is an $n \times n$ identity matrix with the top-left value replaced by 0 to exclude the bias term. When using Gradient Descent, the derivative of the cost function guides the adjustment toward optimal model parameters.
 
 \begin{example}
-Ridge Regression 
+\textbf{Ridge Regression}
+
+\noindent This example demonstrates Ridge Regression as a regularized alternative to linear regression. A high-degree polynomial model is fit to noisy data using a pipeline with Ridge regularization, showing how the regularization term reduces overfitting and stabilizes the model.
 \end{example}
+
 
 %\subsubsection{Lasso Regression}
 %
@@ -834,8 +853,11 @@ An alternative approach to regularizing iterative learning methods such as Gradi
 
 
 \begin{example}
-Early Stopping
+\textbf{Early Stopping}
+
+\noindent This example uses a high-degree polynomial model trained with stochastic gradient descent to demonstrate early stopping. By tracking training and validation errors across epochs, it highlights how halting training early can prevent overfitting and improve generalization.
 \end{example}
+
 
 
 

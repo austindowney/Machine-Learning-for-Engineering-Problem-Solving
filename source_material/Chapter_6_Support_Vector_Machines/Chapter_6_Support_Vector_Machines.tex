@@ -197,8 +197,11 @@ Setting the QP parameters as described can yield the objective for a hard margin
 Training a hard margin linear SVM classifier can thus be achieved by using a standard QP solver with these settings. The resultant vector $\textbf{p}$ will include the bias term $b = p_0$ and the feature weights $w_i = p_i$ for $i = 1, 2, \ldots, n$. A similar approach can be used to solve the soft margin problem, as discussed in further exercises at the end of this chapter.
 
 \begin{example}
-Do example support vector machine example
+\textbf{Support Vector Machine Classification}
+
+This example applies a linear Support Vector Machine (SVM) classifier to distinguish Iris-Virginica flowers based on petal length and width. The decision boundary is derived after scaling the data, and margins are visualized. Misclassified instances within the margin are identified and marked. The model's performance is assessed using a confusion matrix and F1 score.
 \end{example}
+
 
 \subsection{Nonlinear SVM Classification}
 
@@ -231,8 +234,11 @@ This concept can be easily implemented using Scikit-Learn by assembling a Pipeli
 \end{figure}
 
 \begin{example}
-Do example for non linear classification using the moons dataset
+\textbf{Nonlinear Classification}
+
+\noindent This example demonstrates nonlinear classification using the \texttt{make\_moons} dataset. A polynomial feature transformation is combined with a linear SVM to classify the data, and the resulting decision boundaries are visualized.
 \end{example}
+
 
 \subsubsection{Polynomial Kernel}
 
@@ -260,8 +266,11 @@ A typical method for determining optimal hyperparameter settings involves utiliz
 
 
 \begin{example}
-Do example kernel trick.
+\textbf{Kernel Trick with Polynomial Kernel}
+
+\noindent This example uses the kernel trick to enable an SVM to classify non-linearly separable data. A third-degree polynomial kernel is applied to the moons dataset using Scikit-Learn's \texttt{Pipeline} and \texttt{SVC} tools, producing a curved decision boundary that cleanly separates the classes.
 \end{example}
+
 
 
 \subsection{Computational Complexity}
@@ -313,9 +322,14 @@ The SVR class, supporting the kernel trick and acting as the regression counterp
 
 
 
+%%%%%%%%%%%%%%%%%%%  Still needs to be built (it is half built?)  %%%%%%%%%%%%%%%%%%%%%%%%%%
 %\begin{example}
-%Do example on SVM Regression. \rd{Still needs to be built}
+%\textbf{SVM Polynomial Regression \rd{Still needs to be built} }
+%
+%This example fits a non-linear regression curve to noisy quadratic data using Support Vector Regression (SVR) with a polynomial kernel. It highlights how SVR models can handle non-linear relationships by introducing a margin of tolerance, with results shown using both fixed hyperparameters and a grid search for optimal tuning.
 %\end{example}
+
+
 
 
 
