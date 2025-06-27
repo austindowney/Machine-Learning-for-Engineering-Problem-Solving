@@ -92,7 +92,7 @@ Scikit-Learn's SVM implementations facilitate this balance through the hyperpara
 \begin{center}
 \bl{NOTE}
 \end{center}
-If your SVM model is overfitting, you can try regularizing it by reducing C.
+Overfitting in an SVM model can often be addressed by reducing the C value, which increases regularization.
 \end{mdframed}
 
 
@@ -166,35 +166,18 @@ To formulate the soft margin objective, it is necessary to introduce a slack var
 Both hard margin and soft margin problems are examples of convex quadratic optimization problems with linear constraints, commonly referred to as Quadratic Programming (QP) problems. QP involves solving optimization problems where the objective is a quadratic function and the constraints are linear. This form of programming, established in the 1940s, predates and is distinct from ``computer programming,'' and is sometimes more descriptively termed ``quadratic optimization'' to avoid confusion.
 
 A variety of techniques available through off-the-shelf solvers can address these QP problems, though they extend beyond the scope of this text. The general formulation of a QP problem is as follows:
-
 \begin{equation}
 \begin{split}
     & \underset{\textbf{p}}{\text{minimize}} \;\;\;\; \frac{1}{2}\textbf{\textbf{p}}^\text{T}\textbf{H}\textbf{p} + \textbf{f}^\text{T}\textbf{p}\\
-    & \text{subject to} \;\;\;\; \textbf{A} \textbf{p} \le \textbf{b} \\
-	& \text{where} \;\;\;\;   \begin{cases}
-	\textbf{p} & \text{is an $n_p$-dimensional vector ($n_p$ = number of parameters),} \\
-	\textbf{H} & \text{is an $n_p \times n_p$ matrix,} \\
-	\textbf{f} & \text{is an $n_p$-dimensional vector,} \\
-	\textbf{A} & \text{is an $n_c \times n_p$ matrix ($n_c$ = number of constraints),} \\
-	\textbf{b} & \text{is an $n_c$-dimensional vector}.
-	\end{cases}
+    & \text{subject to} \;\;\;\; \textbf{A} \textbf{p} \le \textbf{b}
 \end{split}
+\label{eq:QP_problem}
 \end{equation}
+Here, $\textbf{p}$ is an $n_p$-dimensional vector (where $n_p$ is the number of parameters), $\textbf{H}$ is an $n_p \times n_p$ matrix, $\textbf{f}$ is an $n_p$-dimensional vector, $\textbf{A}$ is an $n_c \times n_p$ matrix (with $n_c$ being the number of constraints), and $\textbf{b}$ is an $n_c$-dimensional vector. 
 
-The expression $\textbf{A} \textbf{p} \le \textbf{b}$ specifies $n_c$ constraints: $\textbf{p}^\text{T} a^{(i)} \le b^{(i)}$ for each $i$ from 1 to $n_c$, where $a^{(i)}$ is the vector from the i\textsuperscript{th} row of $\textbf{A}$ and $b^{(i)}$ is the corresponding element in \textbf{b}.
+Equation~\ref{eq:QP_problem} defines a standard quadratic program with constraints of the form $\textbf{A} \textbf{p} \le \textbf{b}$. For training a hard margin linear SVM, this setup can be used by choosing parameters that encode the SVM objective and constraints. The solution vector $\textbf{p}$ contains both the bias term and the feature weights. Using this knowledge, a standard QP solver can be applied directly to find the optimal SVM classifier.
 
-Setting the QP parameters as described can yield the objective for a hard margin linear SVM classifier:
 
-\begin{itemize}
-\item $n_p = n + 1$, where $n$ is the number of features (the +1 accounts for the bias term).
-\item $n_c = m$, where $m$ is the number of training instances.
-\item $\textbf{H}$ is an $n_p \times n_p$ identity matrix, with a zero in the top-left cell to exclude the bias term.
-\item $\textbf{f} = \textbf{0}$, an $n_p$-dimensional zero vector.
-\item $\textbf{b} = -\textbf{1}$, an $n_c$-dimensional vector filled with $-1$s.
-\item $\textbf{a}^{(i)} = -t^{(i)} \dot{\textbf{x}}^{(i)}$, where $\dot{\textbf{x}}^{(i)}$ is $x^{(i)}$ augmented with a bias feature $\dot{\textbf{x}}_0 = 1$.
-\end{itemize}
-
-Training a hard margin linear SVM classifier can thus be achieved by using a standard QP solver with these settings. The resultant vector $\textbf{p}$ will include the bias term $b = p_0$ and the feature weights $w_i = p_i$ for $i = 1, 2, \ldots, n$. A similar approach can be used to solve the soft margin problem, as discussed in further exercises at the end of this chapter.
 
 \begin{example}
 \textbf{Support Vector Machine Classification}
@@ -275,24 +258,24 @@ A typical method for determining optimal hyperparameter settings involves utiliz
 
 \subsection{Computational Complexity}
 
-The \texttt{LinearSVC} class utilizes the \texttt{liblinear} library, optimized for linear SVMs. It does not accommodate the kernel trick but scales almost linearly with the number of training instances and features, with a training time complexity roughly proportional to \(O(m \times n)\).
+\texttt{LinearSVC} builds on the \texttt{liblinear} solver and is limited to \emph{linear} decision boundaries.  
+Because it does not apply the kernel trick, its training cost grows almost linearly with both the number of samples~\(m\) and features~\(n\), i.e.\ \(O(m\,n)\). Convergence is controlled by the tolerance parameter \texttt{tol} (denoted \(\epsilon\) in the literature); the default value is usually sufficient, but smaller tolerances can be specified when higher accuracy is critical.
 
-The precision of the algorithm can be adjusted using the tolerance hyperparameter \(\epsilon\) (referred to as \texttt{tol} in Scikit-Learn), with the default setting generally suitable for most classification tasks.
+\texttt{SVC}, in contrast, relies on \texttt{libsvm} and \emph{does} support kernel functions. Its computational burden is markedly heavier, between \(O(m^{2} n)\) and \(O(m^{3} n)\) in practice, so training becomes prohibitive once the dataset reaches the hundreds-of-thousands range. Nevertheless, \texttt{SVC} excels on smaller or medium-sized problems that demand nonlinear decision surfaces. Runtime also scales with the average count of non-zero features per instance, meaning sparse high-dimensional inputs remain tractable. A concise, feature-by-feature comparison of Scikit-Learn's SVM classifiers appears in Table~\ref{table:SVM_classifiers}.
 
-Conversely, the \texttt{SVC} class employs the \texttt{libsvm} library, supporting the kernel trick. Its training time complexity ranges between \(O(m^2 \times n)\) and \(O(m^3 \times n)\), making it significantly slower for large datasets, such as those with hundreds of thousands of instances. This class is best suited for complex but smaller or medium-sized datasets. It also scales efficiently with the number of features, particularly with sparse features where each instance has only a few nonzero features, roughly scaling with the average number of nonzero features per instance. The capabilities of Scikit-Learn's SVM classification classes are summarized in Table~\ref{table:SVM_classifiers}.
 
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 \begin{table}[H]
-\caption{Comparison of Scikit-Learn classes for SVM classification}
+\caption{Key characteristics of three Scikit-Learn SVM classifier implementations.}
 \label{table:SVM_classifiers}
 \begin{tabular}{@{}lllll@{}}
 \toprule
-Class & Time complexity & Out-of-core support & Scaling required & Kernel trick \\ \midrule
-LinearSVC & $O(m \times n)$ & No & Yes & No \\
-SGDClassifier & $O(m \times n)$ & Yes & Yes & No \\
-SVC & $O(m^2 \times n)$ to $O(m^3 \times n)$ & No & Yes & Yes \\ \bottomrule
+class & time complexity & out-of-core support & scaling required & kernel trick \\ \midrule
+\texttt{LinearSVC} & $O(m \times n)$ & no & yes & no \\
+\texttt{SGDClassifier} & $O(m \times n)$ & yes & yes & no \\
+\texttt{SVC} & $O(m^2 \times n)$ to $O(m^3 \times n)$ & no & yes & yes \\ \bottomrule
 \end{tabular}
 \end{table}
 

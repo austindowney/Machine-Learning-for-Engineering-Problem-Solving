@@ -7,14 +7,16 @@ IP.get_ipython().run_line_magic('reset', '-sf')
 #%% import modules and set default fonts and colors
 
 """
-Default plot formatting code for Austin Downey's series of open source notes/
+Default plot formatting code for Austin Downey's series of open-source notes/
 books. This common header is used to set the fonts and format.
 
-Header file last updated March 10, 2024
+Header file last updated May 16, 2024
 """
 
 import numpy as np
+import scipy as sp
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 
 
 # set default fonts and plot colors
@@ -27,98 +29,86 @@ plt.rcParams.update({'font.serif':['Times New Roman', 'Times', 'DejaVu Serif',
 plt.rcParams.update({'font.family':'serif'})
 plt.rcParams.update({'font.size': 10})
 plt.rcParams.update({'mathtext.rm': 'serif'})
-plt.rcParams.update({'mathtext.fontset': 'custom'}) # I don't think I need this as its set to 'stixsans' above.
+# I don't think I need this next line as its set to 'stixsans' above. 
+plt.rcParams.update({'mathtext.fontset': 'custom'}) 
 cc = plt.rcParams['axes.prop_cycle'].by_key()['color']
 ## End of plot formatting code
 
 plt.close('all')
 
-#%% Load the modules needed for this code. 
+#%% Plot figure
 
-
-import matplotlib.pyplot as plt
-from sklearn.svm import LinearSVR
-
-
-#%% Define plotting functions 
-
+# ----------------------------------------------------------
+#   Helpers (no plotting)
+# ----------------------------------------------------------
 def find_support_vectors(svm_reg, X, y):
-    y_pred = svm_reg.predict(X)
-    off_margin = (np.abs(y - y_pred) >= svm_reg.epsilon)
-    return np.argwhere(off_margin)
+    """Indices of samples lying outside the ε-tube."""
+    residual = np.abs(y - svm_reg.predict(X))
+    return np.where(residual >= svm_reg.epsilon)[0]
 
-def plot_svm_regression(svm_reg, X, y, axes):
-    x1s = np.linspace(axes[0], axes[1], 100).reshape(100, 1)
-    y_pred = svm_reg.predict(x1s)
-    plt.plot(x1s, y_pred, "k-", linewidth=2, label=r"$\hat{y}$")
-    plt.plot(x1s, y_pred + svm_reg.epsilon, "k--")
-    plt.plot(x1s, y_pred - svm_reg.epsilon, "k--")
-    plt.scatter(X[svm_reg.support_], y[svm_reg.support_], s=180, facecolors=cc[6])
-    plt.plot(X, y, "o",color=cc[0])
-    plt.xlabel("$x_1$")
-    plt.legend(loc="upper left")
-    plt.axis(axes)
-    
+def compute_regression_lines(svm_reg, x_grid):
+    """Return ŷ, upper, lower margins on a supplied x-grid."""
+    y_pred = svm_reg.predict(x_grid)
+    return y_pred, y_pred + svm_reg.epsilon, y_pred - svm_reg.epsilon
 
-#%% SVM polynominal features
-
+# ----------------------------------------------------------
+#   Data & models
+# ----------------------------------------------------------
 np.random.seed(2)
-m = 50
-X = 2 * np.random.rand(m, 1)
-y = (4 + 3 * X + np.random.randn(m, 1)).ravel()
+m  = 50
+X  = 2 * np.random.rand(m, 1)
+y  = (4 + 3 * X + np.random.randn(m, 1)).ravel()
 
-
-
-
-svm_reg = LinearSVR(epsilon=1.5, random_state=42)
-svm_reg.fit(X, y)
-
-svm_reg1 = LinearSVR(epsilon=1.5, random_state=42)
-svm_reg2 = LinearSVR(epsilon=0.5, random_state=42)
-svm_reg1.fit(X, y)
-svm_reg2.fit(X, y)
-
-
-
+svm_reg1 = LinearSVR(epsilon=1.5, random_state=42).fit(X, y)
+svm_reg2 = LinearSVR(epsilon=0.5, random_state=42).fit(X, y)
 
 svm_reg1.support_ = find_support_vectors(svm_reg1, X, y)
 svm_reg2.support_ = find_support_vectors(svm_reg2, X, y)
 
-eps_x1 = 1
-eps_y_pred = svm_reg1.predict([[eps_x1]])
+x_grid = np.linspace(0, 2, 100).reshape(-1, 1)
 
+ŷ1, up1, low1 = compute_regression_lines(svm_reg1, x_grid)
+ŷ2, up2, low2 = compute_regression_lines(svm_reg2, x_grid)
 
+# Point used to illustrate ε
+eps_x1      = 1.0
+eps_y_pred1 = svm_reg1.predict([[eps_x1]])[0]
 
+# ----------------------------------------------------------
+#   Plotting (subplot style)
+# ----------------------------------------------------------
+plt.figure(figsize=(6.5, 3))
 
-fig, axes = plt.subplots(ncols=2, figsize=(6.5, 3), sharey=True)
-plt.sca(axes[0])
-plot_svm_regression(svm_reg1, X, y, [0, 2, 3, 11])
-plt.title(r"$\epsilon = {}$".format(svm_reg1.epsilon))
+# ── ε = 1.5 ────────────────────────────────────────────────
+plt.subplot(1, 2, 1)
+plt.plot(x_grid, ŷ1,  'k-', lw=2, label=r'$\hat{y}$')
+plt.plot(x_grid, up1,  'k--')
+plt.plot(x_grid, low1, 'k--')
+plt.scatter(X[svm_reg1.support_], y[svm_reg1.support_],
+            s=150, facecolors="none", edgecolors=cc[3], linewidths=2,zorder=10)
+plt.plot(X, y, 'o', color=cc[0])
+plt.xlabel(r"$x_1$")
 plt.ylabel(r"$y$")
-#plt.plot([eps_x1, eps_x1], [eps_y_pred, eps_y_pred - svm_reg1.epsilon], "k-", linewidth=2)
-plt.annotate(
-        '', xy=(eps_x1, eps_y_pred), xycoords='data',
-        xytext=(eps_x1, eps_y_pred - svm_reg1.epsilon),
-        textcoords='data', arrowprops={'arrowstyle': '<->', 'linewidth': 1.5}
-    )
+plt.title(r"$\epsilon = {}$".format(svm_reg1.epsilon))
+plt.axis([0, 2, 3, 11])
 plt.text(0.91, 5.6, r"$\epsilon$")
-plt.sca(axes[1])
-plot_svm_regression(svm_reg2, X, y, [0, 2, 3, 11])
+plt.legend(loc='upper left')
+
+# ── ε = 0.5 ────────────────────────────────────────────────
+plt.subplot(1, 2, 2)
+plt.plot(x_grid, ŷ2,  'k-', lw=2, label=r'$\hat{y}$')
+plt.plot(x_grid, up2,  'k--')
+plt.plot(x_grid, low2, 'k--')
+plt.scatter(X[svm_reg2.support_], y[svm_reg2.support_],
+            s=150, facecolors="none",
+                        edgecolors=cc[3], linewidths=2,zorder=10)
+plt.plot(X, y, 'o', color=cc[0])
+plt.xlabel(r"$x_1$")
+plt.ylabel(r"$y$")
 plt.title(r"$\epsilon = {}$".format(svm_reg2.epsilon))
+plt.axis([0, 2, 3, 11])
+plt.legend(loc='upper left')
 
 plt.tight_layout()
-plt.savefig("SVM_Regression",dpi=300)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+plt.savefig("SVM_Regression", dpi=300)
+plt.show()

@@ -45,9 +45,9 @@ Despite its simplicity, the linear classifier is often surprisingly effective, e
 
 
 \begin{data}
+\textbf{MNIST (Modified National Institute of Standards and Technology) Dataset}
 
-
-In this chapter, we utilize the MNIST (Modified National Institute of Standards and Technology) dataset, a collection of 70,000 small images of handwritten digits. This dataset is known as ``modified'' because it combines two earlier sets of images: one created by U.S. high school students and another by US Census Bureau employees. First published in 1998, the dataset is particularly suitable for machine learning tasks as each image is labeled with the digit it represents. Each digit has been normalized and centered in a 28x28 pixel frame and anti-aliased to introduce grayscale levels.
+\noindent  In this chapter, we utilize the MNIST (Modified National Institute of Standards and Technology) dataset, a collection of 70,000 small images of handwritten digits. This dataset is known as ``modified'' because it combines two earlier sets of images: one created by U.S. high school students and another by US Census Bureau employees. First published in 1998, the dataset is particularly suitable for machine learning tasks as each image is labeled with the digit it represents. Each digit has been normalized and centered in a 28x28 pixel frame and anti-aliased to introduce grayscale levels.
 
 Typically, the dataset is split into two parts: the first 60,000 images are used for training, and the remaining 10,000 serve as validation data. It is standard practice to train and test models on the first 60,000 images, reserving the last 10,000 for final validation at the end of the project when the classifier is ready for deployment.
 
@@ -86,8 +86,7 @@ To begin, we simplify our task by focusing on identifying all the ``5''s in the 
 \subsubsection{Regularized Linear Classifier}
 %\todo{Consider adding mathematical detail, possibly involving the MSE error cost function.}
 
-A practical algorithm for building this ``5-detector'' is the Regularized Linear Classifier solved with Stochastic Gradient Descent (SGD) classifier. The SGD classifier offers an efficient and straightforward approach for discriminative learning of linear classifiers under convex loss functions, scaling well with large datasets and maintaining simplicity in implementation as it processes one training example at a time. The main advantages of the Stochastic Gradient Descent classifier include:
-
+A practical algorithm for building this ``5-detector'' is the Regularized Linear Classifier solved with Stochastic Gradient Descent (SGD). The Regularized Linear Classifier offers an efficient and straightforward approach for discriminative learning of linear classifiers under convex loss functions, scaling well with large datasets and maintaining simplicity in implementation as it processes one training example at a time. The main advantages of the Regularized Linear Classifier include:
 \begin{itemize}
 \item Efficiency.
 \item Ease of implementation, providing many opportunities for optimization.
@@ -98,11 +97,16 @@ However, the Stochastic Gradient Descent classifier also presents certain disadv
 \item It is sensitive to feature scaling.
 \end{itemize}
 
+\begin{mdframed}[middlelinewidth=0.5mm]
+\begin{center}
+\bl{NOTE}
+\end{center}
+The Regularized Linear Classifier solved with Stochastic Gradient Descent is commonly referred to simply called a Stochastic Gradient Descent classifier, despite Stochastic Gradient Descent only being the method used to trail the linear model. This is exemplified by the fact that scikit-learn uses the name \texttt{SGDClassifier} for their model that implements a ``Regularized linear models with stochastic gradient descent (SGD) learning''. 
+\end{mdframed}
 
 
-
-Given a labelled training set ${(\mathbf x^{(i)},y^{(i)})}_{i=1}^{m}$ with
-$y^{(i)}\in{+1,-1}$ ($+1$ marks the digit ``5''), the regularised linear ``5-detector'' learns a weight vector $\boldsymbol{\theta}\in\mathbb{R}^{n+1}$ (bias in the first entry) by minimising
+Given a labeled training set ${(\mathbf x^{(i)},y^{(i)})}_{i=1}^m$ with
+$y^{(i)}\in{1,0}$ ($1$ marks the digit ``5''), the regularised linear ``5-detector'' learns a weight vector $\boldsymbol{\theta}$ (bias in the first entry $\boldsymbol{\theta}_1$) by minimising
 
 \begin{equation}
 \label{eq:svm_obj}
@@ -111,7 +115,7 @@ J(\boldsymbol{\theta}) =
 \max \bigl(0,1-y^{(i)}\boldsymbol{\theta}^{\text{T}}\mathbf x^{(i)}\bigr)
 + \frac{\lambda}{2}\,\bigl\lVert\boldsymbol{\theta}_{1:}\bigr\rVert_2^{2},
 \end{equation}
-where the first term is the hinge loss enforcing a unit margin around the decision boundary, and the second term applies $\ell_2$-regularisation of strength $\lambda>0$ to all weights except the bias ($\boldsymbol{\theta}_{1:}$). Minimising \eqref{eq:svm_obj} with stochastic-gradient descent yields a sparse, margin-maximising classifier that generalises well to unseen handwritten digits.
+where the first term is the hinge loss enforcing a unit margin around the decision boundary. The second term applies $\ell_2$-regularisation of strength $\lambda>0$ to all weights except the bias ($\boldsymbol{\theta}_{1}$). Minimising \eqref{eq:svm_obj} with stochastic-gradient descent yields a sparse, margin-maximising classifier that generalises well to unseen handwritten digits.
 
 
 
@@ -148,7 +152,9 @@ These four cases from statistical testing can be combined into a single matrix k
 \end{figure}
 
 
- A effective approach to evaluating classifier performance is to examine the confusion matrix. The essence is to tally the instances where class A is incorrectly classified as class B. A well-performing classifier will exhibit high values along the diagonal and lower values elsewhere in the matrix. Each row represents the actual class, while each column represents the predicted class. For instance, to determine how often the classifier misidentified images of 5s as 3s, inspect the intersection of the 5th row and 3rd column in figure~\ref{fig:confusion_matrix}.
+ A effective approach to evaluating classifier performance is to examine the confusion matrix. The essence is to tally the instances where class~A is incorrectly classified as class~B. A well-performing classifier will exhibit high values along the diagonal and lower values elsewhere in the matrix. Each row represents the actual class, while each column represents the predicted class. For instance, to determine how often the classifier misidentified images of 5s as 3s, inspect the intersection of the 5\textsuperscript{th} row and 3\textsuperscript{rd} column in figure~\ref{fig:confusion_matrix}.
+
+
 
 \begin{figure}[H]
     \centering
@@ -181,26 +187,44 @@ Each row in the confusion matrix corresponds to an actual class, while each colu
 
 
 \subsubsection{Accuracy, Precision, and Recall}
-The confusion matrix provides detailed information, but sometimes a more concise metric is preferred. Before looking into accuracy, let's define it:
-
+The confusion matrix provides detailed information, but sometimes a more concise metric is preferred. Before looking into accuracy, let's define it as
 \begin{equation}
 \text{Accuracy} = \frac{\text{Number of Correct Predictions}}{\text{Total number of Predictions}}
 \end{equation}
-Or:
+or
 \begin{equation}
-\text{Accuracy} = \frac{TP+TN}{TP+TN+FP+FN}
+\text{Accuracy} = \frac{TP+TN}{TP+TN+FP+FN}.
 \end{equation}
 While accuracy offers valuable insights, it's essential to consider the number of falsely classified positive and negative predictions, especially within the context of the problem being addressed. For instance, a 99\% accuracy rate might seem satisfactory for predicting credit card fraud. However, what if a false negative indicates a severe virus or cancer? This is why we need to look deeper into the accuracy formula.
 
 
 %\todo{Look into replacing the verbage of relevant instances and selected instances with True Positives and True Negatives.}
-This is where precision and recall come into play. With this in mind, let's define:
-\begin{enumerate}
-\item[] \textbf{Precision:} Precision measures the fraction of ``selected relevant instances'' over the ``selected instances.'' Mathematically, precision is calculated as the true positives over predicted positives.
-\item[] \textbf{Recall:} Recall measures the fraction of ``selected relevant instances'' over the ``relevant instances.'' Mathematically, recall is calculated as true positives over actual positives.
-\end{enumerate}
+This is where precision and recall come into play. For this, we will need a definitions of instances
+\begin{equation}
+\text{Selected instances} = TP + FP
+\end{equation}
+and
+\begin{equation}
+\text{Relevant instances} = TP + FN
+\end{equation}
+which are visualized in figure~\ref{fig:piechart_TP_vs_FP}. With these definitions in mind in mind, let's define precision as
+\begin{equation}
+\text{Precision} = \frac{\text{selected relevant instances}}{\text{selected instances}},
+\end{equation}
+or,
+\begin{equation}
+\text{Precision} = \frac{TP}{TP + FP}.
+\end{equation}
+One way to achieve perfect precision is to make only one positive prediction and ensure it's correct (precision = 1/1 = 100\%). However, this approach would be impractical as it would ignore most positive instances. Recall complements precision by considering all relevant results, both true positives and false negatives. Recall, also known as sensitivity or true positive rate (TPR), is the ratio of positive instances correctly detected by the classifier. We can define recall as
+\begin{equation}
+\text{Recall} = \frac{\text{selected relevant instances}}{\text{relevant instances}},
+\end{equation}
+or,
+\begin{equation}
+\text{Recall} = \frac{TP}{TP + FN}.
+\end{equation}
 
-While these definitions may not be immediately intuitive, a visualizations such as that shown in figure~\ref{fig:piechart_TP_vs_FP} can help clarify them.
+While the definition of accuracy, precision, and recall may not be immediately intuitive, a visualizations such as that shown in figure~\ref{fig:piechart_TP_vs_FP} can help clarify them.
 
 \begin{figure}[H]
     \centering
@@ -209,42 +233,25 @@ While these definitions may not be immediately intuitive, a visualizations such 
     \label{fig:piechart_TP_vs_FP}
 \end{figure}
 
-Definitions of instances:
-\begin{equation}
-\text{Selected instances} = TP + FP
-\end{equation}
-\begin{equation}
-\text{Relevant instances} = TP + FN
-\end{equation}
-Now that we have a better understanding, let's examine some equations.
-\begin{equation}
-\text{Precision} = \frac{TP}{TP + FP}
-\end{equation}
-Here, TP represents true positives, and FP represents false positives.
 
-One way to achieve perfect precision is to make only one positive prediction and ensure it's correct (precision = 1/1 = 100\%). However, this approach would be impractical as it would ignore most positive instances.
-Recall complements precision by considering all relevant results, both true positives and false negatives. Recall, also known as sensitivity or true positive rate (TPR), is the ratio of positive instances correctly detected by the classifier.
+To balance precision and recall, we often use the F1 score, which is the harmonic mean of precision and recall. The F1 score favors classifiers with similar precision and recall, computed as
 \begin{equation}
-\text{Recall} = \frac{TP}{TP + FN}
-\end{equation}
-To balance precision and recall, we often use the F1 score, which is the harmonic mean of precision and recall. The F1 score favors classifiers with similar precision and recall.
-\begin{equation}
-F_1 = \frac{2 \times \text{precision} \times \text{recall}}{\text{Precision} + \text{Recall}} = \frac{TP}{TP + \frac{FN + FP}{2}}
+F_1 = 2 \times \frac { \text{precision} \times \text{recall}}{\text{precision} + \text{recall}} = \frac{TP}{TP + \frac{FN + FP}{2}}.
 \end{equation}
 However, optimizing both precision and recall simultaneously is challenging due to the precision/recall tradeoff. 
 
-Figure~\ref{fig:decision_threshold} illustrates this tradeoff using the SGDClassifier's decision function. By adjusting the classification threshold, we can control the balance between precision and recall. Lowering the threshold increases recall but reduces precision, and vice versa. 
-%\todo{add an example on how to adjust the threshold in training.}
+Figure~\ref{fig:decision_threshold} illustrates the tradeoffs when adjusting the decision threshold in a Regularized Linear Classifier. By adjusting the classification threshold, we can control the balance between precision and recall. Lowering the threshold increases recall but reduces precision, and vice versa. 
+% \todo{add an example on how to adjust the threshold in training.}
 
 
 \begin{figure}[H]
     \centering
     \includegraphics[]{../figures/decision_threshold.png}
-    \caption{Visualization of the F1 score.}
+    \caption{Visualization changing thresholds on the classification of digits in a ``5-detector'' and the resulting change in precision and recall.}
     \label{fig:decision_threshold}
 \end{figure}
 
-To determine the optimal threshold, it's helpful to plot precision and recall against the threshold values. By default, the classifier in scikit-learn uses a threshold of zero, but this can be adjusted as needed.
+To determine the optimal threshold, it's helpful to plot precision and recall against the threshold values. By default, the classifier in scikit-learn uses a threshold of zero, but this can be adjusted as needed. As illustrated in Figure~\ref{fig:F1_score_plot}, it's relatively straightforward to develop a classifier with nearly any desired precision: simply adjust the threshold to a sufficiently high value. However, it's important to bear in mind that a high-precision classifier may not be very practical if its recall is too low. 
 
 
 
@@ -258,14 +265,14 @@ To determine the optimal threshold, it's helpful to plot precision and recall ag
 
 
 
-As illustrated in Figure~\ref{fig:F1_score_plot}, it's relatively straightforward to develop a classifier with nearly any desired precision: simply adjust the threshold to a sufficiently high value. However, it's important to bear in mind that a high-precision classifier may not be very practical if its recall is too low. 
+
 
 Figure~\ref{fig:precision_vs_recall} reports a precision vs recall curve that is obtained by changing the threshold of the trained model. At the leftmost part of the precision-recall curve (low recall), precision is highest because the model makes very few positive predictions, and those are likely true positives. As recall increases, the model starts predicting more positives, including more false positives, which reduces precision. The shape of the curve is also important; a steep drop-off indicates that the addition of false positives happens rapidly with increasing recall, whereas a more gradual decline suggests a better balance between precision and recall.
 
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=6in]{../figures/precision_recall_curve}
-			\caption{precision vs recall}
+			\caption{The relationship between precision vs recall for a changing threshold value.}
 			\label{fig:precision_vs_recall}
 		\end{figure}
 
@@ -292,7 +299,7 @@ $k$-fold cross-validation offers a more rigorous method for evaluating your algo
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=6.5in]{../figures/grid_search_cross_validation.png}
+    \includegraphics[]{../figures/grid_search_cross_validation.png}
     \caption{Illustration of how $k$-fold cross-validation operates.}
     \label{fig:grid_search_cross_validation}
 \end{figure}
@@ -331,7 +338,7 @@ Previously, we explored binary classifiers, which distinguish between two classe
     \label{fig:one_vs_one}
 \end{figure}
 
-Certain algorithms, such as Support Vector Machine classifiers, suffer from scalability issues with larger training sets. Consequently, OvO is preferred for such algorithms since it's faster to train numerous classifiers on small training sets compared to training a few classifiers on large training sets. However, for most binary classification algorithms, OvA is the preferred strategy. Nevertheless, some algorithms, such as Random Forest classifiers or naive Bayes classifiers, can handle multiple classes directly.
+Certain algorithms, such as Support Vector Machine classifiers, suffer from scalability issues with larger training sets. Consequently, OvO is preferred for such algorithms since it's faster to train numerous classifiers on small training sets compared to training a few classifiers on large training sets. However, for most binary classification algorithms, OvR is the preferred strategy. Nevertheless, some algorithms, such as Random Forest classifiers or naive Bayes classifiers, can handle multiple classes directly.
 
 \begin{example}
 \textbf{Multiclass Regularized Linear Classifier}
@@ -398,12 +405,12 @@ Analyzing individual errors provides valuable insights into the classifier's beh
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=4.0in]{../figures/3s_and_5s.png}
+    \includegraphics[]{../figures/3s_and_5s.png}
     \caption{Confusion matrix showing digits classified as 3s and 5s for the same classifier used to obtain the results shown in figure~\ref{fig:digit_confusion_matrix}.}
     \label{fig:3s_and_5s}
 \end{figure}
 
-The two $5 \times 5$ blocks on the left depict digits classified as 3s, while those on the right show images classified as 5s. Some misclassified digits (e.g., in the bottom-left and top-right blocks) are poorly written, challenging even for human classification (e.g., the digit resembling a 3 in the 8th row and 1st column). However, most misclassifications seem obvious to humans, making it difficult to comprehend why the classifier erred. This is because a simple SGDClassifier, being a linear model, assigns weights per class to each pixel and sums up the weighted pixel intensities to score each class. Consequently, since 3s and 5s differ by few pixels, this model easily confuses them.
+The two $5 \times 5$ blocks on the left depict digits classified as 3s, while those on the right show images classified as 5s. Some misclassified digits (e.g., in the bottom-left and top-right blocks) are poorly written, challenging even for human classification (e.g., the digit resembling a 3 in the 8\textsuperscript{th} row and 1\textsuperscript{st} column). However, most misclassifications seem obvious to humans, making it difficult to comprehend why the classifier erred. This is because a Regularized Linear Classifier (being a linear model) assigns weights per class to each pixel and sums up the weighted pixel intensities to score each class. Consequently, since 3s and 5s differ by few pixels, this model easily confuses them.
 
 The primary discrepancy between 3s and 5s lies in the position of the connecting line between the top line and bottom arc. Slight shifting or rotation of this junction can lead the classifier to misclassify a 3 as a 5, and vice versa. Thus, the classifier is sensitive to image shifting and rotation. To mitigate the 3/5 confusion, preprocessing the images to ensure proper centering and minimal rotation would be beneficial. This approach is likely to reduce other classification errors as well.
 

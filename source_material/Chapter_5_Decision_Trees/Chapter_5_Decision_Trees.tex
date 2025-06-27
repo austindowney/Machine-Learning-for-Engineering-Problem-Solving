@@ -19,29 +19,15 @@ Decision Trees are versatile machine learning algorithms that excel in various t
 
 In this chapter, we will explore the essentials of Decision Trees, starting with their training, visualization, and prediction processes. We will then look into the CART (Classification and Regression Trees) training algorithm, which Scikit-Learn utilizes for constructing Decision Trees. Additionally, we will examine how to regulate the complexity of Decision Trees and adapt them for regression tasks. The chapter concludes by addressing some inherent limitations of Decision Trees. 
 
-
-
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=6.5in]{../figures/decision_tree_basic_concept}
-	\caption{The basic connect of a decision tree, showing (a) how a decision tree is built, and (b) the developed decision tree.}
+	\caption{The basic connect of a decision tree, showing (a)~how a decision tree is built, and (b)~the developed decision tree.}
 	\label{fig:decision_tree_basic_concent}
 \end{figure}
 
 
-
-
-
-
 \subsection{Decision Tree Classification}
-
-
-
-
-
-
-
-
 
 \begin{figure}[H]
 	\centering
@@ -49,11 +35,6 @@ In this chapter, we will explore the essentials of Decision Trees, starting with
 	\caption{Iris decision tree.}
 	\label{fig:Iris_decision_tree}
 \end{figure}
-
-
-
-
-
 
 A decision tree for the Iris Dataset looks like Figure~\ref{fig:Iris_decision_tree}. Let us examine how the Decision Tree processes predictions. Imagine you discover an iris flower and want to classify it. Starting at the root node (depth 0, at the top), the node queries if the petal length of the flower is less than 2.45~cm. If so, you proceed to the root's left child node (depth 1, left), which is a leaf node, meaning it poses no further questions. You would then refer to the predicted class of that node, and the Decision Tree identifies your flower as an Iris-Setosa (class=setosa).
 
@@ -93,7 +74,7 @@ Interestingly, the same estimated probabilities apply throughout the bottom-righ
 \begin{example}
 \textbf{Decision Tree Classifier}
 
-\noindent This example uses Scikit-Learn?s \texttt{DecisionTreeClassifier} to classify iris species based on petal features. The decision process is visualized using Graphviz, showing the structure of learned rules and how decisions are made based on feature thresholds.  This online viewer is the easiest way to do that \url{https://dreampuf.github.io/GraphvizOnline/}
+\noindent This example uses Scikit-Learn's \texttt{DecisionTreeClassifier} to classify iris species based on petal features. The decision process is visualized using Graphviz, showing the structure of learned rules and how decisions are made based on feature thresholds.  This online viewer is the easiest way to do that \url{https://dreampuf.github.io/GraphvizOnline/}
 \end{example}
 
 
@@ -107,7 +88,7 @@ Scikit-Learn employs the Classification And Regression Tree (CART) algorithm to 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=5in]{../figures/CART_algorithm}
+	\includegraphics[]{../figures/CART_algorithm}
 	\caption{Illustration of the CART algorithm process.}
 	\label{fig:algorithm}
 \end{figure}
@@ -256,8 +237,6 @@ More broadly, Decision Trees are sensitive to small variations in training data.
 
 \footnotetext[1]{``2'' is the author's preferred random number seed.}
 
-The next section introduces Random Forests, which overcome these instabilities by averaging predictions across multiple trees, enhancing the robustness and generalizability of the model.
-
 
 
 \subsection{Random Forest}
@@ -271,6 +250,7 @@ The next section introduces Random Forests, which overcome these instabilities b
 \footnotetext[1]{TseKiChun, CC BY-SA 4.0 $<$https://creativecommons.org/licenses/by-sa/4.0$>$, via Wikimedia Commons}
 
 
+This  section introduces Random Forests, which overcome these instabilities by averaging predictions across multiple trees, enhancing the robustness and generalizability of the model.
 Random forests, also known as random decision forests, are an ensemble learning method used for classification, regression, and other tasks. This method constructs multiple decision trees during training. For classification, the output of the random forest is the class chosen by the majority of the trees. For regression tasks, it returns the mean or average prediction from the individual trees. Random decision forests address the tendency of decision trees to overfit their training set. Generally, random forests perform better than individual decision trees, though they may not reach the accuracy of gradient boosted trees. The performance of random forests can vary depending on the characteristics of the data.
 
 

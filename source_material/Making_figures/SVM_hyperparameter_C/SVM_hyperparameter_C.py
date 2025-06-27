@@ -40,145 +40,92 @@ plt.close('all')
 #%% Load the modules needed for this code. 
 
 
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-import sklearn as sk
-import time as time
-from sklearn import linear_model
-from sklearn import pipeline
-from sklearn import datasets
-from sklearn import multiclass
-from sklearn.svm import SVC
+from sklearn import datasets, preprocessing, svm
 
 
-
-#%% Large margin classification
-
-np.random.seed(2)
-
+# %% Load data (virginica = 1, versicolor = 0) ---------------------------------
 iris = datasets.load_iris()
-X = iris["data"][:, (2, 3)]  # petal length, petal width
-y = iris["target"]
+X = iris["data"][:, (2, 3)]               # petal length, petal width
+y = (iris["target"] == 2).astype(np.float64)
 
-setosa_or_versicolor = (y == 0) | (y == 1)
-X = X[setosa_or_versicolor]
-y = y[setosa_or_versicolor]
+# %% Two LinearSVC models with different C ------------------------------------
+scaler = preprocessing.StandardScaler()
+X_scaled = scaler.fit_transform(X)
 
-# SVM Classifier model
-svm_clf = SVC(kernel="linear", C=10000)
-svm_clf.fit(X, y)   
-    
-def plot_svc_decision_boundary(svm_clf, xmin, xmax):
-    w = svm_clf.coef_[0]
-    b = svm_clf.intercept_[0]
+clf1 = svm.LinearSVC(C=1,   loss="hinge", random_state=42).fit(X_scaled, y)
+clf2 = svm.LinearSVC(C=200, loss="hinge", random_state=42).fit(X_scaled, y)
 
-    # At the decision boundary, w0*x0 + w1*x1 + b = 0
-    # => x1 = -w0/w1 * x0 - b/w1
+# %% Convert scaled parameters back to original space -------------------------
+def unscale(clf):
+    """Return (w, b) in original feature space."""
+    w_scaled = clf.coef_[0]
+    b_scaled = clf.intercept_[0]
+    w_orig = w_scaled / scaler.scale_
+    b_orig = b_scaled - np.dot(w_scaled, scaler.mean_ / scaler.scale_)
+    return w_orig, b_orig
+
+w1, b1 = unscale(clf1)
+w2, b2 = unscale(clf2)
+
+# Identify support vectors manually (LinearSVC does not store them)
+t = y * 2 - 1                                # {-1, +1} labels
+sv_idx1 = (t * (X @ w1 + b1) < 1).ravel()
+sv_idx2 = (t * (X @ w2 + b2) < 1).ravel()
+SV1 = X[sv_idx1]
+SV2 = X[sv_idx2]
+
+# %% Pre-compute decision boundaries & margins --------------------------------
+def decision_line(w, b, xmin, xmax):
     x0 = np.linspace(xmin, xmax, 200)
-    decision_boundary = -w[0]/w[1] * x0 - b/w[1]
+    x1 = -w[0] / w[1] * x0 - b / w[1]
+    margin = 1 / w[1]
+    return x0, x1, x1 + margin, x1 - margin
 
-    margin = 1/w[1]
-    gutter_up = decision_boundary + margin
-    gutter_down = decision_boundary - margin
+xmin, xmax = 2.8, 6.7
+x0, y_dec1, y_up1, y_dn1 = decision_line(w1, b1, xmin, xmax)
+_,  y_dec2, y_up2, y_dn2 = decision_line(w2, b2, xmin, xmax)
 
-    svs = svm_clf.support_vectors_
-    plt.scatter(svs[:, 0], svs[:, 1], s=180, facecolors=cc[6])
-    plt.plot(x0, decision_boundary, "k-", linewidth=2)
-    plt.plot(x0, gutter_up, "k--", linewidth=2)
-    plt.plot(x0, gutter_down, "k--", linewidth=2)
+# %% Plot ---------------------------------------------------------------------
+plt.figure(figsize=(6.5, 3.0))
 
-#%% Sensitivity to outliers
+# -- Subplot (a): C = 1 --------------------------------------------------------
+plt.subplot(1, 2, 1)
+plt.plot(X[y == 0, 0], X[y == 0, 1], "s", color=cc[1],
+         label="versicolor",zorder=10)
+plt.plot(X[y == 1, 0], X[y == 1, 1], "d", color=cc[2],
+         label="virginica",zorder=10)
+plt.scatter(SV1[:, 0], SV1[:, 1], s=150, facecolors="none",
+            edgecolors=cc[3], linewidths=2,zorder=10)
 
-X_outliers = np.array([[3.4, 1.3], [3.2, 0.8]])
-y_outliers = np.array([0, 0])
-Xo1 = np.concatenate([X, X_outliers[:1]], axis=0)
-yo1 = np.concatenate([y, y_outliers[:1]], axis=0)
-Xo2 = np.concatenate([X, X_outliers[1:]], axis=0)
-yo2 = np.concatenate([y, y_outliers[1:]], axis=0)
+plt.plot(x0, y_dec1, "k-",  linewidth=2, label="decision boundary")
+plt.plot(x0, y_up1,  "k--", linewidth=1)
+plt.plot(x0, y_dn1,  "k--", linewidth=1)
 
-svm_clf2 = SVC(kernel="linear", C=10**9)
-svm_clf2.fit(Xo2, yo2)
-
-
-iris = datasets.load_iris()
-X = iris["data"][:, (2, 3)]  # petal length, petal width
-y = (iris["target"] == 2).astype(np.float64)  # Iris virginica
-
-svm_clf = sk.pipeline.Pipeline([
-        ("scaler", sk.preprocessing.StandardScaler()),
-        ("linear_svc", sk.svm.LinearSVC(C=1, loss="hinge", random_state=42)),
-    ])
-
-svm_clf.fit(X, y)
-
-
-scaler = sk.preprocessing.StandardScaler()
-svm_clf1 = sk.svm.LinearSVC(C=1, loss="hinge", random_state=42)
-svm_clf2 = sk.svm.LinearSVC(C=100, loss="hinge", random_state=42)
-
-scaled_svm_clf1 = sk.pipeline.Pipeline([
-        ("scaler", scaler),
-        ("linear_svc", svm_clf1),
-    ])
-scaled_svm_clf2 = sk.pipeline.Pipeline([
-        ("scaler", scaler),
-        ("linear_svc", svm_clf2),
-    ])
-
-scaled_svm_clf1.fit(X, y)
-scaled_svm_clf2.fit(X, y)
-
-
-# Convert to unscaled parameters
-b1 = svm_clf1.decision_function([-scaler.mean_ / scaler.scale_])
-b2 = svm_clf2.decision_function([-scaler.mean_ / scaler.scale_])
-w1 = svm_clf1.coef_[0] / scaler.scale_
-w2 = svm_clf2.coef_[0] / scaler.scale_
-svm_clf1.intercept_ = np.array([b1])
-svm_clf2.intercept_ = np.array([b2])
-svm_clf1.coef_ = np.array([w1])
-svm_clf2.coef_ = np.array([w2])
-
-# Find support vectors (LinearSVC does not do this automatically)
-t = y * 2 - 1
-support_vectors_idx1 = (t * (X.dot(w1) + b1) < 1).ravel()
-support_vectors_idx2 = (t * (X.dot(w2) + b2) < 1).ravel()
-svm_clf1.support_vectors_ = X[support_vectors_idx1]
-svm_clf2.support_vectors_ = X[support_vectors_idx2]
-
-
-ax1 = plt.figure(figsize=(6.5,3.0))
-
-plt.subplot(121)
-plt.plot(X[:, 0][y==0], X[:, 1][y==0], "s",color=cc[1], label="Iris versicolor")
-plt.plot(X[:, 0][y==1], X[:, 1][y==1], "d",color=cc[2], label="Iris virginica")
-plot_svc_decision_boundary(svm_clf1, 4, 5.9)
 plt.xlabel("petal length (cm)")
 plt.ylabel("petal width (cm)")
-plt.legend(loc="upper left")
-plt.title("$C = {}$".format(svm_clf1.C))
-plt.axis([4, 5.9, 0.8, 2.8])
+plt.title("$C = 1$")
+plt.legend(framealpha=1,loc='upper left',fontsize=9)
+plt.axis([xmin, xmax, 0.8, 2.8])
 
-ax2 = plt.subplot(122)
-plt.plot(X[:, 0][y==0], X[:, 1][y==0], "s",color=cc[1])
-plt.plot(X[:, 0][y==1], X[:, 1][y==1], "d",color=cc[2])
-plot_svc_decision_boundary(svm_clf2, 4, 5.99)
+# -- Subplot (b): C = 200 ------------------------------------------------------
+plt.subplot(1, 2, 2)
+plt.plot(X[y == 0, 0], X[y == 0, 1], "s", color=cc[1],zorder=10)
+plt.plot(X[y == 1, 0], X[y == 1, 1], "d", color=cc[2],zorder=10)
+plt.scatter(SV2[:, 0], SV2[:, 1], s=150, facecolors="none",
+            edgecolors=cc[3], linewidths=2,zorder=10)
+
+plt.plot(x0, y_dec2, "k-",  linewidth=2)
+plt.plot(x0, y_up2,  "k--", linewidth=1)
+plt.plot(x0, y_dn2,  "k--", linewidth=1)
+
 plt.xlabel("petal length (cm)")
-plt.title("$C = {}$".format(svm_clf2.C))
-plt.axis([4, 5.9, 0.8, 2.8])
-
-ax2.set_yticklabels([])
+plt.title("$C = 200$")
+plt.axis([xmin, xmax, 0.8, 2.8])
+plt.gca().set_yticklabels([])  # hide y-tick labels on second subplot
 
 plt.tight_layout()
-plt.savefig("SVM_hyperparameter_C",dpi=300)
-
-
-
-
-
-
-
-
+plt.savefig("SVM_hyperparameter_C.png", dpi=300)
+plt.show()
 
 
 

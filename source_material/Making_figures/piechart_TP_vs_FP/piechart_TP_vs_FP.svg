@@ -138,16 +138,16 @@
      inkscape:export-ydpi="300"><tspan
        x="193.48114"
        y="251.22128"
-       id="tspan8"><tspan
+       id="tspan2"><tspan
    style="font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#000000"
-   id="tspan7">actual</tspan><tspan
+   id="tspan1">actual</tspan><tspan
    y="251.22128"
-   id="tspan9"> </tspan></tspan><tspan
+   id="tspan3"> </tspan></tspan><tspan
        x="193.48114"
        y="265.06462"
-       id="tspan11"><tspan
+       id="tspan5"><tspan
          style="font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#000000"
-         id="tspan10">true</tspan></tspan></text>
+         id="tspan4">true</tspan></tspan></text>
   <text
      xml:space="preserve"
      style="font-size:18.1401px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;white-space:pre;inline-size:90.7053;display:inline;fill:#26306e;stroke-width:1.02842;stroke-linecap:butt;stroke-linejoin:round"
@@ -160,16 +160,16 @@
      inkscape:export-ydpi="300"><tspan
        x="193.48114"
        y="251.22128"
-       id="tspan13"><tspan
-         style="line-height:100%;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#000000"
-         id="tspan12">Relevant</tspan><tspan
-         y="251.22128"
-         id="tspan14"> </tspan></tspan><tspan
+       id="tspan7"><tspan
+   style="line-height:100%;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#000000"
+   id="tspan6">Relevant</tspan><tspan
+   y="251.22128"
+   id="tspan8"> </tspan></tspan><tspan
        x="193.48114"
        y="269.59962"
-       id="tspan16"><tspan
+       id="tspan10"><tspan
          style="line-height:100%;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#000000"
-         id="tspan15">Instances</tspan></tspan></text>
+         id="tspan9">Instances</tspan></tspan></text>
   <text
      xml:space="preserve"
      style="font-size:18.1401px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;white-space:pre;inline-size:90.7053;display:inline;fill:#26306e;stroke-width:1.02842;stroke-linecap:butt;stroke-linejoin:round"
@@ -182,15 +182,15 @@
      inkscape:export-ydpi="300"><tspan
        x="193.48114"
        y="251.22128"
-       id="tspan18"><tspan
+       id="tspan12"><tspan
          style="line-height:100%;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#000000"
-         id="tspan17">Selected
+         id="tspan11">Selected
 </tspan></tspan><tspan
        x="193.48114"
        y="269.59962"
-       id="tspan20"> <tspan
+       id="tspan14"> <tspan
    style="line-height:100%;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#000000"
-   id="tspan19">Instances</tspan></tspan></text>
+   id="tspan13">Instances</tspan></tspan></text>
   <text
      xml:space="preserve"
      style="font-size:18.1401px;line-height:100%;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;white-space:pre;inline-size:90.7053;display:inline;fill:#26306e;stroke-width:1.02842;stroke-linecap:butt;stroke-linejoin:round"
@@ -203,13 +203,27 @@
      inkscape:export-ydpi="300"><tspan
        x="193.48114"
        y="251.22128"
-       id="tspan22"><tspan
+       id="tspan16"><tspan
          style="line-height:100%;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#000000"
-         id="tspan21">Selected
+         id="tspan15">Selected
 </tspan></tspan><tspan
        x="193.48114"
        y="269.59962"
-       id="tspan24"> <tspan
+       id="tspan18"> <tspan
    style="line-height:100%;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#000000"
-   id="tspan23">Instances</tspan></tspan></text>
+   id="tspan17">Instances</tspan></tspan></text>
+  <rect
+     style="fill:#ffffff;stroke:none;stroke-width:1.167;fill-opacity:1"
+     id="rect3"
+     width="159.76665"
+     height="30.604652"
+     x="202.30193"
+     y="101.66969" />
+  <rect
+     style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.167;stroke-linecap:butt;stroke-linejoin:round"
+     id="rect3-4"
+     width="159.76665"
+     height="30.604652"
+     x="199.72133"
+     y="3.8424344" />
 </svg>
