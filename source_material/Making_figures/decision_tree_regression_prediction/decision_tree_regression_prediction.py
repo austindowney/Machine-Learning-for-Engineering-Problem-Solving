@@ -42,9 +42,9 @@ import graphviz as graphviz
 
 
 np.random.seed(2)
-m = 200
-X = np.random.rand(m,1)-0.5
-y = 5 * X**2
+m = 100
+X = np.random.rand(m,1)
+y = 5 * X
 y = y + np.random.randn(m,1)/10
 
 tree_reg1 = sk.tree.DecisionTreeRegressor(random_state=2, max_depth=1)
@@ -55,27 +55,30 @@ tree_reg2.fit(X, y)
 plt.figure(figsize=(6.5, 2.5))
 ax1 = plt.subplot(121)
 
-x1 = np.linspace(-0.5, 0.5, 500).reshape(-1, 1)
+x1 = np.linspace(0, 1, 500).reshape(-1, 1)
 y_pred = tree_reg1.predict(x1)
 
-plt.plot(X, y, ".",label='data')
-plt.plot(x1, y_pred, "--", linewidth=2, label=r"$\hat{y}$")
+plt.plot(X, y, ".",markersize=3,label='data')
+plt.plot(x1, y_pred, "--", linewidth=1.5, label=r"$\hat{y}$")
 plt.xlabel("$x_1$")
 plt.ylabel("$y$")
-plt.ylim([-0.21,1.21])
-plt.legend(loc="upper center",framealpha=1)
+plt.ylim([-0.4,5.4])
+plt.yticks([0,1,2,3,4,5])
+#plt.xticks([-0.5,-0.25,0,0.25,0.5])
+plt.legend(loc="upper left",framealpha=1)
 plt.title("max_depth=1")
 plt.grid(True)
 
 
 ax2 = plt.subplot(122)
-x1 = np.linspace(-0.5, 0.5, 500).reshape(-1, 1)
 y_pred = tree_reg2.predict(x1)
 
 plt.xlabel("$x_1$")
-plt.plot(X, y, ".")
-plt.plot(x1, y_pred, "--", linewidth=2, label=r"$\hat{y}$")
-plt.ylim([-0.21,1.21])
+plt.plot(X, y, ".",markersize=3)
+plt.plot(x1, y_pred, "--", linewidth=1.5, label=r"$\hat{y}$")
+plt.ylim([-0.4,5.4])
+plt.yticks([0,1,2,3,4,5])
+#plt.xticks([-0.5,-0.25,0,0.25,0.5])
 plt.title("max_depth=3")
 ax2.set_yticklabels([])
 plt.grid(True)

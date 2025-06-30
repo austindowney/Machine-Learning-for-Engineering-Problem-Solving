@@ -55,22 +55,25 @@ from sklearn.tree import export_graphviz
 
 #%% build dataset
 
-m = 200
-X = np.random.rand(m,1)-0.5
-y = 5 * X**2
+np.random.seed(2)
+m = 100
+X = np.random.rand(m,1)
+y = 5 * X
 y = y + np.random.randn(m,1)/10
 
 tree_reg = sk.tree.DecisionTreeRegressor(max_depth=2)
 tree_reg.fit(X,y)
 
-x_model = np.linspace(-0.5,0.5,1000).reshape(-1,1)
+x_model = np.linspace(0,1,1000).reshape(-1,1)
 y_model = tree_reg.predict(x_model)
 
 plt.figure(figsize=(3,2))
-plt.plot(X,y,'.',label='data')
-plt.plot(x_model,y_model,'-',label='model')
-plt.xlabel('$x_1$')
-plt.ylabel('$x_2$')
+plt.plot(X,y,'.',markersize=3,label='data')
+plt.plot(x_model,y_model,'--',linewidth=1.5,label='model')
+plt.xlabel('$x$')
+plt.ylabel('$y$')
+plt.ylim([-0.4,5.4])
+plt.yticks([0,1,2,3,4,5])
 plt.legend()
 plt.tight_layout()
 plt.savefig('data and model from python.pdf')
@@ -80,16 +83,30 @@ plt.savefig('data and model from python.pdf')
 export_graphviz(tree_reg,filled=True,rounded=True,out_file='tree')
 
 s= graphviz.Source.from_file('tree')
-s.render('tree from python',format='pdf', view=False)
+
+s.render('tree from python',format='svg', view=False) # if set to pdf, it returned an error on office computer - 6/2025
+s.render('tree from python',format='jpg', view=False) # if set to pdf, it returned an error on office computer - 6/2025
 
 
 
 
+# --- 1.  Get the DOT source as a *string*  --------------------
+dot_data = export_graphviz(
+        tree_reg,
+        filled=True,
+        rounded=True,
+        out_file=None)           # ← returns str instead of writing a file
 
+# --- 2.  Build a Graphviz Source object -----------------------
+g = graphviz.Source(dot_data, filename="tree")  # "tree" is the base-name
 
+# Optional: tweak global node style so text never overruns the box
+g.node_attr.update(
+    fontsize='9',               # default is 14; tweak to taste
+    margin='0.06,0.04')         # (x-margin, y-margin) in inches
 
-
-
+# --- 3.  Render ------------------------------------------------
+g.render(format="svg", cleanup=True)   # creates tree.svg (no viewer pop-up)
 
 
 

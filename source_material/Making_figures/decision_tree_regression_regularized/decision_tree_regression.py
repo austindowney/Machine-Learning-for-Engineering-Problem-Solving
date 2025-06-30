@@ -39,29 +39,32 @@ import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeRegressor
 
 
-m = 200
-X = np.random.rand(m,1)-0.5
-y = 5 * X**2
-y = y + np.random.randn(m,1)/10
+np.random.seed(2)
+m = 100
+X = np.random.rand(m,1)
+y = 5 * X
+y = y + np.random.randn(m,1)/3
 
 tree_reg1 = DecisionTreeRegressor(random_state=2, max_depth=20,min_samples_leaf=1)
-tree_reg2 = DecisionTreeRegressor(random_state=2, max_depth=20,min_samples_leaf=10)
+tree_reg2 = DecisionTreeRegressor(random_state=2, max_depth=20,min_samples_leaf=15)
 tree_reg1.fit(X, y)
 tree_reg2.fit(X, y)
 
 plt.figure(figsize=(6.5, 2.5))
 ax1 = plt.subplot(121)
 
-x1 = np.linspace(-0.5, 0.5, 500).reshape(-1, 1)
+x1 = np.linspace(0, 1, 500).reshape(-1, 1)
 y_pred = tree_reg1.predict(x1)
 
-plt.plot(X, y, ".",label='data')
-plt.plot(x1, y_pred, "--", linewidth=2, label=r"$\hat{y}$")
-plt.xlabel("$x_1$")
+plt.plot(X, y, ".",markersize=3,label='data')
+plt.plot(x1, y_pred, "--", linewidth=1.5, label=r"$\hat{y}$")
+plt.xlabel("$x$")
 plt.ylabel("$y$")
-plt.ylim([-0.21,1.21])
+plt.ylim([-0.9,5.9])
+plt.yticks([-1,0,1,2,3,4,5,6])
+#plt.xticks([-0.5,-0.25,0,0.25,0.5])
 
-plt.legend(loc="upper center",framealpha=1)
+plt.legend(loc="upper left",framealpha=1)
 plt.title("min_samples_leaf=1")
 plt.grid(True)
 
@@ -69,13 +72,14 @@ plt.grid(True)
 ax2 = plt.subplot(122)
 y_pred = tree_reg2.predict(x1)
 
-plt.xlabel("$x_1$")
-plt.plot(X, y, ".")
-plt.plot(x1, y_pred, "--", linewidth=2, label=r"$\hat{y}$")
-plt.ylim([-0.21,1.21])
+plt.xlabel("$x$")
+plt.plot(X, y, ".",markersize=3)
+plt.plot(x1, y_pred, "--", linewidth=1.5, label=r"$\hat{y}$")
+plt.ylim([-0.4,5.4])
+plt.yticks([-1,0,1,2,3,4,5,6])
 
     
-plt.title("min_samples_leaf=10")
+plt.title("min_samples_leaf=15")
 ax2.set_yticklabels([])
 plt.grid(True)
 

@@ -57,7 +57,7 @@ m = 100
 X = 2 * np.random.rand(m, 1) - 1
 y = (0.2 + 0.1 * X + 0.5 * X**2 + np.random.randn(m, 1) / 10).ravel()
 
-svr1 = SVR(kernel="poly", degree=2, C=100,  epsilon=0.1, gamma="scale").fit(X, y)
+svr1 = SVR(kernel="poly", degree=2, C=10000,  epsilon=0.1, gamma="scale").fit(X, y)
 svr2 = SVR(kernel="poly", degree=2, C=0.01, epsilon=0.1, gamma="scale").fit(X, y)
 
 x_grid = np.linspace(-1, 1, 100).reshape(-1, 1)
