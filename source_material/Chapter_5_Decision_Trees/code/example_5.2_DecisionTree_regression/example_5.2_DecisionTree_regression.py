@@ -3,10 +3,7 @@
 """
 Example 5.2 Decision Tree Regression
 
-Developed for Machine Learning for Mechanical Engineers at the University of
-South Carolina
-
-@author: austin_downey
+@author: Austin R.J. Downey
 """
 
 import IPython as IP
@@ -25,23 +22,23 @@ plt.close('all')
 
 # build the data
 m = 200
-X = np.random.rand(m, 1)-0.5
-y = 5 * (X) ** 2
+X = np.random.rand(m, 1)
+y = 5 * X
 y = y + np.random.randn(m, 1) / 10
 
 # train the model
 tree_reg = sk.tree.DecisionTreeRegressor(max_depth=3)
 tree_reg.fit(X, y)
 
-x_model = np.linspace(-0.5, 0.5, 100).reshape(-1, 1)
+x_model = np.linspace(0, 1, 100).reshape(-1, 1)
 y_model = tree_reg.predict(x_model)
 
 plt.figure()
 plt.plot(X, y, ".",label='data')
 plt.plot(x_model, y_model, "-", label="model")
-plt.xlabel("$x_1$")
-plt.ylabel("$x_2$")
-plt.legend(loc="upper center")
+plt.xlabel("$x$")
+plt.ylabel("$y$")
+plt.legend()
 
 #%% Plot the regression tree
 

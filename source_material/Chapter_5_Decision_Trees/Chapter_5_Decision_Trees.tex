@@ -28,15 +28,29 @@ In this chapter, we will explore the essentials of Decision Trees, starting with
 
 
 \subsection{Decision Tree Classification}
+Figure~\ref{fig:decision_tree_boundaries} illustrates the decision boundaries of the Decision Tree. The bold vertical line denotes the decision boundary for the root node (depth 0): petal length = 2.45~cm. The left region is pure (comprising only Iris-Setosa) and cannot be further split. However, the right region is impure, prompting the depth-1 right node to divide it at a petal width of 1.75~cm, indicated by the dashed line. With {\tt{max\_depth}} set to 2, the tree does not extend further. Increasing {\ttfamily{max\_depth}} to 3 would lead the two depth-2 nodes to introduce additional decision boundaries, marked by the dotted lines.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=6.5in]{../figures/decision_tree_boundaries}
+	\caption{Decision Tree decision boundaries.}
+	\label{fig:decision_tree_boundaries}
+\end{figure}
+
+
+
+A decision tree for the Iris Dataset looks like Figure~\ref{fig:Iris_decision_tree}. Let us examine how the Decision Tree processes predictions. Imagine you discover an iris flower and want to classify it. Starting at the root node (depth 0, at the top), the node queries if the petal length of the flower is less than 2.45~cm. If so, you proceed to the root's left child node (depth 1, left), which is a leaf node, meaning it poses no further questions. You would then refer to the predicted class of that node, and the Decision Tree identifies your flower as an Iris-Setosa (class=setosa). 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=3.5in]{../figures/Iris_decision_tree}
-	\caption{Iris decision tree.}
+	\caption{Decision tree for the Iris Dataset trained using the CART algorithms.}
 	\label{fig:Iris_decision_tree}
 \end{figure}
 
-A decision tree for the Iris Dataset looks like Figure~\ref{fig:Iris_decision_tree}. Let us examine how the Decision Tree processes predictions. Imagine you discover an iris flower and want to classify it. Starting at the root node (depth 0, at the top), the node queries if the petal length of the flower is less than 2.45~cm. If so, you proceed to the root's left child node (depth 1, left), which is a leaf node, meaning it poses no further questions. You would then refer to the predicted class of that node, and the Decision Tree identifies your flower as an Iris-Setosa (class=setosa).
+In Figure~\ref{fig:Iris_decision_tree}, each node reports the split criterion, Gini impurity, sample count, and class distribution. Fill colors denote the predicted species; orange for Setosa, green for Versicolor, and purple for Virginica. Shade intensity conveys confidence: darker hues indicate purer (more certain) leaves, whereas white represents complete uncertainty.
+
 
 Consider finding another iris with a petal length exceeding 2.45~cm. This time, you move to the root's right child node (depth 1, right). Since this node is not a leaf, it inquires if the petal width is less than 1.75~cm. If affirmative, your flower is likely an Iris-Versicolor (depth 2, left); otherwise, it is probably an Iris-Virginica (depth 2, right). The process is straightforward.
 
@@ -54,14 +68,8 @@ The Gini impurity $G_i$ for the $i^{th}$ node is computed using Equation~\ref{eq
 \end{equation}
 where $p_{i,k}$ is the proportion of class $k$ instances among the training instances at the $i^{th}$ node.
 
-Figure~\ref{fig:decision_tree_boundaries} illustrates the decision boundaries of the Decision Tree. The bold vertical line denotes the decision boundary for the root node (depth 0): petal length = 2.45~cm. The left region is pure (comprising only Iris-Setosa) and cannot be further split. However, the right region is impure, prompting the depth-1 right node to divide it at a petal width of 1.75~cm, indicated by the dashed line. With {\tt{max\_depth}} set to 2, the tree does not extend further. Increasing {\ttfamily{max\_depth}} to 3 would lead the two depth-2 nodes to introduce additional decision boundaries, marked by the dotted lines.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=6.5in]{../figures/decision_tree_boundaries}
-	\caption{Decision Tree decision boundaries.}
-	\label{fig:decision_tree_boundaries}
-\end{figure}
+
 
 
 
@@ -139,9 +147,9 @@ Figure~\ref{fig:decision_tree_regularization} illustrates two Decision Trees tra
 
 \subsubsection{Computational Complexity}
 
-Making predictions with a Decision Tree involves traversing from the root to a leaf. Decision Trees are generally well-balanced, implying that the path from the root to a leaf involves crossing approximately $O(\log_2(m))$ nodes. Since checking a node involves examining just one feature, the overall complexity for making predictions is $O(\log_2(m))$, making it exceptionally fast regardless of the feature count.
+Making predictions with a Decision Tree involves traversing from the root to a leaf. Decision Trees are generally well-balanced, implying that the path from the root to a leaf involves crossing approximately $O\big(\log_2(m)\big)$ nodes. Since checking a node involves examining just one feature, the overall complexity for making predictions is $O\big(\log_2(m)\big)$, making it exceptionally fast regardless of the feature count.
 
-Training, however, is more intensive: the algorithm examines all features (or fewer if {\tt{max\_\allowbreak features}} is set) across all samples at each node, leading to a training complexity of $O(n \times m \log(m))$. For smaller datasets (few thousand instances or fewer), Scikit-Learn can expedite training by presorting data (set {\tt{presort=True}}), though this method becomes inefficient for larger datasets.
+Training, however, is more intensive: the algorithm examines all features (or fewer if {\tt{max\_\allowbreak features}} is set) across all samples at each node, leading to a training complexity of $O\big(n \times m \log(m)\big)$; where $n$ is the number of features. For smaller datasets (few thousand instances or fewer), Scikit-Learn can expedite training by presorting data (set {\tt{presort=True}}), though this method becomes inefficient for larger datasets.
 
 \subsubsection{Gini Impurity or Entropy?}
 

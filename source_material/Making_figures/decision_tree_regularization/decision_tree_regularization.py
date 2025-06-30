@@ -36,17 +36,12 @@ plt.close('all')
 
 #%% Load special modules as needed
 
-# to make this notebook's output stable across runs
-np.random.seed(3)
-
-
-
-#%% 2
+np.random.seed(2)
 
 
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.datasets import make_moons
-X, y = make_moons(n_samples=100, noise=0.25)
+X, y = make_moons(n_samples=60, noise=0.25)
 
 deep_tree_clf1 = DecisionTreeClassifier()
 deep_tree_clf2 = DecisionTreeClassifier(min_samples_leaf=5)

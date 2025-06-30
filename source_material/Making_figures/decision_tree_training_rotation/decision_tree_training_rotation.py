@@ -11,7 +11,6 @@ Header file last updated May 16, 2024
 """
 
 import numpy as np
-import scipy as sp
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
@@ -45,14 +44,12 @@ from sklearn.tree import DecisionTreeClassifier
 
 np.random.seed(5)
 
-
 X_square = np.random.rand(100, 2) - 0.5
 y_square = (X_square[:, 0] > 0).astype(np.int64)
 
 angle = np.pi / 4  
 rotation_matrix = np.array([[np.cos(angle), -np.sin(angle)], [np.sin(angle), np.cos(angle)]])
 X_rotated_square = X_square.dot(rotation_matrix)
-
 
 tree_clf_square = DecisionTreeClassifier(random_state=2)
 tree_clf_square.fit(X_square, y_square)
@@ -61,50 +58,38 @@ tree_clf_rotated_square = DecisionTreeClassifier(random_state=2)
 tree_clf_rotated_square.fit(X_rotated_square, y_square)
 
 
+
+
 #%% Plot the rotation plots
 
 
 plt.figure(figsize=(6.5, 2.5))
 ax1 = plt.subplot(121)
-#plot_decision_boundary(tree_clf_square, X_square, y_square,axes=[-0.7, 0.7, -0.7, 0.7], cmap="Pastel1")
-#cmap="Pastel1"
 axes=[-0.7, 0.7, -0.7, 0.7]
-#def plot_decision_boundary(clf, X_square, y, axes, cmap):
+
 x1, x2 = np.meshgrid(np.linspace(axes[0], axes[1], 100),
                      np.linspace(axes[2], axes[3], 100))
 X_new = np.c_[x1.ravel(), x2.ravel()]
 y_pred = tree_clf_square.predict(X_new).reshape(x1.shape)
-
 plt.contourf(x1, x2, y_pred, alpha=0.3, cmap="Pastel2")
 plt.contour(x1, x2, y_pred, cmap="Greys", alpha=0.8)
-
-markers = ("o", "^")
-for idx in (0, 1):
-    plt.scatter(X_square[:, 0][ y_square == idx], X_square[:, 1][ y_square == idx], marker=markers[idx])
-    
+plt.scatter(X_square[y_square == 0, 0],X_square[y_square == 0, 1],marker='s',label="class 0")
+plt.scatter(X_square[y_square == 1, 0],X_square[y_square == 1, 1],marker='d',label="class 1")
 plt.xlabel("$x_1$")
 plt.ylabel(r"$x_2$")
     
     
 ax2 = plt.subplot(122)
-
 axes=[-0.7, 0.7, -0.7, 0.7]
-#def plot_decision_boundary(clf, X_square, y, axes, cmap):
 x1, x2 = np.meshgrid(np.linspace(axes[0], axes[1], 100),
                      np.linspace(axes[2], axes[3], 100))
 X_new = np.c_[x1.ravel(), x2.ravel()]
 y_pred = tree_clf_rotated_square.predict(X_new).reshape(x1.shape)
-
 plt.contourf(x1, x2, y_pred, alpha=0.3, cmap="Pastel2")
 plt.contour(x1, x2, y_pred, cmap="Greys", alpha=0.8)
-
-markers = ("o", "^")
-for idx in (0, 1):
-    plt.scatter(X_rotated_square[:, 0][ y_square == idx], X_square[:, 1][ y_square == idx], marker=markers[idx])
-    
+plt.scatter(X_rotated_square[y_square == 0, 0],X_square[y_square == 0, 1],marker='s',label="class 0")
+plt.scatter(X_rotated_square[y_square == 1, 0],X_square[y_square == 1, 1],marker='d',label="class 1")
 plt.xlabel("$x_1$")
-
-
 plt.tight_layout()
 plt.savefig("decision_tree_training_rotation",dpi=300)
 
