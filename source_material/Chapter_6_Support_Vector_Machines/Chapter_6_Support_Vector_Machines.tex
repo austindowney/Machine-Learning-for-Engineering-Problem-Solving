@@ -10,7 +10,7 @@
 	\setcounter{section}{5}	
 	\setcounter{figure}{0}   
 	\renewcommand\thefigure{\thesection.\arabic{figure}}
-	\setcounter{equation}{\thesection}   
+	\setcounter{equation}{0}   
 	\renewcommand\theequation{\thesection.\arabic{equation}}
 
 
@@ -23,7 +23,7 @@
 
 
 
-The essence of Support Vector Machines (SVMs) is best illustrated visually. Figure~\ref{fig:SVM_large_margin_classification} displays a segment of the iris dataset discussed previously. This dataset is linearly separable as the two classes can be distinctly divided with a straight line. The left plot reveals the decision boundaries for three different linear classifiers. One model, depicted by the dashed line, fails to separate the classes adequately. The other two models accurately classify the training data; however, their decision boundaries are very close to the data points, which may lead to poorer performance on new data. In contrast, the solid line in the right plot delineates the SVM classifier's decision boundary, which not only separates the classes effectively but also maximizes the distance from the nearest data points. This approach is known as large margin classification, where the SVM strives to fit the broadest possible ``street'' (indicated by the parallel dashed lines) between the classes.
+The essence of Support Vector Machines (SVMs) is best illustrated visually. Figure~\ref{fig:SVM_large_margin_classification} displays a segment of the iris dataset discussed previously. This dataset is linearly separable as the two classes can be distinctly divided with a straight line. The left plot reveals the decision boundaries for two different linear classifiers. The two models accurately classify the training data; however, their decision boundaries are very close to the data points, which may lead to poorer performance on new data. In contrast, the solid line in the right plot delineates the SVM classifier's decision boundary, which not only separates the classes effectively but also maximizes the distance from the nearest data points. This approach is known as large margin classification, where the SVM strives to fit the broadest possible ``street'' (indicated by the parallel dashed lines) between the classes.
 
 
 
@@ -103,7 +103,11 @@ In prior chapters, we adopted the convention of consolidating all model paramete
 
 
 \subsubsection{Decision Function and Predictions}
-A linear SVM classifier determines the class of a new instance $x$ by calculating the decision function $\textbf{w}^\text{T} \textbf{x} + b = w_1 x_1 + \cdots + w_n x_n + b$. If the outcome is positive, the predicted class $\hat{y}$ is the positive class (1); otherwise, it is the negative class (0).
+A linear SVM classifier determines the class of a new instance $x$ by calculating the decision function
+\begin{equation}
+\textbf{w}^\text{T} \textbf{x} + b = w_1 x_1 + \cdots + w_n x_n + b.
+\end{equation}
+If the outcome is positive, the predicted class $\hat{y}$ is the positive class (1); otherwise, it is the negative class (0).
 
 \begin{equation}
   \hat{y} = 
@@ -119,7 +123,7 @@ Figure~\ref{fig:SVM_decision_function} illustrates the decision function for a m
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=4.5in]{../figures/SVM_decision_function}
+	\includegraphics[]{../figures/SVM_decision_function}
 	\caption{Decision function for the Iris Dataset showing how the decision function $h$ cuts through the feature space.}
 	\label{fig:SVM_decision_function}
 \end{figure}
@@ -136,7 +140,11 @@ The slope of the decision function corresponds to the norm of the weight vector,
 	\label{fig:SVM_weight_vectors}
 \end{figure}
 
-To achieve a large margin while enforcing that no data points fall within the margin (hard margin), we ensure the decision function exceeds +1 for all positive training instances and is less than -1 for all negative instances. Let $t^{(i)}$ equal -1 for negative instances ($y^{(i)} = 0$) and +1 for positive ones ($y^{(i)} = 1$). The constraints then require $t^{(i)}(\textbf{w}^\text{T} \textbf{x}^{(i)} + b) \geq 1$ for all training instances. This forms the basis of the hard margin linear SVM classifier optimization problem:
+To achieve a large margin while enforcing that no data points fall within the margin (hard margin), we ensure the decision function exceeds +1 for all positive training instances and is less than -1 for all negative instances. Let $t^{(i)}$ equal -1 for negative instances ($y^{(i)} = 0$) and +1 for positive ones ($y^{(i)} = 1$). The constraints then require
+\begin{equation}
+t^{(i)}(\textbf{w}^\text{T} \textbf{x}^{(i)} + b) \geq 1
+\end{equation}
+for all training instances. This forms the basis of the hard margin linear SVM classifier optimization problem:
 
 \begin{equation}
 \begin{split}
@@ -219,26 +227,36 @@ This concept can be easily implemented using Scikit-Learn by assembling a Pipeli
 \begin{example}
 \textbf{Nonlinear Classification}
 
-\noindent This example demonstrates nonlinear classification using the \texttt{make\_moons} dataset. A polynomial feature transformation is combined with a linear SVM to classify the data, and the resulting decision boundaries are visualized.
+\noindent This example demonstrates nonlinear classification leveraging \texttt{LinearSVC} in a pipeline with \texttt{preprocessing.PolynomialFeatures} using the \texttt{make\_moons} dataset. A polynomial feature transformation is combined with a linear SVM to classify the data, and the resulting decision boundaries are visualized.
 \end{example}
 
 
-\subsubsection{Polynomial Kernel}
+\subsubsection{Kernel trick}
 
 % \todo{Add text on Kernal math if needed}
 While adding polynomial features is straightforward and enhances the performance of various Machine Learning algorithms (not limited to SVMs), it presents limitations. Specifically, lower-degree polynomials may not adequately handle complex datasets, and higher-degree polynomials significantly increase the feature count, slowing down the model.
 
-SVMs offer a unique solution through a remarkable mathematical technique known as the kernel trick, which allows for the benefits of high-degree polynomial features without actually expanding the feature space, thereby avoiding a rapid increase in computation. This kernel trick is incorporated within the SVC class. An application of this is demonstrated on the moons dataset:
+SVMs offer a unique solution through a remarkable mathematical technique known as the kernel trick, which allows for the benefits of high-degree polynomial features without actually expanding the feature space, thereby avoiding a rapid increase in computation. This kernel trick is incorporated within the SVC class. 
 
-The accompanying code configures an SVM classifier using a 3rd-degree polynomial kernel, depicted on the left of Figure~\ref{fig:SVM_polynomial_kernel}. Another SVM classifier, utilizing a 10th-degree polynomial kernel, is shown on the right. Adjusting the polynomial degree can help manage model fit: reducing the degree may prevent overfitting, whereas increasing it may be necessary for underfitting scenarios. The `coef0` hyperparameter is crucial as it determines the influence of high versus low-degree polynomials in the model.
+In the dual form of an SVM the explicit dot product of two input vectors  
+\begin{equation}
+\mathbf x^{\mathrm T}\mathbf z
+\end{equation} 
+is replaced by a kernel function  
+\begin{equation}
+k(\mathbf x,\mathbf z),
+\end{equation}
+where $\mathbf x$ and $\mathbf z$ are $n$-dimensional feature vectors representing any two data points in the training set.  
+This substitution lets the algorithm construct a linear separator in a (possibly infinite-dimensional) feature space while all calculations still occur in the original input coordinates.
 
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=6.5in]{../figures/SVM_polynomial_kernel.png}
-	\caption{SVM polynomial kernel}
-	\label{fig:SVM_polynomial_kernel}
-\end{figure}
+%In the dual form of an SVM the inner product $\mathbf w^\text{T}\mathbf x$ is replaced by a kernel
+%\begin{equation}
+%k(\mathbf x,\mathbf x),
+%\end{equation}
+%allowing the algorithm to fit a \textit{linear} separator in a (possibly infinite-dimensional) feature space while the optimisation still takes place in the original coordinates. 
+
+Figure~\ref{fig:SVM_polynomial_kernel} shows configured SVM classifiers using a 3\textsuperscript{rd} and 3\textsuperscript{th} degree polynomial kernel; on the left and right respectively. Adjusting the polynomial degree can help manage model fit: reducing the degree may prevent overfitting, whereas increasing it may be necessary for underfitting scenarios. The `coef0` hyperparameter is crucial as it determines the influence of high versus low-degree polynomials in the model.
 
 \begin{mdframed}[middlelinewidth=0.5mm]
 \begin{center}
@@ -248,20 +266,62 @@ A typical method for determining optimal hyperparameter settings involves utiliz
 \end{mdframed}
 
 
-\begin{example}
-\textbf{Kernel Trick with Polynomial Kernel}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=6.5in]{../figures/SVM_polynomial_kernel.png}
+	\caption{SVM polynomial kernel}
+	\label{fig:SVM_polynomial_kernel}
+\end{figure}
 
-\noindent This example uses the kernel trick to enable an SVM to classify non-linearly separable data. A third-degree polynomial kernel is applied to the moons dataset using Scikit-Learn's \texttt{Pipeline} and \texttt{SVC} tools, producing a curved decision boundary that cleanly separates the classes.
+
+\subsubsection{Standard Kernels}
+
+
+Three kernels cover the vast majority of practical cases. 
+\begin{itemize}
+\item The polynomial kernel captures interactions between input features up to a chosen degree~$d$:
+\begin{equation}
+k_{\text{poly}}\bigl(\textbf{x},\textbf{z}\bigr)
+  = \bigl(\textbf{x}^{\text{T}}\textbf{z} + c\bigr)^{d}
+\end{equation}
+where $c\!\ge\!0$ is a constant offset.  It is effective when domain knowledge suggests that a low-order combination of variables explains the target.  Keep $d$ modest (typically $d\le5$) and standardise inputs to avoid exploding feature dimensions and overfitting.
+\item The radial basis function (RBF) kernel builds smooth, highly flexible decision boundaries:
+\begin{equation}
+k_{\text{rbf}}\bigl(\textbf{x},\textbf{z}\bigr)
+  = \exp\!\bigl(-\gamma \lVert \textbf{x}-\textbf{z}\rVert^{2}\bigr)
+\end{equation}
+with width parameter $\gamma>0$.  A large $\gamma$ makes the surface too flat (underfitting), while a small $\gamma$ lets every point carve its own pocket (overfitting).  Tune $C$ and $\gamma$ jointly, typically on a logarithmic grid, after x-score standardising the features.
+\item The sigmoid kernel adds an S-shaped non-linearity to the inner product:
+\begin{equation}
+k_{\text{sig}}\bigl(\textbf{x},\textbf{z}\bigr)
+  = \tanh\!\bigl(\kappa\,\textbf{x}^{\text{T}}\textbf{z} + \theta\bigr)
+\end{equation}
+where $\kappa$ controls the slope and $\theta$ the offset.  Although useful for some sparse or text data, this kernel is not always positive-semidefinite, so ensure your software handles the resulting optimisation safely.
+\end{itemize}
+
+\begin{example}
+\textbf{Polynomial Kernel Trick}
+
+\noindent This example uses the kernel trick to enable an SVM to classify non-linearly separable data using \texttt{SVC} (not \texttt{LinearSVC}). A third-degree polynomial kernel is applied to the moons dataset using Scikit-Learn's \texttt{Pipeline} and \texttt{SVC} tools, producing a curved decision boundary that cleanly separates the classes.
 \end{example}
 
 
+\begin{mdframed}[middlelinewidth=0.5mm]
+\begin{center}
+\bl{NOTE}
+\end{center}
+Begin with the RBF kernel as a strong default, explore polynomial kernels when you expect specific interaction orders, and treat the sigmoid option as experimental unless you have evidence it helps.
+\end{mdframed}
 
 \subsection{Computational Complexity}
+
+Scikit-Learn provides two main SVM classifiers that trade accuracy for speed in different ways.  
+\texttt{LinearSVC} is optimized for large, high-dimensional data when a linear decision boundary is adequate; \texttt{SVC} sacrifices runtime for the expressive power of kernels and thus handles complex, nonlinear patterns. Table \ref{table:SVM_classifiers} highlights how these priorities translate into computational costs and practical constraints and compares them to \texttt{SGDClassifier} for reference.
 
 \texttt{LinearSVC} builds on the \texttt{liblinear} solver and is limited to \emph{linear} decision boundaries.  
 Because it does not apply the kernel trick, its training cost grows almost linearly with both the number of samples~\(m\) and features~\(n\), i.e.\ \(O(m\,n)\). Convergence is controlled by the tolerance parameter \texttt{tol} (denoted \(\epsilon\) in the literature); the default value is usually sufficient, but smaller tolerances can be specified when higher accuracy is critical.
 
-\texttt{SVC}, in contrast, relies on \texttt{libsvm} and \emph{does} support kernel functions. Its computational burden is markedly heavier, between \(O(m^{2} n)\) and \(O(m^{3} n)\) in practice, so training becomes prohibitive once the dataset reaches the hundreds-of-thousands range. Nevertheless, \texttt{SVC} excels on smaller or medium-sized problems that demand nonlinear decision surfaces. Runtime also scales with the average count of non-zero features per instance, meaning sparse high-dimensional inputs remain tractable. A concise, feature-by-feature comparison of Scikit-Learn's SVM classifiers appears in Table~\ref{table:SVM_classifiers}.
+\texttt{SVC}, in contrast, relies on \texttt{libsvm} and \emph{does} support kernel functions. Its computational burden is markedly heavier, between \(O(m^{2} n)\) and \(O(m^{3} n)\) in practice, so training becomes prohibitive once the dataset reaches the hundreds-of-thousands range. Nevertheless, \texttt{SVC} excels on smaller or medium-sized problems that demand nonlinear decision surfaces. Runtime also scales with the average count of non-zero features per instance, meaning sparse high-dimensional inputs remain tractable. 
 
 
 
@@ -271,19 +331,29 @@ Because it does not apply the kernel trick, its training cost grows almost linea
 \caption{Key characteristics of three Scikit-Learn SVM classifier implementations.}
 \label{table:SVM_classifiers}
 \begin{tabular}{@{}lllll@{}}
-\toprule
+Trule
 class & time complexity & out-of-core support & scaling required & kernel trick \\ \midrule
 \texttt{LinearSVC} & $O(m \times n)$ & no & yes & no \\
-\texttt{SGDClassifier} & $O(m \times n)$ & yes & yes & no \\
-\texttt{SVC} & $O(m^2 \times n)$ to $O(m^3 \times n)$ & no & yes & yes \\ \bottomrule
+\texttt{SVC} & $O(m^2 \times n)$ to $O(m^3 \times n)$ & no & yes & yes \\
+\texttt{SGDClassifier} & $O(m \times n)$ & yes & yes & no \\ \bottomrule
 \end{tabular}
 \end{table}
 
 
 
 \subsection{SVM Regression}
+\label{sec:svr}
 
-The SVM algorithm showcases remarkable versatility, not only in its capability to handle both linear and nonlinear classification but also in its support for linear and nonlinear regression. This is achieved by inverting the original objective: rather than striving to create the widest possible ``street'' between two classes with minimal margin violations, SVM Regression aims to fit as many instances as possible within this street, while still controlling margin violations. The width of this street is adjustable via the hyperparameter $\epsilon$. Figure~\ref{fig:SVM_Regression} demonstrates two linear SVM Regression models trained on random linear data; one features a wide margin ($\epsilon = 1.5$), and the other a narrower margin ($\epsilon = 0.5$).
+Support Vector Regression (SVR) adapts the SVM idea to regression by surrounding the prediction curve with a tube of width $\epsilon$; points outside this tube incur a penalty and the optimizer keeps the tube as flat as possible while allowing a limited number of violations governed by the regularization constant $C$.  Conceptually this reverses the classification goal: instead of widening a margin to separate two classes, SVR encourages the data to lie inside the margin, making $\epsilon$ the principal knob that controls how loose the fit may be for both linear and kernel-based models.
+
+
+
+
+
+\subsubsection{Linear SVR}
+
+The presence of additional training instances within the margin does not influence the predictions of the model, rendering it $\epsilon$-insensitive. For linear SVM Regression tasks, the LinearSVR class from Scikit-Learn can be utilized. For instance, 
+Figure~\ref{fig:SVM_Regression} demonstrates two linear SVM Regression models trained on random linear data; one features a wide margin ($\epsilon = 1.5$), and the other a narrower margin ($\epsilon = 0.5$).
 
 \begin{figure}[H]
 	\centering
@@ -292,7 +362,18 @@ The SVM algorithm showcases remarkable versatility, not only in its capability t
 	\label{fig:SVM_Regression}
 \end{figure}
 
-The presence of additional training instances within the margin does not influence the predictions of the model, rendering it $\epsilon$-insensitive. For linear SVM Regression tasks, the LinearSVR class from Scikit-Learn can be utilized. When addressing nonlinear regression challenges, a kernelized SVM model can be employed. For instance, Figure~\ref{fig:SVM_regression_2nd_degree} illustrates SVM Regression applied to a randomly generated quadratic dataset using a 2nd-degree polynomial kernel, with varying degrees of regularization depicted in the plots.
+For data that follow an approximately linear trend, the \texttt{LinearSVR} class in \textsc{Scikit-Learn} solves the primal problem directly. It scales in $O(mn)$ time with $m$ samples and $n$ features, making it a practical choice for large data sets where a simple linear fit is adequate.
+
+\subsubsection{Kernel SVR}
+\label{sec:svr-kernel}
+When the relationship is non-linear, the \texttt{SVR} class employs the kernel trick:
+\begin{equation}
+f(x)=\sum_{i=1}^{m}(\alpha_i-\alpha_i^{\!*})\,k(x_i,x)+b,
+\end{equation}
+where $k(\cdot,\cdot)$ is typically RBF or polynomial.  Figure~\ref{fig:SVM_regression_2nd_degree} shows a 2\textsuperscript{nd}-degree polynomial kernel
+capturing quadratic structure under various regularisation levels.
+
+The Scikit-lern SVR class, supporting the kernel trick and acting as the regression counterpart to the SVC class, performs well with small to medium-sized datasets but slows considerably as dataset size increases. In contrast, the LinearSVR class, akin to the LinearSVC class, scales linearly with the size of the training set.
 
 \begin{figure}[H]
 	\centering
@@ -301,23 +382,12 @@ The presence of additional training instances within the margin does not influen
 	\label{fig:SVM_regression_2nd_degree}
 \end{figure}
 
-The SVR class, supporting the kernel trick and acting as the regression counterpart to the SVC class, performs well with small to medium-sized datasets but slows considerably as dataset size increases. In contrast, the LinearSVR class, akin to the LinearSVC class, scales linearly with the size of the training set.
 
+\begin{example}
+\textbf{SVM Polynomial Regression}
 
-
-%%%%%%%%%%%%%%%%%%%  Still needs to be built (it is half built?)  %%%%%%%%%%%%%%%%%%%%%%%%%%
-%\begin{example}
-%\textbf{SVM Polynomial Regression \rd{Still needs to be built} }
-%
-%This example fits a non-linear regression curve to noisy quadratic data using Support Vector Regression (SVR) with a polynomial kernel. It highlights how SVR models can handle non-linear relationships by introducing a margin of tolerance, with results shown using both fixed hyperparameters and a grid search for optimal tuning.
-%\end{example}
-
-
-
-
-
-
-
+This example fits a non-linear regression curve to noisy quadratic data using Support Vector Regression (SVR) with a polynomial kernel. It highlights how SVR models can handle non-linear relationships by introducing a margin of tolerance.
+\end{example}
 
 
 

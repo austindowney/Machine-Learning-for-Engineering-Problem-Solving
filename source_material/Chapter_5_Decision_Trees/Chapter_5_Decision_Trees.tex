@@ -61,13 +61,12 @@ The attributes of a node include:
     \item \textit{value} shows the count of training instances for each class at this node: for example, the bottom-right node affects 0 Iris-Setosa, 1 Iris-Versicolor, and 45 Iris-Virginica.
     \item \textit{gini} is a measure of impurity: a node is considered `pure' (gini=0) if all training instances it affects belong to the same class. For example, the depth-1 left node exclusively pertains to Iris-Setosa instances, rendering it pure with a gini score of 0.
 \end{itemize}
-The Gini impurity $G_i$ for the $i^{th}$ node is computed using Equation~\ref{eq:gini_impurity}. For instance, the Gini score for the depth-2 left node is calculated as follows: $1 - (0/54)^2 - (49/54)^2 - (5/54)^2 \approx 0.168$. We will discuss an alternative impurity measure later.
+The Gini impurity $G_i$ for the $i^{th}$ node is computed using
 \begin{equation}
 	\label{eq:gini_impurity}
-	G_i = 1 - \sum_{k=1}^{n}p_{i,k}^2
+	G_i = 1 - \sum_{k=1}^{n}p_{i,k}^2,
 \end{equation}
-where $p_{i,k}$ is the proportion of class $k$ instances among the training instances at the $i^{th}$ node.
-
+where $p_{i,k}$ is the proportion of class $k$ instances among the training instances at the $i^{th}$ node. For instance, the Gini score for the depth-2 left node is calculated as follows: $1 - (0/54)^2 - (49/54)^2 - (5/54)^2 \approx 0.168$. We will discuss an alternative impurity measure later.
 
 
 
@@ -102,23 +101,15 @@ Scikit-Learn employs the Classification And Regression Tree (CART) algorithm to 
 \end{figure}
 
 
-The objective function it aims to minimize during this process is shown in Equation~\ref{eq:CART_algorithm}.
+The objective function it aims to minimize during this process is
 
 \begin{equation}
 \label{eq:CART_algorithm}
-\begin{aligned}
-    & J(k, t_k) = \frac{m_{\text{left}}}{m} G_{\text{left}} + \frac{m_{\text{right}}}{m} G_{\text{right}} \\ \\
-    & \text{where} \quad 
-    \left\{
-    \begin{array}{l}
-        G_{\text{left}/\text{right}} \text{ measures the impurity of the left/right subset,} \\
-        m_{\text{left}/\text{right}} \text{ is the number of instances in the left/right subset.}
-    \end{array}
-    \right.
-\end{aligned}
+J(k, t_k) = \frac{m_{\text{left}}}{m} G_{\text{left}} + \frac{m_{\text{right}}}{m} G_{\text{right}}. 
 \end{equation}
 
-\noindent After the initial split, the algorithm continues to divide the resulting subsets and their subsequent divisions recursively. This recursive process halts when it reaches the predefined maximum depth ({\tt{max\_depth}}) set through a hyperparameter, or if no further impurity-reducing splits can be found.
+\noindent In this equation, $G_{\text{left}/\text{right}}$ measures the impurity of the left/right subset, and $m_{\text{left}/\text{right}}$ is the number of instances in the left/right subset.
+ After the initial split, the algorithm continues to divide the resulting subsets and their subsequent divisions recursively. This recursive process halts when it reaches the predefined maximum depth ({\tt{max\_depth}}) set through a hyperparameter, or if no further impurity-reducing splits can be found.
 
 Unlike linear models that assume a specific data structure, Decision Trees impose few assumptions on their initial data. If not appropriately constrained, a Decision Tree can intricately conform to the training data, leading to overfitting. This model type is described as nonparametric, not due to a lack of parameters, which it can have in abundance, but because the parameters are not predetermined before training, allowing the model's structure to freely mirror the data intricacies. Conversely, a parametric model, like a linear model, has a fixed number of parameters, limiting its flexibility but also minimizing overfitting risks while potentially increasing underfitting risks.
 
@@ -151,14 +142,14 @@ Making predictions with a Decision Tree involves traversing from the root to a l
 
 Training, however, is more intensive: the algorithm examines all features (or fewer if {\tt{max\_\allowbreak features}} is set) across all samples at each node, leading to a training complexity of $O\big(n \times m \log(m)\big)$; where $n$ is the number of features. For smaller datasets (few thousand instances or fewer), Scikit-Learn can expedite training by presorting data (set {\tt{presort=True}}), though this method becomes inefficient for larger datasets.
 
-\subsubsection{Gini Impurity or Entropy?}
+\subsubsection{Entropy verse Gini Impurity}
 
-Decision Trees can use the Gini impurity as a default criterion for node purity, but entropy can also be utilized by setting the criterion hyperparameter to ``entropy''. Originally a thermodynamic concept representing molecular disorder, entropy reaches zero when molecules are in a complete state of rest and order. This concept was later adopted in information theory, introduced by Shannon, to quantify the average informational content in messages entropy is zero when all messages are identical. In the realm of Machine Learning, entropy serves as a measure of impurity: it is zero in a dataset if all its elements belong to a single class. The entropy for the i\textsuperscript{th} node is defined as shown in Equation~\ref{eq:entropy}.
+Decision Trees in sklearn use the Gini impurity as the default criterion for node purity, entropy can also be utilized by setting the criterion hyperparameter to ``entropy''. Originally a thermodynamic concept representing molecular disorder, entropy reaches zero when molecules are in a complete state of rest and order. This concept was later adopted in information theory, introduced by Shannon, to quantify the average informational content in messages entropy is zero when all messages are identical. In the realm of Machine Learning, entropy serves as a measure of impurity: it is zero in a dataset if all its elements belong to a single class. The entropy for the i\textsuperscript{th} node is defined as
 
 
 \begin{equation}
 	\label{eq:entropy}
-    H_i = - \sum_{\substack{k=1 \\ p_{i,k} \neq 0}}^{n} p_{i,k} \log_{2}(p_{i,k})
+    H_i = - \sum_{\substack{k=1 \\ p_{i,k} \neq 0}}^{n} p_{i,k} \log_{2}(p_{i,k}).
 \end{equation}
 
 The choice between Gini impurity and entropy often results in negligible differences, producing similar trees. Gini impurity has a slight computational advantage and is thus the default choice. However, it tends to separate the most frequent class into a distinct branch, whereas entropy generally yields more balanced trees.
@@ -171,7 +162,7 @@ The choice between Gini impurity and entropy often results in negligible differe
 
 \subsection{Decision Tree Regression}
 
-Decision Trees are not limited to classification tasks; they can also be adapted for regression. To illustrate, we use Scikit-Learn's \texttt{DecisionTreeRegressor} to train a regression tree on a noisy quadratic dataset with \texttt{max\_depth}=2. The structure of this tree is displayed in Figure~\ref{fig:decision_tree_regression}.
+Decision Trees are not limited to classification tasks; they can also be adapted for regression. To illustrate, we use Scikit-Learn's \texttt{DecisionTreeRegressor} to train a regression tree on a noisy linear dataset with \texttt{max\_depth}=2. The structure of this tree is displayed in Figure~\ref{fig:decision_tree_regression}. In contract to the color scheme for classification, the change in color shades here relate to the predicted value of $y$.
 
 \begin{figure}[H]
 	\centering
@@ -191,25 +182,36 @@ The predictions from this model are visualized in Figure~\ref{fig:decision_tree_
 	\label{fig:decision_tree_regression_prediction}
 \end{figure}
 
-The CART algorithm for regression trees aims to minimize the MSE when splitting the training set, similar to how it minimizes impurity in classification tasks. The cost function minimized by the algorithm is represented by Equation~\ref{eq:CART_regression}.
+The CART algorithm for regression trees aims to minimize the MSE when splitting the training set, similar to how it minimizes impurity in classification tasks. The cost function minimized by the algorithm is represented as
 
 \begin{equation}
 	\label{eq:CART_regression}
-    J(k, t_k) = \frac{m_{\text{left}}}{m} \text{MSE}_{\text{left}} + \frac{m_{\text{right}}}{m} \text{MSE}_{\text{right}} \quad \text{where} \quad 
-    \left\{
-    \begin{array}{l}
-        \text{MSE}_{\text{node}} = \sum\limits_{i \in \text{node}} \left( \hat{y}_{\text{node}} - y^{(i)} \right)^2 \\
-        \hat{y}_{\text{node}} = \frac{1}{m_{\text{node}}} \sum\limits_{i \in \text{node}} y^{(i)}
-    \end{array}
-    \right.
+    J(k, t_k) = \frac{m_{\text{left}}}{m} \text{MSE}_{\text{left}} + \frac{m_{\text{right}}}{m} \text{MSE}_{\text{right}}.
+\end{equation}
+Knowing that, 
+\begin{equation}
+	\text{MSE}_{\text{node}} = \sum\limits_{i \in \text{node}} \left( \hat{y}_{\text{node}} - y^{(i)} \right)^2
+\end{equation}
+and
+\begin{equation}
+\hat{y}_{\text{node}} = \frac{1}{m_{\text{node}}} \sum\limits_{i \in \text{node}} y^{(i)}.
 \end{equation}
 
-Similar to classification, Decision Trees for regression can overfit if not properly regularized. Without regularization, the predictions, as depicted on the left of Figure~\ref{fig:decision_tree_regression_regularized}, can fit the training data excessively. By setting \texttt{min\_samples\_leaf} to 10, a more generalized model is achieved, as shown on the right in the same figure.
+% \quad \text{where} \quad 
+%    \left\{
+%    \begin{array}{l}
+%         \\
+%        \hat{y}_{\text{node}} = \frac{1}{m_{\text{node}}} \sum\limits_{i \in \text{node}} y^{(i)}
+%    \end{array}
+%    \right.
+%\end{equation}
+
+Similar to classification, Decision Trees for regression can overfit if not properly regularized. Without regularization, the predictions, as depicted on the left of Figure~\ref{fig:decision_tree_regression_regularized}, can fit the training data excessively. By setting \texttt{min\_samples\_leaf} to 15, a more generalized model is achieved, as shown on the right in the same figure.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=6.5in]{../figures/decision_tree_regression_regularized}
-	\caption{Impact of regularization on Decision Tree regression models.}
+	\caption{Impact of regularization through setting the minimum number of samples in a leaf on a Decision Tree regression model.}
 	\label{fig:decision_tree_regression_regularized}
 \end{figure}
 
@@ -217,7 +219,7 @@ Similar to classification, Decision Trees for regression can overfit if not prop
 \begin{example}
 \textbf{Decision Tree Regression}
 
-\noindent This example uses Scikit-Learn's \texttt{DecisionTreeRegressor} to fit a non-linear relationship between input and output data. A tree of depth 4 is trained on noisy quadratic data and visualized using Graphviz to show how the regression model partitions the input space.
+\noindent This example uses Scikit-Learn's \texttt{DecisionTreeRegressor} to fit a non-linear relationship between input and output data. A tree of depth 4 is trained on noisy linear data and visualized using Graphviz to show how the regression model partitions the input space.
 \end{example}
 
 
@@ -229,7 +231,7 @@ While Decision Trees offer simplicity, interpretability, versatility, and power,
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=5.5in]{../figures/decision_tree_training_rotation}
-	\caption{Sensitivity to training set rotation.}
+	\caption{Sensitivity to training set rotation. Decision trees create a single clean split on the original data (left), but after a $45^\circ$  rotation they must build a jagged, multi-step boundary; illustrating their sensitivity to feature orientation.}
 	\label{fig:decision_tree_training_rotation}
 \end{figure}
 
@@ -251,14 +253,14 @@ More broadly, Decision Trees are sensitive to small variations in training data.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=6.5in]{../figures/random_forest}
-	\caption{random forest with majority voting. \protect\footnotemark[1]} 
+	\caption{Random forest with majority voting. \protect\footnotemark[1]} 
 	\label{fig:random_forest}
 \end{figure}
 
 \footnotetext[1]{TseKiChun, CC BY-SA 4.0 $<$https://creativecommons.org/licenses/by-sa/4.0$>$, via Wikimedia Commons}
 
 
-This  section introduces Random Forests, which overcome these instabilities by averaging predictions across multiple trees, enhancing the robustness and generalizability of the model.
+Random Forests overcome the instabilities of decision trees by averaging predictions across multiple trees, enhancing the robustness and generalizability of the model.
 Random forests, also known as random decision forests, are an ensemble learning method used for classification, regression, and other tasks. This method constructs multiple decision trees during training. For classification, the output of the random forest is the class chosen by the majority of the trees. For regression tasks, it returns the mean or average prediction from the individual trees. Random decision forests address the tendency of decision trees to overfit their training set. Generally, random forests perform better than individual decision trees, though they may not reach the accuracy of gradient boosted trees. The performance of random forests can vary depending on the characteristics of the data.
 
 

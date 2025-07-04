@@ -46,14 +46,14 @@ plt.legend()
 # .DOT file and can be viewed in an online viewer https://dreampuf.github.io/GraphvizOnline/
 export_graphviz(
         tree_reg,
-        out_file="tree",
+        out_file="tree_reg",
         rounded=True,
         filled=True
     )
 
 # We can load the file back in
-s = graphviz.Source.from_file('tree')
-s.render('tree', format='jpg',view=True)
+s = graphviz.Source.from_file('tree_reg')
+s.render('tree_reg', format='jpg',view=True)
 
 
 

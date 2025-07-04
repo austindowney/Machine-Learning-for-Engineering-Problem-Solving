@@ -46,7 +46,7 @@ tree_clf.fit(X_petal, Y)
 #.DOT file and can be viewed in an online viewer https://dreampuf.github.io/GraphvizOnline/
 export_graphviz(
         tree_clf,
-        out_file="iris_tree.dot",
+        out_file="tree_clf.dot",
         feature_names=feature_names[2:],
         class_names=Y_names,
         rounded=True,
@@ -54,13 +54,13 @@ export_graphviz(
     )
 
 # We can load the file back in
-s = graphviz.Source.from_file('iris_tree.dot')
+s = graphviz.Source.from_file('tree_clf.dot')
 
 # look at what is inside it. Also, just typing s in the console will diplay the image
 print(s)
 
 # export the image to a jpg
-s.render('iris_tree', format='jpg',view=True)
+s.render('tree_clf', format='jpg',view=True)
 
 #%% Predict the class for any petal size
 

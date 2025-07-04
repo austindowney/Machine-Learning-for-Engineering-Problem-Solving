@@ -3,10 +3,7 @@
 """
 Example 6.2 Polynomial Features
 
-Developed for Machine Learning for Mechanical Engineers at the University of
-South Carolina
-
-@author: austin_downey
+@author: Austin R.J. Downey
 """
 
 import IPython as IP

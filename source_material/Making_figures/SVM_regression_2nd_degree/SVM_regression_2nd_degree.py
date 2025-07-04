@@ -40,41 +40,39 @@ plt.close('all')
 
 from sklearn.svm import SVR
 
-
-# ----------------------------------------------------------
-#   Helper – no plotting
-# ----------------------------------------------------------
-def svr_tube(svr_model, x_grid):
-    """Return ŷ, upper, lower margins for supplied grid."""
-    y_hat = svr_model.predict(x_grid)
-    return y_hat, y_hat + svr_model.epsilon, y_hat - svr_model.epsilon
-
-# ----------------------------------------------------------
-#   Data & models
-# ----------------------------------------------------------
 np.random.seed(2)
 m = 100
 X = 2 * np.random.rand(m, 1) - 1
 y = (0.2 + 0.1 * X + 0.5 * X**2 + np.random.randn(m, 1) / 10).ravel()
 
-svr1 = SVR(kernel="poly", degree=2, C=10000,  epsilon=0.1, gamma="scale").fit(X, y)
-svr2 = SVR(kernel="poly", degree=2, C=0.01, epsilon=0.1, gamma="scale").fit(X, y)
+svr1 = SVR(kernel="poly", degree=2, C=100000,  epsilon=0.1, gamma="scale").fit(X, y)
+svr2 = SVR(kernel="poly", degree=2, C=0.002, epsilon=0.1, gamma="scale").fit(X, y)
 
 x_grid = np.linspace(-1, 1, 100).reshape(-1, 1)
-ŷ1, up1, low1 = svr_tube(svr1, x_grid)
-ŷ2, up2, low2 = svr_tube(svr2, x_grid)
+
+# Predict and calculate margins for svr1
+y_hat_1 = svr1.predict(x_grid)
+up1 = y_hat_1 + svr1.epsilon
+low1 = y_hat_1 - svr1.epsilon
+
+# Predict and calculate margins for svr2
+y_hat_2 = svr2.predict(x_grid)
+up2 = y_hat_2 + svr2.epsilon
+low2 = y_hat_2 - svr2.epsilon
+
 
 sup1 = svr1.support_
 sup2 = svr2.support_
 
-# ----------------------------------------------------------
-#   Plotting (plt.subplot style)
-# ----------------------------------------------------------
+
+#%%
+
+
 plt.figure(figsize=(6.5, 3))
 
-# ── Model 1 ────────────────────────────────────────────────
+
 plt.subplot(1, 2, 1)
-plt.plot(x_grid, ŷ1,   'k-', lw=2, label=r'$\hat{y}$')
+plt.plot(x_grid, y_hat_1,   'k-', lw=2, label=r'$\hat{y}$')
 plt.plot(x_grid, up1,  'k--')
 plt.plot(x_grid, low1, 'k--')
 plt.scatter(X[sup1], y[sup1], s=80, facecolors="none",
@@ -82,14 +80,13 @@ plt.scatter(X[sup1], y[sup1], s=80, facecolors="none",
 plt.plot(X, y, 'o', ms=3,zorder=10)
 plt.xlabel(r"$x_1$")
 plt.ylabel(r"$y$")
-plt.title(r"$degree={}, C={}, \epsilon={}$"
-          .format(svr1.degree, svr1.C, svr1.epsilon))
+plt.title('$C=100$,000')
 plt.axis([-1, 1, 0, 1])
 plt.legend(loc='upper left')
 
-# ── Model 2 ────────────────────────────────────────────────
+
 plt.subplot(1, 2, 2)
-plt.plot(x_grid, ŷ2,   'k-', lw=2, label=r'$\hat{y}$')
+plt.plot(x_grid, y_hat_2,   'k-', lw=2, label=r'$\hat{y}$')
 plt.plot(x_grid, up2,  'k--')
 plt.plot(x_grid, low2, 'k--')
 plt.scatter(X[sup2], y[sup2], s=80, facecolors="none",
@@ -97,8 +94,7 @@ plt.scatter(X[sup2], y[sup2], s=80, facecolors="none",
 plt.plot(X, y, 'o', ms=3,zorder=10)
 plt.xlabel(r"$x_1$")
 plt.ylabel(r"$y$")
-plt.title(r"$degree={}, C={}, \epsilon={}$"
-          .format(svr2.degree, svr2.C, svr2.epsilon))
+plt.title(r"$C={}$".format(svr2.C))
 plt.axis([-1, 1, 0, 1])
 plt.legend(loc='upper left')
 

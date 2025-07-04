@@ -86,7 +86,7 @@ plt.title("$w_1 = {}$".format(w))
 plt.tight_layout()
 ax2.set_yticklabels([])
 plt.savefig("SVM_weight_vectors",dpi=300)
-
+plt.savefig("SVM_weight_vectors.pdf")
 
 
 

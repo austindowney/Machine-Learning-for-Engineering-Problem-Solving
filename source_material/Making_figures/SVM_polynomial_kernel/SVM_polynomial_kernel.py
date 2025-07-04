@@ -40,7 +40,7 @@ import matplotlib.pyplot as plt
 import sklearn as sk
 from sklearn.datasets import make_moons
 from sklearn.pipeline import Pipeline
-
+from sklearn import svm
 
 
 #%% SVM polynominal features
@@ -91,7 +91,7 @@ plt.axis(axes)
 plt.grid(True)
 plt.xlabel("$x_1$")
 plt.ylabel("$x_2$")
-plt.title(r"$d=3, r=1, C=5$")
+plt.title(r"$degree=3$ and $coef0=1$")
 
 
 ax2 = plt.subplot(122)
@@ -111,7 +111,7 @@ plt.grid(True)
 plt.xlabel("$x_1$")
 
 ax2.set_yticklabels([])
-plt.title(r"$d=10,$ $r=100$, $C=5$")
+plt.title(r"$degree=10$ and $coef0=100$")
 
 plt.tight_layout()
 plt.savefig("SVM_polynomial_kernel",dpi=300)
