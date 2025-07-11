@@ -28,11 +28,11 @@
 
 	\vspace{2cm}
 
-
-	
 	\begin{center}
 	\begin{minipage}{0.75\textwidth}
-		{\fontsize{15}{15}\selectfont A free text focused on introducing classical machine learning techniques using the {\tt{scikit-learn}} library designed for engineers with limited to no programming experience.}
+		\centering
+    	\setstretch{1.5} % Set the desired line spacing
+       	{\LARGE{} A Practical Example-driven Guide to Classical Techniques}
 	\end{minipage}
 	\end{center}
 
@@ -74,38 +74,78 @@
 
 \setcounter{secnumdepth}{0} % Set the section depth to 0 so this is an un-umbered section in the table of contents.
 
+%v\setcounter{secnumdepth}{3} % reset the section depth
+\setcounter{page}{1}
+\pagenumbering{arabic} 
+
 \section{Preface}
-
-A free text focused on introducing classical machine learning techniques using the {\tt{scikit-learn}} library designed for engineers with limited to no programming experience.
-
-\subsection{Cover Art}
-Generic linear classifier.
-
 \vspace{-1ex}
+This text is a practical, example-driven guide to introduce classical machine learning techniques using the {\tt{scikit-learn}} library designed for engineers with limited to no programming experience. This preface collects the essential housekeeping information for using this text.
+
+
+
+\vspace{-0.5ex}
 \subsection{Accompanying Video Lectures}
 \vspace{-1ex}
-Videos of lectures associated with this text are available as a YouTube playlist 
+Videos of lectures associated with this text are available as a playlist 
 \href{https://www.youtube.com/playlist?list=PL-2wJog-EC5-yp3CSFpj2vEcj3Pp6UcoC}{here}.
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=6.0in]{figures/video_playlist}
+	\vspace{-0.5ex}
+	\caption{Playlist of videos associated with this text.}
+	\label{fig:video_playlist}
+	\vspace{-1.5ex}
+\end{figure} 
 
+\vspace{-0.5ex}
+\subsection{Programming in Python}
+\vspace{-1ex}
+This text uses Python programmed though the Spyder IDE managed through the Anaconda platform for the examples, leveraging the {\tt{scikit-learn}} library to explain the topics discussed. To assist readers of the text, a six part video series that walks the practitioner though this combination of IDE and distribution manager is provided as a playlist  \href{https://www.youtube.com/playlist?list=PL-2wJog-EC5-wQQUdpc8MjztKZ1kE2ATS}{here}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=6.0in]{figures/python_playlist}
+	\vspace{-0.5ex}
+	\caption{Playlist of videos for leaning how to program in Python using Spyder and Anaconda.}
+	\label{fig:python_playlist}
+	\vspace{-1.5ex}
+\end{figure} 
+
+\pagebreak
+
+\clearpage                 % start the special page
+\thispagestyle{noRhead}    % suppress only the right header on *this* page
+
+\vspace{-0.5ex}
+\subsection{Cover Art}
+\vspace{-1ex}
+Generic linear classifier.
+
+\vspace{-0.5ex}
 \subsection{License}
+\vspace{-1ex}
 This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License [cc-by-sa 4.0]. More information on the Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) license can be found 
 \href{https://creativecommons.org/licenses/by-sa/4.0/}{here}.
 Unless otherwise denoted, all text, figures, diagrams, and photos used in this work are the sole property of the authors and are released under CC BY-SA 4.0 both in part and in whole. Reworks and redistributions of this work that fall within the CC BY-SA 4.0 licenses are encouraged.
 
+\vspace{-0.5ex}
 \subsection{Source Code}
+\vspace{-1ex}
 The source code for this text is available 
 \href{https://github.com/austindowney/Machine-Learning-for-Engineering-Problem-Solving}{here}.
 
-\vspace{-1ex}
+
+
+
 \subsection{Questions and Contact Information}
 \vspace{-1ex}
 For questions, corrections, or requests, contact Austin Downey at austindowney@sc.edu.
 
 
-\setcounter{secnumdepth}{3} % reset the section depth
-\setcounter{page}{1}
-\pagenumbering{arabic} 
+\clearpage                 	% start the special page
+\setcounter{secnumdepth}{3} % reset the section depth so the following sections have numbers. The 3 means it has section, subsection, and subsubsection
 
 \pagebreak
 

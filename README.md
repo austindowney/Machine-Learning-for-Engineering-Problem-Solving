@@ -1,5 +1,5 @@
-# Machine Learning for Engineering Problem Solving
-A free text focused on introducing classical machine learning techniques using the scikit-learn library designed for engineers with limited to no programming experience.
+# Machine Learning for Engineering Problem Solving: A Practical Example-driven Guide to Classical Techniques
+This text is a practical, example-driven guide to introduce classical machine learning techniques using the scikit-learn library designed for engineers with limited to no programming experience. This preface collects the essential housekeeping information for using this text.
 
 
 <p align="center">
@@ -13,9 +13,17 @@ A current PDF version of the text can be found <a href="https://github.com/austi
 Videos of lectures associated with this text are available as a YouTube playlist <a href="https://www.youtube.com/playlist?list=PL-2wJog-EC58uXz1LhpNRmV8nCEvyvoVS">here</a>.
 
 <p align="center">
-<a href="https://www.youtube.com/playlist?list=PL-2wJog-EC5-yp3CSFpj2vEcj3Pp6UcoC""><img src="media/youtube_video_screenshot.jpg" alt="Screenshot of the video lecture" width="450"></a>  
+<a href="https://www.youtube.com/playlist?list=PL-2wJog-EC5-yp3CSFpj2vEcj3Pp6UcoC""><img src="media/video_playlist.png" alt="Screenshot of the video lecture" width="450"></a>  
 </p>
-<p align="center"> Screenshot of the video lecture that accompanies this repository which can be found <a href="https://www.youtube.com/playlist?list=PL-2wJog-EC5-yp3CSFpj2vEcj3Pp6UcoC">here</a>.  </p>
+<p align="center"> Playlist of videos associated with this text.  </p>
+
+This project uses Python programmed though the Spyder IDE managed through the Anaconda platform. A video series that walks the practitioner though this combination of IDE and distribution manager is provided <a href="https://www.youtube.com/playlist?list=PL-2wJog-EC5-wQQUdpc8MjztKZ1kE2ATS">here</a>.
+
+<p align="center">
+<a href="https://www.youtube.com/playlist?list=PL-2wJog-EC5-wQQUdpc8MjztKZ1kE2ATS"><img src="media/python_playlist.png" alt="Screenshot of the video lecture" width="450"></a>  
+</p>
+<p align="center"> Playlist of videos for leaning how to program in Python using Spyder and Anaconda.  </p>
+
 
 ## License
 
