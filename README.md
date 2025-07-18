@@ -1,4 +1,5 @@
-# Machine Learning for Engineering Problem Solving: A Practical Example-driven Guide to Classical Techniques
+# Machine Learning for Engineering Problem Solving
+## A Practical Example-driven Guide to Classical Techniques
 This text is a practical, example-driven guide to introduce classical machine learning techniques using the scikit-learn library, designed for engineers with limited to no programming experience. This preface collects the essential housekeeping information for using this text.
 
 
@@ -8,7 +9,7 @@ This text is a practical, example-driven guide to introduce classical machine le
 
 A current PDF version of the text can be found <a href="https://github.com/austindowney/Machine-Learning-for-Engineering-Problem-Solving/blob/main/Machine_Learning_for_Engineering_Problem_Solving.pdf">here</a>.
 
-## Accompanying Video Lectures
+### Accompanying Video Lectures
 
 Videos of lectures associated with this text are available as a YouTube playlist <a href="https://www.youtube.com/playlist?list=PL-2wJog-EC5-yp3CSFpj2vEcj3Pp6UcoC">here</a>.
 
@@ -25,14 +26,14 @@ This project uses Python programmed through the Spyder IDE managed through the A
 <p align="center"> Playlist of videos for learning how to program in Python using Spyder and Anaconda.  </p>
 
 
-## License
+### License
 
 This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License [cc-by-sa 4.0].
 
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC_BY--SA_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 
 
-## Citation
+### Citation
 
 Cite as  
 @Misc{DowneyMachineLearningEngineering,  
