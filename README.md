@@ -4,7 +4,7 @@ This text is a practical, example-driven guide to introduce classical machine le
 
 
 <p align="center">
-<img src="source_material/figures/x_y_plot_linear_classifier.png" alt="drawing" width="300"/>
+<img src="source_material/figures/truck.jpg" alt="drawing" width="300"/>
 </p>
 
 A current PDF version of the text can be found <a href="https://github.com/austindowney/Machine-Learning-for-Engineering-Problem-Solving/blob/main/Machine_Learning_for_Engineering_Problem_Solving.pdf">here</a>.
