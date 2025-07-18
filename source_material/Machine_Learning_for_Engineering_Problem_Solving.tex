@@ -1,0 +1,217 @@
+\documentclass[12pt,letter]{article}
+\usepackage{downey_format}
+
+% These packages are added for / required to compile the entire document
+\usepackage{standalone} 
+\usepackage{chapterbib}   
+
+%%%%%%%%%%%%%		Notes on compiling Document		%%%%%%%%%%%%%
+% Notes on compiling Document
+%
+% 1. Each chapter can be compiled on its own.
+% 2. I set the document up with a common figures folder to allow for the reuse of figures and generally to keep the document clean. 
+% 3. When compiling the main document, you must include the \graphicspath{{xx}} for the first chapter, to set it in Chapter 1. From here on, it will think it is in the chapter one folder but the <../figures> in each folder will work with this. 
+% 4. I (Austin Downey) have gotten this to compile on Windows with MikTeX and Linux with TeXLive. Your results may vary. For Linux, I:
+% 	i.	added the extra {} in \graphicspath
+% 	ii.	removed the .tex extension from the file names except for Chapter 1. 
+% 5. The common bibliography is an issue that has yet to be sorted out. Currently citing sources in footnotes.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+\begin{document}
+\thispagestyle{empty}	
+
+\begin{center}
+	{\fontsize{33}{100}\selectfont Machine Learning for Engineering Problem Solving}
+
+	\vspace{1cm}
+
+	\begin{center}
+	\begin{minipage}{0.75\textwidth}
+		\centering
+    	\setstretch{1.5} % Set the desired line spacing
+       	{\LARGE{} A Practical Example-driven Guide to Classical Techniques}
+	\end{minipage}
+	\end{center}
+
+	\vspace{3cm}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=4.0in]{figures/truck}
+		\label{fig:title_figure}
+	\end{figure} 
+	
+	\vspace{2cm}
+	
+	\textbf{Austin R.J. Downey}\\ Department of Mechanical Engineering \\ Department of Civil and Environmental Engineering \\ University of South Carolina, Columbia SC, USA 
+	
+
+
+
+
+
+
+
+
+	\vspace*{\fill}
+	
+	\today
+
+
+\end{center}
+
+\pagebreak
+
+\pagebreak
+\setcounter{page}{1}
+\pagenumbering{roman}
+\tableofcontents
+
+\pagebreak
+
+\setcounter{secnumdepth}{0} % Set the section depth to 0 so this is an un-umbered section in the table of contents.
+\setcounter{page}{1}
+\pagenumbering{arabic} 
+
+\section{Preface}
+\vspace{-1ex}
+This text is a practical, example-driven guide to introduce classical machine learning techniques using the {\tt{scikit-learn}} library designed for engineers with limited to no programming experience. This preface collects the essential housekeeping information for using this text.
+
+
+
+\vspace{-0.5ex}
+\subsection{Accompanying Video Lectures}
+\vspace{-1ex}
+Videos of lectures associated with this text are available as a playlist 
+\href{https://www.youtube.com/playlist?list=PL-2wJog-EC5-yp3CSFpj2vEcj3Pp6UcoC}{here}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=6.0in]{figures/video_playlist}
+	\vspace{-0.5ex}
+	\caption{Playlist of videos associated with this text.}
+	\label{fig:video_playlist}
+	\vspace{-1.5ex}
+\end{figure} 
+
+\vspace{-0.5ex}
+\subsection{Programming in Python}
+\vspace{-1ex}
+This text uses Python programmed though the Spyder IDE managed through the Anaconda platform for the examples, leveraging the {\tt{scikit-learn}} library to explain the topics discussed. To assist readers of the text, a six part video series that walks the practitioner though this combination of IDE and distribution manager is provided as a playlist  \href{https://www.youtube.com/playlist?list=PL-2wJog-EC5-wQQUdpc8MjztKZ1kE2ATS}{here}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=6.0in]{figures/python_playlist}
+	\vspace{-0.5ex}
+	\caption{Playlist of videos for leaning how to program in Python using Spyder and Anaconda.}
+	\label{fig:python_playlist}
+	\vspace{-1.5ex}
+\end{figure} 
+
+
+\pagebreak
+\clearpage                 % start the special page
+\thispagestyle{noRhead}    % suppress only the right header on *this* page
+
+\vspace{-0.5ex}
+\subsection{Cover Art}
+\vspace{-1ex}
+The cover image, is a mid-1930s International Harvester C-series truck. Built between 1934 and 1936 at the company's Springfield Works in Springfield, Ohio. Roughly 80,000 C-series trucks where made during this short time. The C-series was International's first line to feature an all-steel cab and a host of mechanical upgrades over the prior W-series. This truck was photographed by Ethan McNeese on Washington Island in Door County, Wisconsin in 2021.
+
+The truck on the cover underscores the simple idea that a machine's purpose is to turn raw input into useful work. The same principle drives machine learning, where digital ``machines'' transform data into insight and data-informed actions.
+
+
+
+\vspace{-0.5ex}
+\subsection{License}
+\vspace{-1ex}
+This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License [cc-by-sa 4.0]. More information on the Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) license can be found 
+\href{https://creativecommons.org/licenses/by-sa/4.0/}{here}.
+Unless otherwise denoted, all text, figures, diagrams, and photos used in this work are the sole property of the authors and are released under CC BY-SA 4.0 both in part and in whole. Reworks and redistributions of this work that fall within the CC BY-SA 4.0 licenses are encouraged.
+
+\vspace{-0.5ex}
+\subsection{Source Code}
+\vspace{-1ex}
+The source code for this text is available 
+\href{https://github.com/austindowney/Machine-Learning-for-Engineering-Problem-Solving}{here}.
+
+
+
+
+\subsection{Questions and Contact Information}
+\vspace{-1ex}
+For questions, corrections, or requests, contact Austin Downey at austindowney@sc.edu.
+
+
+\clearpage                 	% start the special page
+\setcounter{secnumdepth}{3} % reset the section depth so the following sections have numbers. The 3 means it has section, subsection, and subsubsection
+\pagebreak
+
+%%%%%%%%%%%%%		Notes on compiling Document		%%%%%%%%%%%%%
+% Notes on compiling Document
+%
+% 1. Each chapter can be compiled on there own.
+% 2. I set the document up with a common figures folder to allow for the reuse of figures and generally to keep the document clean. 
+% 3. When compiling the main document, you must include the \graphicspath{{xx}} for the first chapter, to set it in chapter 1. From here on, it will think its in the chapter one folder but the <../figures> in each folder will work with this. 
+% 4. I (Austin Downey) have gotten this to compile on Windows with MikTeX and Linux with TeXLive. Your results may vary. For Linux, I:
+% 	i.	added the extra {} in \graphicspath
+% 	ii.	removed the .tex extension from the file names except for chapter 1. 
+% 5. The common bibliography is an issue that has yet to be sorted out.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Chapter 1 Basic Concepts
+\graphicspath{{Chapter_1_Basic_Concepts/}}
+\input{Chapter_1_Basic_Concepts/Chapter_1_Basic_Concepts}
+
+% Chapter 2 Regression
+\include{Chapter_2_Regression/Chapter_2_Regression}
+
+% Chapter 3 Classification
+\include{Chapter_3_Classification/Chapter_3_Classification}
+
+% Chapter 4 Regression-based Classification
+\include{Chapter_4_Regression-based_Classification/Chapter_4_Regression-based_Classification}
+
+
+% Chapter 5 Decision Trees
+\include{Chapter_5_Decision_Trees/Chapter_5_Decision_Trees}
+
+% Chapter 6 Support Vector Machines
+\include{Chapter_6_Support_Vector_Machines/Chapter_6_Support_Vector_Machines}
+
+
+
+
+
+
+
+
+\pagebreak
+\renewcommand{\thepage}{}
+\renewcommand\refname{References Cited}
+\pagestyle{plain}
+\bibliographystyle{Downey_NSF}
+\bibliography{Chapter_1_Basic_Concepts}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
+

@@ -1,0 +1,206 @@
+
+\usepackage{mathptmx} % added for time new Roman font
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage[final]{pdfpages}
+
+% defines all example environments
+\usepackage[framemethod=tikz]{mdframed} % added for the box around examples
+\newtheorem{ex}{Example}
+\numberwithin{ex}{section} % allows for the use of example numbers that line up with the section numbers
+\newenvironment{example}{\begin{mdframed}[middlelinewidth=0.5mm]\begin{ex}\normalfont}{\end{ex}\end{mdframed}}
+
+% defines all review environment
+\usepackage[framemethod=tikz]{mdframed} % added for the box around examples
+\newtheorem{re}{Review}
+\numberwithin{re}{section} % allows for the use of example numbers that line up with the section numbers
+\newenvironment{review}{\begin{mdframed}[middlelinewidth=2mm,roundcorner=20pt]\begin{re}\normalfont}{\end{re}\end{mdframed}}
+
+% defines all vibration case studies
+\newtheorem{vcs}{Machine Learning Case Study}
+\numberwithin{vcs}{section} % allows for the use of numbers that line up with the section numbers
+\newenvironment{ML_case_study}{\begin{mdframed}[linecolor=orange,middlelinewidth=2mm,roundcorner=20pt]\begin{vcs}\normalfont}{\end{vcs}\end{mdframed}}
+
+% defines all data enviorments
+\usepackage[framemethod=tikz]{mdframed} % added for the box around examples
+\newtheorem{da}{Data Set}
+\numberwithin{da}{section} % allows for the use of example numbers that lign up with the section numbers
+\newenvironment{data}{\begin{mdframed}[middlelinewidth=2mm,roundcorner=20pt]\begin{re}\normalfont}{\end{re}\end{mdframed}}
+
+% defines all note environment
+\newenvironment{note}{\begin{mdframed}[middlelinewidth=0.5mm,roundcorner=0pt]\begin{center} \bl{NOTE} \end{center}\normalfont\noindent \hspace{-0.75ex}}{\end{mdframed}} % This has an extra \hspace{-0.75ex} in it as the with noindent it still had a small indent. Not sure why.
+
+% defines the quotation environment 
+\usepackage{xcolor}
+\newcommand{\quotebox}[2]{\begin{center}\fcolorbox{white}{blue!15!gray!15}{\begin{minipage}{0.9\linewidth}\vspace{10pt}\center\begin{minipage}{0.8\linewidth}{\space\Huge``}{#1}{\Huge''}{\break\null\hfill} {\small #2}  \end{minipage}\medbreak\end{minipage}}\end{center}}
+
+% defines the definition environment 
+\newcommand{\definitionbox}[2]{\begin{center}\fcolorbox{white}{blue!15!gray!15}{\begin{minipage}{0.9\linewidth}\vspace{10pt}\center\begin{minipage}{0.8\linewidth} {{\textbf{Definition} - }{#1}: {#2}}\end{minipage}\medbreak\end{minipage}}\end{center}}
+
+% load in packages needed for basic layout functions
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage[textsize=tiny]{todonotes}
+\usepackage[OT2, T1]{fontenc}			% added for Russian names in Cyrillic text
+\usepackage[russian, english]{babel}	% added for Russian names in Cyrillic text
+\usepackage{enumitem}					% added to reduce the space in an itemized list
+\usepackage[hyphens]{url}				% added to allow url to break at hyphen
+\usepackage{setspace}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{textcomp} 
+\usepackage{multicol} 
+
+%\usepackage{underscore}					% added to allow for line break in a "_" used in code function names.
+
+% added for MATLAB code
+\usepackage[framed]{matlab-prettifier}
+\let\ph\mlplaceholder % shorter macro
+\lstMakeShortInline"
+
+\usepackage{color} % color added for editing
+\newcommand{\bl}[1]{\textcolor[rgb]{0.00,0.00,1.00}{#1}}
+\newcommand{\gr}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\rd}[1]{\textcolor[rgb]{0.75,0.00,0.00}{#1}}
+\newcommand{\tl}[1]{\textcolor[rgb]{0,0.6,0.60}{#1}}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead[L]{ML for Eng. Problem Solving}
+\fancyhead[R]{\rightmark}
+%\fancyfoot{} % clear all footer fields
+%\fancyfoot[L]{Open Vibrations by Downey and Micheli} 
+
+% ---- page style that has no right header -----------------
+\fancypagestyle{noRhead}{%
+	\pagestyle{fancy}
+	\fancyhead[L]{ML for Eng. Problem Solving} % keep the left header
+}
+
+%%%%%%%		define the symbols for positive directions		%%%%%%
+\usepackage{amssymb}											%%
+\makeatletter													%%	
+																%%					
+\newcommand*\curvepluscounterclock{% positive counterclockwise	%%
+  \mathbin{\rotatebox[origin=c]{90}{$\m@th\curvearrowleft$}+}}	%%
+																%%
+\newcommand*\curveplusclock{% positive counterclockwise			%%
+  \mathbin{\rotatebox[origin=c]{90}{$\m@th\curvearrowright$}+}} %%
+																%%
+\newcommand*\rightplus{% positive right							%%
+  \mathpalette\@rightplus\relax}								%%
+\newcommand*\@rightplus[1]{%									%%
+  \mathbin{\vcenter{\hbox{$\m@th\overset{#1+}{\to}$}}}}			%%
+																%%	
+\newcommand*\upplus{% positive up								%%
+  \mathbin{+\mathord\uparrow}}									%%
+																%%			
+\newcommand*\downplus{% positive down							%%		
+  \mathbin{+\mathord\downarrow}}								%%
+  																%%		
+\newcommand*\downrightplus{% positive down and right			%%	
+  \mathbin{+ \rotatebox[origin=c]{-30}{$\m@th\rightarrow$}}}	%%
+\makeatother 													%%	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\usepackage{mathtools}          %loads amsmath as well added for the piece-wise function
+\DeclarePairedDelimiter\Floor\lfloor\rfloor
+\DeclarePairedDelimiter\Ceil\lceil\rceil
+
+ 
+\newcounter{NumberInTable}
+\newcommand{\LTNUM}{\stepcounter{NumberInTable}{(\theNumberInTable)}}
+
+\newcommand{\Laplace}[1]{\ensuremath{\mathcal{L}{\left[#1\right]}}}
+\newcommand{\InvLap}[1]{\ensuremath{\mathcal{L}^{-1}{\left[#1\right]}}}
+\renewcommand{\textuparrow}{$\uparrow$}
+
+% Sets the footnotes to be letters, not numbers. This is needed or it's a mix of both. 
+\renewcommand*\thefootnote{\alph{footnote}}
+
+% Removes the indent from the footnotes
+\usepackage[hang,flushmargin]{footmisc} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% For python code Listings, needs to be simplified    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{12} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{12}  % for normal
+
+% add custom colors
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+% Python style for highlighting
+\newcommand\pythonstyle{\lstset{
+language=Python,
+basicstyle=\ttm,
+morekeywords={self},              % Add keywords here
+keywordstyle=\ttb\color{deepblue},
+emph={MyClass,__init__},          % Custom highlighting
+emphstyle=\ttb\color{deepred},    % Custom highlighting style
+stringstyle=\color{deepgreen},
+frame=tb,                         % Any extra options here
+showstringspaces=false
+}}
+
+
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}
+
+% Python for external files
+\newcommand\pythonexternal[2][]{{
+\pythonstyle
+\lstinputlisting[#1]{#2}}}
+
+% Python for inline
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
