@@ -36,14 +36,14 @@ This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 Intern
 ### Citation
 
 Cite as  
-@Misc{DowneyMachineLearningEngineering,  
-  author = {Austin {R.J.} Downey},  
-  title  = {Machine Learning for Engineering Problem Solving},  
-  url    = {https://github.com/austindowney/Machine-Learning-for-Engineering-Problem-Solving},  
-}  
-
-
-
+@Article{Downey2025MachineLearningEngineering,  
+  author    = {Downey, Austin {R.J.}},  
+  title     = {Machine Learning for Engineering Problem Solving: A Practical Example-driven Guide to Classical Techniques},  
+  year      = {2025},  
+  month     = jul,  
+  doi       = {10.31224/4909},  
+  publisher = {Open Engineering Inc},  
+}
 
 
 
