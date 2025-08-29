@@ -10,7 +10,7 @@ IP.get_ipython().run_line_magic('reset', '-sf')
 Default plot formatting code for Austin Downey's series of open-source notes/
 books. This common header is used to set the fonts and format.
 
-Header file last updated May 16, 2024
+Header file last updated July 19, 2025
 """
 
 import numpy as np

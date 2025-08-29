@@ -61,7 +61,7 @@ Training seeks parameter values $\theta$ that give high predicted probabilities 
   \end{cases}
 \label{eq:cost_function}
 \end{equation}
-which is plotted in \ref{fig:Logistic_Regression_cost_function}.
+The considered cost function is plotted in figure~\ref{fig:Logistic_Regression_cost_function}.
 
 \begin{figure}[H]
 	\centering
@@ -74,13 +74,13 @@ The cost function in equation~\ref{eq:cost_function} behaves intuitively: $-\log
 
 
 
-The overall cost, denoted $J(\theta)$, is the mean loss across all $m$ training examples. This metric is commonly called the log-loss and written in equation~\ref{eq:log_loss}:
+The overall cost, denoted $J(\theta)$, is the mean loss across all $m$ training examples. This metric is commonly called the log-loss and written as 
 \begin{equation}
 J(\theta) ;=; -\frac{1}{m}\sum_{i=1}^{m}\Big[y^{(i)} \log \bigl(\hat{p}^{(i)}\bigr) ;+; \bigl(1 - y^{(i)}\bigr) \log \bigl(1-\hat{p}^{(i)}\bigr)\Big].
 \label{eq:log_loss}
 \end{equation}
 
-Because there is no closed-form solution for the parameters $\theta$ (embedded within $\hat{p}$), the minimum must be found with an iterative optimizer. The cost surface is convex, so gradient descent or another suitable algorithm will reach the global minimum provided the learning rate is reasonable and enough iterations are allowed. The gradient of the cost with respect to the $j^\text{th}$ parameter $\theta_j$ is given in equation~\ref{eq:Logistic_cost_function_partial_derivatives}:
+Because there is no closed-form solution for the parameters $\theta$ (embedded within $\hat{p}$), the minimum must be found with an iterative optimizer. The cost surface is convex, so gradient descent or another suitable algorithm will reach the global minimum provided the learning rate is reasonable and enough iterations are allowed. The gradient of the cost with respect to the $j^\text{th}$ parameter $\theta_j$ is given as
 \begin{equation}
 \frac{\partial J}{\partial \theta_j} ;=; \frac{1}{m} \sum_{i=1}^{m} \Bigl[\sigma \bigl(\theta^\text{T}X^{(i)}\bigr) - y^{(i)}\Bigr],x^{(i)}_{j}.
 \label{eq:Logistic_cost_function_partial_derivatives}
@@ -131,17 +131,20 @@ The petal width of Iris-virginica flowers usually lies between 1.4~cm and 2.5~cm
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=6.5in]{../figures/Iris_dataset_decision_boundary_1D.png}
+	\includegraphics[width=6.2in]{../figures/Iris_dataset_decision_boundary_1D.png}
+	\vspace{-3ex}
 	\caption{Decision boundary for the flowers of three Iris plant species with C set to $C=10^{10}$ .}
 	\label{fig:Iris_dataset_decision_boundary_1D}
 \end{figure}
 
+\vspace{-2ex}
 \begin{example}
 \textbf{1D Logistic Regression}
 
 \noindent This example builds a logistic regression model to classify Iris-Virginica based on a single feature: petal width. It visualizes class probabilities and shows the decision boundary at the 50\% threshold.
 \end{example}
 
+	\vspace{-2ex}
 \subsubsection{2-D Decision Boundaries}
 
 
@@ -151,10 +154,13 @@ Figure~\ref{fig:Iris_dataset_decision_boundary_2D} plots petal width against pet
 
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=6.5in]{../figures/Iris_dataset_decision_boundary_2D.png}
+			\includegraphics[width=6.2in]{../figures/Iris_dataset_decision_boundary_2D.png}
+			\vspace{-3ex}
 			\caption{A 2D decision boundary for the Iris dataset.}
 			\label{fig:Iris_dataset_decision_boundary_2D}
 		\end{figure}
+
+\pagebreak
 
 \begin{example}
 \textbf{2D Decision Boundary}

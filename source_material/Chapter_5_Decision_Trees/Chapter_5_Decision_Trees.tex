@@ -79,15 +79,16 @@ A Decision Tree can estimate the likelihood that a sample belongs to class~$k$. 
 
 Interestingly, the same estimated probabilities apply throughout the bottom-right rectangle of Figure~\ref{fig:decision_tree_boundaries}, even in a scenario where the petal dimensions are 6~cm by 1.5~cm where one might intuitively expect an Iris-Virginica classification.
 
+\pagebreak
 \begin{example}
 \textbf{Decision Tree Classifier}
 
 \noindent This example uses Scikit-Learn's \texttt{DecisionTreeClassifier} to classify iris species based on petal features. The decision process is visualized using Graphviz, showing the structure of learned rules and how decisions are made based on feature thresholds.  This online viewer is the easiest way to do that \url{https://dreampuf.github.io/GraphvizOnline/}
 \end{example}
 
-
+\vspace{-1ex}
 \subsection{The CART Training Algorithm}
-
+\vspace{-1ex}
 Scikit-Learn trains decision trees with the Classification and Regression Tree (CART) algorithm\footnotemark[1], a process often called ``growing'' the tree. At each node the algorithm splits the local training set into two parts by selecting a feature $k$ and a threshold $t_{k}$, for example ``petal length $\leq 2.45$~cm''. It evaluates every candidate pair $(k,t_{k})$ and chooses the one that yields the purest child nodes, judging purity by a weighted combination of each child's impurity measure and sample count.
 
 
@@ -96,7 +97,9 @@ Scikit-Learn trains decision trees with the Classification and Regression Tree (
 
 \begin{figure}[H]
 	\centering
+	\vspace{-1ex}
 	\includegraphics[]{../figures/CART_algorithm}
+\vspace{-1ex}
 	\caption{Illustration of the CART algorithm process.}
 	\label{fig:algorithm}
 \end{figure}
@@ -113,6 +116,8 @@ J(k, t_k) = \frac{m_{\text{left}}}{m} G_{\text{left}} + \frac{m_{\text{right}}}{
  After the initial split, the algorithm continues to divide the resulting subsets and their subsequent divisions recursively. This recursive process halts when it reaches the predefined maximum depth ({\tt{max\_depth}}) set through a hyperparameter, or if no further impurity-reducing splits can be found.
 
 Unlike linear models that assume a specific data structure, Decision Trees impose few assumptions on their initial data. If not appropriately constrained, a Decision Tree can intricately conform to the training data, leading to overfitting. This model type is described as nonparametric, not due to a lack of parameters, which it can have in abundance, but because the parameters are not predetermined before training, allowing the model's structure to freely mirror the data intricacies. Conversely, a parametric model, like a linear model, has a fixed number of parameters, limiting its flexibility but also minimizing overfitting risks while potentially increasing underfitting risks.
+
+\pagebreak
 
 To mitigate overfitting in Decision Trees, it is essential to control the model's freedom during training through regularization. The regularization hyperparameters vary by the algorithm, but typically, the tree's maximum depth can be restricted. In Scikit-Learn, this is managed by the \texttt{max\_depth} hyperparameter, which is unlimited by default. Lowering \texttt{max\_depth} helps regularize the model, thereby reducing overfitting likelihood.
 
@@ -136,6 +141,7 @@ Figure~\ref{fig:decision_tree_regularization} illustrates two Decision Trees tra
 \end{figure}
 
 
+\pagebreak
 
 \subsubsection{Computational Complexity}
 

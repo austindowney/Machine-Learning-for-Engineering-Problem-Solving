@@ -62,7 +62,7 @@ Artificial Intelligence (AI) encompasses a wide range of technologies aimed at m
 
 
 
-
+\pagebreak
 
 \subsubsection{Examples of Machine Learning}
 
@@ -76,7 +76,7 @@ Machine Learning, as a subset of AI, involves algorithms that improve automatica
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=2in]{../figures/Symbolics3640_Modified.jpg}
+    \includegraphics[width=2.2in]{../figures/Symbolics3640_Modified.jpg}
     \caption{A Symbolics Lisp Machine, a specialized hardware platform designed to run expert systems which are a version of AI focusing on answering questions to challenging problems.\protect\footnotemark[1]}
     \label{fig:Symbolics3640_Modified}
 \end{figure}
@@ -87,7 +87,7 @@ Machine Learning, as a subset of AI, involves algorithms that improve automatica
 
 
 
-
+\pagebreak
 	\subsubsection{Examples of Deep Learning}
 
 	
@@ -95,12 +95,12 @@ Machine Learning, as a subset of AI, involves algorithms that improve automatica
 
 		\begin{figure}[t]
 			\centering
-			\includegraphics[width=6in]{../figures/simple_neural_network_vs_deep_learning.jpg}
+			\includegraphics[width=6.5in]{../figures/simple_neural_network_vs_deep_learning.jpg}
 			\caption{simple neural network vs deep learning}
 			\label{fig:simple_neural_network_vs_deep_learning}
 		\end{figure}
 
-
+\pagebreak
 	\begin{data}
 
 		Imagenet in 2012 represented a significant step forward in machine learning by introducing the first practical example of deep learning, famously known as AlexNet (Figure~\ref{fig:imageNet_classificatoin_paper}) This model, developed by Geoffrey Hinton and his team, utilized deep convolutional neural networks to dramatically improve the accuracy of image classification, which was a longstanding challenge in the field.
@@ -109,7 +109,7 @@ Machine Learning, as a subset of AI, involves algorithms that improve automatica
 		\begin{figure}[H]
 			\centering
 			\vspace{-2ex}
-			\includegraphics[width=4.5in]{../figures/imageNet_classificatoin_paper}
+			\includegraphics[width=5.0in]{../figures/imageNet_classificatoin_paper}
 			\vspace{-4ex}
 			\caption{Geoffrey's 2012 paper ``ImageNet Classification with Deep Convolutional Neural Networks''.\protect\footnotemark[1]}
 			\label{fig:imageNet_classificatoin_paper}
@@ -120,7 +120,7 @@ Machine Learning, as a subset of AI, involves algorithms that improve automatica
 
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=\linewidth]{../figures/ImageNet-competition-results}
+			\includegraphics[width=4.95in]{../figures/ImageNet-competition-results}
 			\caption{ImageNet Competition Results showing the impact of deep learning methods on image classification.}
 			\label{fig:ImageNet-competition-results}
 		\end{figure}
@@ -129,7 +129,7 @@ Machine Learning, as a subset of AI, involves algorithms that improve automatica
 
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=\linewidth]{../figures/Nobel}
+			\includegraphics[width=4.95in]{../figures/Nobel}
 			\caption{The 2024 Nobel Prize in Physics for ``for foundational discoveries and inventions that enable machine learning with artificial neural networks'' was awarded to: (a) John Hopfield and (b) Geoffrey  Hinton. \protect\footnotemark[1]}
 			\label{fig:Nobel}
 		\end{figure}
@@ -172,35 +172,37 @@ Machine Learning, as a subset of AI, involves algorithms that improve automatica
 			\item Inference: Using the model can be computationally cheap and even performed ``at the edge''
 		\end{itemize}
 
-
+\pagebreak
 
 			\begin{figure}[t]
 				\centering
 				\includegraphics[width=\linewidth]{../figures/Supervised_and_unsupervised_machine_learning.png}
+				\vspace{-6ex}
 				\caption{Supervised vs unsupervised unsupervised machine learning methods\protect\footnotemark[1].}
 				\label{fig:Supervised_and_unsupervised_machine_learning}
+				\vspace{-1ex}
 			\end{figure}
 
 		\footnotetext[1]{modified from: Langs, G., Röhrich, S., Hofmanninger, J. et al., CC BY 4.0 $<$https://creativecommons.org/licenses/by/4.0$>$, via Wikimedia Commons}
 
 
-	\subsection{Supervision in Machine Learning}
 
+	\subsection{Supervision in Machine Learning}
+	\vspace{-1ex}
 
 		The general domains of ML can be classified into supervised and unsupervised learning, as shown in figure~\ref{fig:Supervised_and_unsupervised_machine_learning}.
 
 		
 		\subsubsection{Supervised Learning}
-			
-			\textbf{Supervised}, the data is pre-categorized with labels
-			\begin{itemize}
+	\vspace{-1ex}			
+			In supervised learning, the data is pre-categorized with labels
+			\begin{itemize}[itemsep=0.0ex,topsep=0.0ex]
 				\item \textbf{Classification}, The process of categorizing a given set of data into classes
 				\item \textbf{Regression}, The process of estimating the relationships between a dependent variables (i.e. output) and one or more independent variables (i.e. input).
 			\end{itemize}
-
 			In supervised learning, the training data provided to the algorithm includes the desired solutions, known as labels. A common task within this type of learning is classification. An example of classification is a spam filter, which is trained using numerous emails that are each labeled as either spam or ham. The objective for the spam filter is to learn how to accurately classify new emails based on this training. Regression is another typical task is to predict a target numeric value, such as the price of a house, given a set of features (size, proximity to railroad or highways, age of house, style, etc.) called predictors. To train a system you need to build a model and train in on many house sale examples, including both predictors (house features) and their labels (i.e., prices).
 			Some of the most important supervised learning algorithms:
-			\begin{itemize}
+			\begin{itemize}[itemsep=0.0ex,topsep=0.0ex]
 				\item	k-Nearest Neighbors
 				\item	Linear Regression
 				\item	Logistic Regression
@@ -238,6 +240,7 @@ Machine Learning, as a subset of AI, involves algorithms that improve automatica
 In unsupervised learning, the training data is unlabeled, and the system endeavors to learn independently without explicit guidance. For instance, consider a situation where you have extensive data on what people watch on YouTube. You might use a clustering algorithm to identify groups of similar users. However, at no point do you instruct the algorithm on which group a user belongs to; it discovers these connections autonomously. For example, it might identify that the types of videos people watch are closely linked to specific age and income metrics. Older viewers may prefer watching videos about vacations, while younger viewers might watch a lot of educational content, such as Khan Academy.
 
 Visualization algorithms such as that in Figure~\ref{fig:data_visualization}) serve as an important instance of unsupervised learning algorithms: they take in extensive, complex, and unlabeled data and produce a 2D or 3D representation that can be conveniently visualized. These algorithms strive to maintain as much of the original data structure as possible (for example, ensuring that distinct clusters in the input space do not merge in the visual output). This helps in comprehending the organizational structure of the data and potentially uncovering hidden patterns. Other Important concepts in unsupervised learning include
+\pagebreak
 \begin{itemize}
 	\item \textbf{Clustering}, The process of identifying and grouping similar data points in larger datasets without concern for the specific outcome
 	\item \textbf{Association}, The process learning a rule-based method for discovering relations between variables data data
@@ -388,7 +391,7 @@ If the dataset is exceptionally large, employing a batch learning algorithm may 
 
 			
 Online learning trains a model incrementally by presenting new data points one at a time or in small mini-batches. Each update is computationally light and fast, allowing the model to refresh its knowledge continuously as fresh data streams in. This approach is particularly appropriate for systems that:
-\begin{itemize}
+\begin{itemize}[itemsep=0.25ex]
     \item receive data continuously, such as stock prices,
     \item need to quickly or autonomously adapt to changes,
     \item have limited computing resources: once an online learning system processes new data instances, they can be discarded to save space, unless there is a need to revert to a previous state and ``replay'' the data.
@@ -399,93 +402,101 @@ A critical parameter in online learning systems is the learning rate, which dict
 
 		
 		\subsubsection{Bad Data in Machine Learning }
-		
+		\vspace{-1ex}		
 
 		A significant challenge in online learning is the system's susceptibility to performance degradation when exposed to poor quality data. This is particularly problematic in live systems where clients might quickly notice issues. For instance, bad data could originate from a malfunctioning robot sensor or an attempt to manipulate search engine rankings through spamming. To mitigate these risks, it is crucial to vigilantly monitor the system and quickly disable learning or revert to a previously effective state if a decline in performance is observed. Additionally, monitoring the input data for anomalies and employing anomaly detection algorithms can help identify and respond to aberrant data.
 
-		For example, imagine training a convolutional neural network to recognize cows (Figure~\ref{fig:cows}). Every image in the training set shows black-and-white cattle standing on lush green pasture, so the easiest statistical cue for the model to latch onto is the dominant green background rather than the animals themselves. At inference time, the network confidently labels any scene filled with grass as ``cow,'' yet fails when presented with a cow on snow or asphalt. In other words, it has learned ``grass recognition,'' not ``cow recognition''.
 
 			\begin{figure}[H]
 				\centering
-				\includegraphics[width=\linewidth]{../figures/cows}
+				\includegraphics[width=6in]{../figures/cows}
+				\vspace{-1ex}
 				\caption{Training a machine learning algorithm to recognize cows may end up just learning to recognize grass. This is sometimes called ``short-cut learning''\protect\footnotemark[1].}
 				\label{fig:cows}
 			\end{figure}
+
+
 			\footnotetext[1]{Screen shoot of a Google image search for cows taken by the Austin Downey, all images stated to be under a creative commons license per Google search tools; also assumed to be fair use under given the educational purpose of this text, via \url{https://www.google.com/}}
+
+
+		For example, imagine training a convolutional neural network to recognize cows (Figure~\ref{fig:cows}). Every image in the training set shows black-and-white cattle standing on lush green pasture, so the easiest statistical cue for the model to latch onto is the dominant green background rather than the animals themselves. At inference time, the network confidently labels any scene filled with grass as ``cow,'' yet fails when presented with a cow on snow or asphalt. In other words, it has learned ``grass recognition,'' not ``cow recognition''.
+
+
 		
 	\subsection{Learning Approaches: Instance-Based and Model-Based}
 		
 
 Another method of classifying machine learning systems is based on their generalization capabilities. Typically, the main objective in machine learning is to make predictions, which requires the system to generalize from its training examples to new, unseen instances. Achieving high performance on training data is useful but not the ultimate goal; the system must also excel when confronted with new data.
-
 There are primarily two strategies for generalization: instance-based learning and model-based learning.
 		
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{../figures/instance_based_learning}
+	\caption{Instance-based learning where the class of a unknown instance is inferred from the its distance to data points with known labels.}
+	\label{fig:instance_based_learning}
+\end{figure}
 		
 		\subsubsection{Instance-based learning}
 		
 
 One of the simplest learning strategies is rote memorization. For instance, a spam filter built on this principle would only mark emails as spam if they match previously flagged emails exactly. While this approach is straightforward, it's hardly the most effective.
-
 A more sophisticated spam filter could extend its detection capabilities to include emails that closely resemble known spam messages. This approach necessitates a metric for measuring the similarity between two emails. A basic method might involve counting the shared words between emails. Under this system, an email would be classified as spam if it shares a significant number of words with an email already identified as spam.
-
 This method exemplifies instance-based learning (Figure~\ref{fig:instance_based_learning}), where the system memorizes specific examples and uses a similarity metric to generalize to new instances.
 			
 			
-			\begin{figure}[H]
-				\centering
-				\includegraphics[width=\linewidth]{../figures/instance_based_learning}
-				\caption{Instance-based learning where the class of a unknown instance is inferred from the its distance to data points with known labels.}
-				\label{fig:instance_based_learning}
-			\end{figure}
-		
+
+		\pagebreak
 		
 		\subsubsection{Model-based learning}
+				\vspace{-1ex}
 		
 Another approach to generalization involves constructing a model based on a set of examples and then using this model to make predictions as shown in figure~\ref{fig:model_based_learning}. This method is known as model-based learning.
 			
 			
 			\begin{figure}[H]
 			\centering
-				\includegraphics[width=\linewidth]{../figures/model_based_learning}
+				\includegraphics[width=6in]{../figures/model_based_learning}
 				\caption{Model-based learning where the class of a unknown instance is inferred from its location in reference to a model trained on the data with known labels.}
 				\label{fig:model_based_learning}
 			\end{figure}
 		
-		
+	
+			\begin{figure}[H]
+			\centering
+				\includegraphics[width=6in]{../figures/ml_map}
+				\caption{Flowchart of estimators used in the scikit learn library that intends guide users for what algorithms to use for a given case\protect\footnotemark[1].}
+				\label{fig:ml_map}
+			\end{figure}
+			\footnotetext[1]{Scikit-learn algorithms cheat sheet, permissive simplified BSD license and assumed to be fair use under given its nature as documentation and the educational purpose of this text, via \url{https://scikit-learn.org/stable/tutorial/machine_learning_map/index.html}}
+	
 	
 		\subsubsection{Selecting methods:}	
 
 
 One of the initial challenges faced by newcomers to machine learning is selecting the appropriate algorithms (or estimators) for specific tasks. This is due to the fact that various algorithms excel with different kinds of data and problems. The flowchart depicted in Fig.~\ref{fig:ml_map}, which originates from the scikit-learn library documentation, is intended to guide users in choosing the most suitable algorithms for their particular datasets.
 
-			\begin{figure}[H]
-			\centering
-				\includegraphics[width=\linewidth]{../figures/ml_map}
-				\caption{Flowchart of estimators used in the scikit learn library that intends guide users for what algorithms to use for a given case \protect\footnotemark[1].}
-				\label{fig:ml_map}
-			\end{figure}
-			\footnotetext[1]{Scikit-learn algorithms cheat sheet, permissive simplified BSD license and assumed to be fair use under given its nature as documentation and the educational purpose of this text, via \url{https://scikit-learn.org/stable/tutorial/machine_learning_map/index.html}}
 
+				\vspace{-1ex}
 		\subsection{The Unreasonable Effectiveness of Data}
+				\vspace{-1ex}
+
+In a landmark study released in 2001, Microsoft researchers Michele Banko and Eric Brill demonstrated that a variety of Machine Learning algorithms, even relatively straightforward ones, achieved similar levels of performance on a complex task of natural language disambiguation when provided with sufficient data. This finding is illustrated in figure~\ref{fig:data_versus_algorithms} and further discussed in their paper\protect\footnotemark[1].
+
+\footnotetext[1]{Michele Banko and Eric Brill. ``Scaling to very very large corpora for natural language disambiguation.'' Proceedings of the 39th annual meeting of the Association for Computational Linguistics. 2001.}
+
+\begin{figure}[H]
+\centering
+	\includegraphics[width=6.5in]{../figures/data_versus_algorithms.png}
+	\vspace{-2ex}
+	\caption{Learning curves for four algorithms studied in Banko and Brill showing the importance of the amount of data when compared to algorithm selection.  }
+	\label{fig:data_versus_algorithms}
+\end{figure}
 
 
-In a landmark study released in 2001, Microsoft researchers Michele Banko and Eric Brill demonstrated that a variety of Machine Learning algorithms, even relatively straightforward ones, achieved similar levels of performance on a complex task of natural language disambiguation when provided with sufficient data. This finding is illustrated in figure~\ref{fig:data_versus_algorithms} and further discussed in their paper \protect\footnotemark[2].
+As the authors put it: ``these results suggest that we may want to reconsider the tradeoff between spending time and money on algorithm development versus spending it on corpus development.''. Or put more directly ``The Unreasonable Effectiveness of Data''\protect\footnotemark[2]. It's important to recognize, however, that small and medium-sized datasets remain prevalent, and acquiring additional training data is not always straightforward or economical. Therefore, the significance of algorithm selection should not be overlooked.
 
-\footnotetext[2]{Michele Banko and Eric Brill. ``Scaling to very very large corpora for natural language disambiguation.'' Proceedings of the 39th annual meeting of the Association for Computational Linguistics. 2001.}
-
-			\begin{figure}[H]
-			\centering
-				\includegraphics[width=6.5in]{../figures/data_versus_algorithms.png}
-				\caption{Learning curves for four algorithms studied in Banko and Brill showing the importance of the amount of data when compared to algorithm selection.  }
-				\label{fig:data_versus_algorithms}
-			\end{figure}
-
-
-			As the authors put it: ``these results suggest that we may want to reconsider the tradeoff between spending time and money on algorithm development versus spending it on corpus development.''. Or put more directly ``The Unreasonable Effectiveness of Data''\protect\footnotemark[1]. It's important to recognize, however, that small and medium-sized datasets remain prevalent, and acquiring additional training data is not always straightforward or economical. Therefore, the significance of algorithm selection should not be overlooked.
-
-
-
-\footnotetext[1]{Halevy, Alon, Peter Norvig, and Fernando Pereira. ``The unreasonable effectiveness of data.'' IEEE intelligent systems 24.2 (2009): 8-12.}
+\footnotetext[2]{Halevy, Alon, Peter Norvig, and Fernando Pereira. ``The unreasonable effectiveness of data.'' IEEE intelligent systems 24.2 (2009): 8-12.}
 
 
 \end{document}

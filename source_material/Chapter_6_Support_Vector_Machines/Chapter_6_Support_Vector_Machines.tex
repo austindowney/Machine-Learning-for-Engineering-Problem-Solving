@@ -98,7 +98,7 @@ Overfitting in an SVM model can often be addressed by reducing the C value, whic
 
 In earlier chapters we placed every model parameter in a single vector $\boldsymbol{\theta}$: the first entry $\theta_0$ acted as the bias, while $\theta_1,\dots,\theta_n$ were the feature weights, and each input was augmented with a constant bias feature $x_0 = 1$. In this chapter we adopt the notation most common for SVMs. The bias is written as $b$, the weight vector as $\mathbf{w}$, and no extra bias feature is appended to the input vectors.
 
-
+\pagebreak
 
 \subsubsection{Decision Function and Predictions}
 A linear SVM classifier determines the class of a new instance $x$ by calculating the decision function
@@ -126,6 +126,7 @@ Figure~\ref{fig:SVM_decision_function} plots the decision function for a model w
 	\label{fig:SVM_decision_function}
 \end{figure}
 
+\pagebreak
 
 \subsubsection{Training Objective}
 
@@ -191,7 +192,7 @@ Equation~\ref{eq:QP_problem} defines a standard quadratic program with constrain
 This example applies a linear Support Vector Machine (SVM) classifier to distinguish Iris-Virginica flowers based on petal length and width. The decision boundary is derived after scaling the data, and margins are visualized. Misclassified instances within the margin are identified and marked. The model's performance is assessed using a confusion matrix and F1 score.
 \end{example}
 
-
+\pagebreak
 \subsection{Nonlinear SVM Classification}
 
 \begin{figure}[H]
@@ -316,13 +317,6 @@ Begin with the RBF kernel as a strong default, explore polynomial kernels when y
 Scikit-Learn provides two main SVM classifiers that trade accuracy for speed in different ways.  
 \texttt{LinearSVC} is optimized for large, high-dimensional data when a linear decision boundary is adequate; \texttt{SVC} sacrifices runtime for the expressive power of kernels and thus handles complex, nonlinear patterns. Table \ref{table:SVM_classifiers} highlights how these priorities translate into computational costs and practical constraints and compares them to \texttt{SGDClassifier} for reference.
 
-\texttt{LinearSVC} builds on the \texttt{liblinear} solver and is limited to \emph{linear} decision boundaries.  
-Because it does not apply the kernel trick, its training cost grows almost linearly with both the number of samples~\(m\) and features~\(n\), i.e.\ \(O(m\,n)\). Convergence is controlled by the tolerance parameter \texttt{tol} (denoted \(\epsilon\) in the literature); the default value is usually sufficient, but smaller tolerances can be specified when higher accuracy is critical.
-
-\texttt{SVC}, in contrast, relies on \texttt{libsvm} and \emph{does} support kernel functions. Its computational burden is markedly heavier, between \(O(m^{2} n)\) and \(O(m^{3} n)\) in practice, so training becomes prohibitive once the dataset reaches the hundreds-of-thousands range. Nevertheless, \texttt{SVC} excels on smaller or medium-sized problems that demand nonlinear decision surfaces. Runtime also scales with the average count of non-zero features per instance, meaning sparse high-dimensional inputs remain tractable. 
-
-
-
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 \begin{table}[H]
@@ -338,9 +332,19 @@ class & time complexity & out-of-core support & scaling required & kernel trick 
 \end{table}
 
 
+\texttt{LinearSVC} builds on the \texttt{liblinear} solver and is limited to \emph{linear} decision boundaries.  
+Because it does not apply the kernel trick, its training cost grows almost linearly with both the number of samples~\(m\) and features~\(n\), i.e.\ \(O(m\,n)\). Convergence is controlled by the tolerance parameter \texttt{tol} (denoted \(\epsilon\) in the literature); the default value is usually sufficient, but smaller tolerances can be specified when higher accuracy is critical.
 
+\texttt{SVC}, in contrast, relies on \texttt{libsvm} and \emph{does} support kernel functions. Its computational burden is markedly heavier, between \(O(m^{2} n)\) and \(O(m^{3} n)\) in practice, so training becomes prohibitive once the dataset reaches the hundreds-of-thousands range. Nevertheless, \texttt{SVC} excels on smaller or medium-sized problems that demand nonlinear decision surfaces. Runtime also scales with the average count of non-zero features per instance, meaning sparse high-dimensional inputs remain tractable. 
+
+
+
+
+
+\vspace{-1ex}
 \subsection{SVM Regression}
 \label{sec:svr}
+\vspace{-1ex}
 
 Support Vector Regression (SVR) adapts the SVM idea to regression by surrounding the prediction curve with a tube of width $\epsilon$; points outside this tube incur a penalty and the optimizer keeps the tube as flat as possible while allowing a limited number of violations governed by the regularization constant $C$.  Conceptually this reverses the classification goal: instead of widening a margin to separate two classes, SVR encourages the data to lie inside the margin, making $\epsilon$ the principal knob that controls how loose the fit may be for both linear and kernel-based models.
 
@@ -349,13 +353,15 @@ Support Vector Regression (SVR) adapts the SVM idea to regression by surrounding
 
 
 \subsubsection{Linear SVR}
-
+\vspace{-1ex}
 The presence of additional training instances within the margin does not influence the predictions of the model, rendering it $\epsilon$-insensitive. For linear SVM Regression tasks, the LinearSVR class from Scikit-Learn can be utilized. For instance, 
 Figure~\ref{fig:SVM_Regression} demonstrates two linear SVM Regression models trained on random linear data; one features a wide margin ($\epsilon = 1.5$), and the other a narrower margin ($\epsilon = 0.5$).
 
 \begin{figure}[H]
 	\centering
+	\vspace{-1ex}
 	\includegraphics[width=6.5in]{../figures/SVM_Regression.png}
+\vspace{-2ex}
 	\caption{SVM Regression models with different $\epsilon$ values.}
 	\label{fig:SVM_Regression}
 \end{figure}

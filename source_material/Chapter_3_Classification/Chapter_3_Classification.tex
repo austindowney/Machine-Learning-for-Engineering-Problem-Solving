@@ -43,13 +43,14 @@ Despite its simplicity, the linear classifier is often surprisingly effective, e
     \label{fig:x_y_plot_linear_classifier}
 \end{figure}
 
+\pagebreak
 
 \begin{data}
 \textbf{MNIST (Modified National Institute of Standards and Technology) Dataset}
 
-\noindent  In this chapter, we utilize the MNIST (Modified National Institute of Standards and Technology) dataset, a collection of 70,000 small images of handwritten digits. This dataset is known as ``modified'' because it combines two earlier sets of images: one created by U.S. high school students and another by US Census Bureau employees. First published in 1998, the dataset is particularly suitable for machine learning tasks as each image is labeled with the digit it represents. Each digit has been normalized and centered in a 28x28 pixel frame and anti-aliased to introduce grayscale levels.
+\noindent  The MNIST (Modified National Institute of Standards and Technology) dataset is a collection of 70,000 small images of handwritten digits (figure~\ref{fig:MNIST_data_set}). This dataset is known as ``modified'' because it combines two earlier sets of images: one created by U.S. high school students and another by US Census Bureau employees. First published in 1998, the dataset is particularly suitable for machine learning tasks as each image is labeled with the digit it represents. Each digit has been normalized and centered in a 28x28 pixel frame and anti-aliased to introduce grayscale levels. Each instance (i.e. picture) has 784 features that range from 0 to 256 and each represent an 8-bit gray scale pixel as shown in figure~\ref{fig:MNIST_digit_features}.
 
-Typically, the dataset is split into two parts: the first 60,000 images are used for training, and the remaining 10,000 serve as validation data. It is standard practice to train and test models on the first 60,000 images, reserving the last 10,000 for final validation at the end of the project when the classifier is ready for deployment.
+Typically, the dataset is split into two parts: the first 60,000 images are used for training, and the remaining 10,000 serve as validation data. It is standard practice to train and test models on the first 60,000 images, reserving the last 10,000 for final validation at the end of the project when the classifier is ready for deployment. Scikit-Learn includes a helper function that facilitates the downloading of the MNIST dataset.
 
 \begin{figure}[H]
     \centering
@@ -58,7 +59,7 @@ Typically, the dataset is split into two parts: the first 60,000 images are used
     \label{fig:MNIST_data_set}
 \end{figure}
 
-Scikit-Learn includes a helper function that facilitates the downloading of the MNIST dataset.
+
 
 
 \begin{figure}[H]
@@ -198,6 +199,15 @@ or
 While accuracy offers valuable insights, it's essential to consider the number of falsely classified positive and negative predictions, especially within the context of the problem being addressed. For instance, a 99\% accuracy rate might seem satisfactory for predicting credit card fraud. However, what if a false negative indicates a severe virus or cancer? This is why we need to look deeper into the accuracy formula.
 
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4.9in]{../figures/piechart_TP_vs_FP.png}
+	\vspace{-1ex}
+    \caption{Visual representation of relevant instances, showing their relation to True Positives (TP) and False Positives (FP). }
+    \label{fig:piechart_TP_vs_FP}
+\end{figure}
+
+
 %\todo{Look into replacing the verbage of relevant instances and selected instances with True Positives and True Negatives.}
 This is where precision and recall come into play. For this, we will need a definitions of instances
 \begin{equation}
@@ -226,13 +236,7 @@ or,
 
 While the definition of accuracy, precision, and recall may not be immediately intuitive, a visualizations such as that shown in figure~\ref{fig:piechart_TP_vs_FP} can help clarify them.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[]{../figures/piechart_TP_vs_FP.png}
-    \caption{Visual representation of relevant instances, showing their relation to True Positives (TP) and False Positives (FP). }
-    \label{fig:piechart_TP_vs_FP}
-\end{figure}
-
+\pagebreak
 
 To balance precision and recall, we often use the F1 score, which is the harmonic mean of precision and recall. The F1 score favors classifiers with similar precision and recall, computed as
 \begin{equation}
@@ -246,7 +250,8 @@ Figure~\ref{fig:decision_threshold} illustrates the tradeoffs when adjusting the
 
 \begin{figure}[H]
     \centering
-    \includegraphics[]{../figures/decision_threshold.png}
+    \includegraphics[width=5.8in]{../figures/decision_threshold.png}
+	\vspace{-2ex}
     \caption{Visualization changing thresholds on the classification of digits in a ``5-detector'' and the resulting change in precision and recall.}
     \label{fig:decision_threshold}
 \end{figure}
@@ -258,14 +263,17 @@ To determine the optimal threshold, it's helpful to plot precision and recall ag
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=6.5in]{../figures/F1_score_plot.png}
+	\vspace{-2ex}
+    \includegraphics[width=5.8in]{../figures/F1_score_plot.png}
+	\vspace{-3ex}
     \caption{Visualization of the precision, recall, and F1 score as a function of changing a threshold value. }
+	\vspace{-1ex}
     \label{fig:F1_score_plot}
 \end{figure}
 
 
 
-
+\pagebreak
 
 Figure~\ref{fig:precision_vs_recall} reports a precision vs recall curve that is obtained by changing the threshold of the trained model. At the leftmost part of the precision-recall curve (low recall), precision is highest because the model makes very few positive predictions, and those are likely true positives. As recall increases, the model starts predicting more positives, including more false positives, which reduces precision. The shape of the curve is also important; a steep drop-off indicates that the addition of false positives happens rapidly with increasing recall, whereas a more gradual decline suggests a better balance between precision and recall.
 
@@ -284,7 +292,7 @@ By analyzing the curve, one can choose a threshold that balances precision and r
 \noindent This example computes and compares three key classification metrics (accuracy, precision, and recall) for a linear classifier trained to detect the digit ``5'' in the MNIST dataset. It shows both manual and \texttt{sklearn}-based calculations, introduces the F1 score, and visualizes how precision and recall vary with the classification threshold using a precision-recall curve.
 \end{example}
 
-
+\pagebreak
 \subsection{$k$-fold Cross-validation}
 As you've likely observed, training your SGD classifier doesn't always yield consistent results in terms of model performance; hence the ``stochastic'' in stochastic gradient descent. One approach to obtaining a solution closer to the global minimum is to allow the gradient descent algorithm to iterate over more epochs. However, this poses a challenge as it's highly time-consuming and may lead to overfitting the model. Moreover, the variability in model performance makes it difficult to gauge the model's effectiveness.
 
@@ -319,11 +327,6 @@ Of course, Scikit-Learn provides a cross-validation feature, known as \texttt{sk
 \subsection{Multiclass Classification}
 Previously, we explored binary classifiers, which distinguish between two classes. Now, we'll explore the use of multiclass classifiers (also known as multinomial classifiers), which can discern between more than two classes. The simplest approach to multiclass classification involves multiple iterations of a binary classifier. There are two primary strategies for achieving this, both of which are considered in the context of the MNIST database challenge:
 
-\begin{itemize}
-\item \textbf{One-versus-Rest (OvR)}: This strategy involves creating a system capable of classifying digit images into 10 classes (from 0 to 9) by training 10 binary classifiers, one for each digit (e.g., a 0-detector, a 1-detector, etc.). When classifying an image, the decision score from each classifier is obtained, and the class with the highest score is selected. While sometimes referred to as One-Versus-All (OvA), this term is slightly misleading as it does not involve comparisons against the same class.
-\item \textbf{One-versus-one (OvO)}: This approach trains a binary classifier for every pair of digits, such as one for distinguishing between 0s and 1s, another for distinguishing between 0s and 5s, and so forth. If there are $N$ classes, $N \times (N - 1) / 2$ classifiers need to be trained. For the MNIST problem, this translates to training 45 binary classifiers. During classification, the image is evaluated against all 45 classifiers, and the class with the most victories is selected. The primary advantage of OvO is that each classifier only needs to be trained on the relevant portion of the training set for the two classes it distinguishes, which is beneficial for algorithms that scale poorly.
-\end{itemize}
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=3.5in]{../figures/one_vs_rest}
@@ -331,12 +334,23 @@ Previously, we explored binary classifiers, which distinguish between two classe
     \label{fig:one_vs_rest}
 \end{figure}
 
+\begin{itemize}
+\item \textbf{One-versus-Rest (OvR)}: This strategy involves creating a system capable of classifying digit images into 10 classes (from 0 to 9) by training 10 binary classifiers, one for each digit (e.g., a 0-detector, a 1-detector, etc.). When classifying an image, the decision score from each classifier is obtained, and the class with the highest score is selected. While sometimes referred to as One-Versus-All (OvA), this term is slightly misleading as it does not involve comparisons against the same class.
+\end{itemize}
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=3.5in]{../figures/one_vs_one}
     \caption{One-versus-one (OvO) classifier for a multi-class dataset.}
     \label{fig:one_vs_one}
 \end{figure}
+
+\begin{itemize}
+\item \textbf{One-versus-one (OvO)}: This approach trains a binary classifier for every pair of digits, such as one for distinguishing between 0s and 1s, another for distinguishing between 0s and 5s, and so forth. If there are $N$ classes, $N \times (N - 1) / 2$ classifiers need to be trained. For the MNIST problem, this translates to training 45 binary classifiers. During classification, the image is evaluated against all 45 classifiers, and the class with the most victories is selected. The primary advantage of OvO is that each classifier only needs to be trained on the relevant portion of the training set for the two classes it distinguishes, which is beneficial for algorithms that scale poorly.
+\end{itemize}
+
+
+
 
 Certain algorithms, such as Support Vector Machine classifiers, suffer from scalability issues with larger training sets. Algorithms that do not scale well with large datasets often resort to the OvO approach because training many small classifiers is computationally cheaper than fitting a handful of models on the full data. For most binary classifiers the OvR strategy is the norm. Some methods (including Random Forests and na\"{\i}ve Bayes) support multiclass problems natively and therefore require neither reduction strategy.
 
@@ -367,7 +381,8 @@ First, examine the confusion matrix. To do this, generate predictions using the 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=4.0in]{../figures/digit_confusion_matrix.png}
+    \includegraphics[width=4.4in]{../figures/digit_confusion_matrix.png}
+	\vspace{-2ex}
     \caption{Confusion matrix for the MNIST data set solved using a one-vs-one classifier with Stochastic Gradient Descent and a $k$-fold of 3.}
     \label{fig:digit_confusion_matrix}
 \end{figure}
@@ -379,7 +394,8 @@ To turn figure~\ref{fig:digit_confusion_matrix} into a figure that highlights th
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=4.0in]{../figures/digit_confusion_matrix_error.png}
+    \includegraphics[width=4.4in]{../figures/digit_confusion_matrix_error.png}
+	\vspace{-2ex}
     \caption{Normalized confusion matrix (similar to figure~\ref{fig:digit_confusion_matrix}) with the diagonal removed to emphasize errors.}
     \label{fig:digit_confusion_matrix_2}
 \end{figure}
@@ -389,14 +405,17 @@ The refined plot facilitates a clear understanding of the classifier's error pat
 Analyzing the confusion matrix provides valuable insights for classifier enhancement. In this case, efforts should concentrate on improving the classification of 8s and 9s, along with addressing the specific 3/5 confusion. Potential strategies include gathering more training data for these digits, devising new features (e.g., counting closed loops), or preprocessing images to emphasize distinguishing patterns (e.g., using Scikit-Image, Pillow, or OpenCV).
 
 
-
+\pagebreak
 \subsubsection{Analyzing Individual Errors}
+\vspace{-1ex}
 
 Analyzing individual errors provides valuable insights into the classifier's behavior and reasons for its failures.
 
 \begin{figure}[H]
     \centering
+	\vspace{-1ex}
     \includegraphics[]{../figures/3s_and_5s.png}
+	\vspace{-1ex}
     \caption{Confusion matrix showing digits classified as 3s and 5s for the same classifier used to obtain the results shown in figure~\ref{fig:digit_confusion_matrix}.}
     \label{fig:3s_and_5s}
 \end{figure}

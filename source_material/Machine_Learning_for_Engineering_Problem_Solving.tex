@@ -1,5 +1,6 @@
 \documentclass[12pt,letter]{article}
-\usepackage{downey_format}
+\usepackage{downey_format}		% Loads the custom style package.
+\usepackage{footmisc} 			% Loaded in the main document only, as this is only used for the footnotes on the first page.
 
 % These packages are added for / required to compile the entire document
 \usepackage{standalone} 
@@ -17,11 +18,18 @@
 % 5. The common bibliography is an issue that has yet to be sorted out. Currently citing sources in footnotes.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
+\fancypagestyle{firstpagestyle}
+{
+    \fancyhf{} % Clear all headers and footers
+    \fancyfoot[L]{\href{https://doi.org/10.31224/4909}{DOI:10.31224/4909}}% \\ Persistent OSF \href{https://osf.io/preprints/osf/uh3yz}{link}} % Text on the left side of the footer
+}
+% persistent URL https://osf.io/preprints/osf/uh3yz (use for things that may link to multiple versions of the same text like a webpage.
 
 
 \begin{document}
-\thispagestyle{empty}	
+
+%\thispagestyle{empty}	% Use thiis page style if you don't want to list the DOI
+\thispagestyle{firstpagestyle}
 
 \begin{center}
 	{\fontsize{33}{100}\selectfont Machine Learning for Engineering Problem Solving}
@@ -128,7 +136,7 @@ The truck on the cover underscores the simple idea that a machine's purpose is t
 \vspace{-0.5ex}
 \subsection{License}
 \vspace{-1ex}
-This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License [cc-by-sa 4.0]. More information on the Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) license can be found 
+This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA 4.0). More information on the Attribution-ShareAlike 4.0 International license can be found 
 \href{https://creativecommons.org/licenses/by-sa/4.0/}{here}.
 Unless otherwise denoted, all text, figures, diagrams, and photos used in this work are the sole property of the authors and are released under CC BY-SA 4.0 both in part and in whole. Reworks and redistributions of this work that fall within the CC BY-SA 4.0 licenses are encouraged.
 

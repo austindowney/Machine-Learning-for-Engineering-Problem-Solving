@@ -32,7 +32,7 @@ The first approach gives an exact answer immediately, whereas the second reaches
 
 
 
-
+\pagebreak
 \begin{data}
 
 	\textbf{Ames Housing Dataset}
@@ -61,17 +61,19 @@ The first approach gives an exact answer immediately, whereas the second reaches
 
 
 
-
+\pagebreak
 
 \subsection{Linear Regression}
-
+\vspace{-1ex}
 
 
 Consider the scenario where you wish to determine the value of a house in Ames using the Ames dataset included in sklearn. To illustrate this, let us plot the relationship between the above ground living area and the housing price.
 
 \begin{figure}[H]
     \centering
+	\vspace{-1ex}
     \includegraphics[]{../figures/Ames_simple_linear_regression_model_1.png}
+	\vspace{-2ex}
     \caption{Ames housing data.}
     \label{fig:Ames_simple_linear_regression_model_1}
 \end{figure}
@@ -84,7 +86,9 @@ This model comprises two parameters, $\theta_1$ and $\theta_2$, which can be adj
 
 \begin{figure}[H]
     \centering
+	\vspace{-1ex}
     \includegraphics[]{../figures/Ames_simple_linear_regression_model_2.png}
+	\vspace{-2ex}
     \caption{Ames housing data with trend lines.}
     \label{fig:GDP_data_trend}
 \end{figure}
@@ -94,14 +98,14 @@ This model comprises two parameters, $\theta_1$ and $\theta_2$, which can be adj
 
 
 
-
+\pagebreak
 
 \begin{mdframed}[middlelinewidth=0.5mm]
 \begin{center}
 \gr{Notations}
 \end{center}
 
-\begin{itemize}
+\begin{itemize}[itemsep=0.25ex]
     \item $\textbf{x}$: a lowercase, bolded variable that denotes a vector.
     \item $\textbf{X}$: an uppercase, bolded variable that represents a matrix.
     \item $\textbf{X}$: this denotes the feature matrix, also known as the input matrix.
@@ -114,7 +118,9 @@ This model comprises two parameters, $\theta_1$ and $\theta_2$, which can be adj
 \end{itemize}
 \end{mdframed}
 
+	\vspace{-2ex}
 \subsubsection{Closed Form Solution}
+	\vspace{-1ex}
 
 Before you can tune a model's parameters, you need a clear way to judge how well it fits the data. The standard approach is to define a cost function that assigns a numerical penalty to poor fits; lower values indicate better performance. For a linear model, this cost function measures the difference between the model's predictions and the actual training targets, and you minimize that difference using Ordinary Least Squares linear regression. Practically, you feed your training data into the algorithm, which then solves for the parameter values that align the linear relationship most closely to the data. In Python, this procedure is implemented in \texttt{scikit-learn} as \texttt{sklearn.linear\_model.LinearRegression}.
 
@@ -156,7 +162,6 @@ The MSE is also applied to minimize the error in a linear regression model, with
 %$\theta_1 \text{ (intercept)}$\\
 %$\theta_2 \text{ (slope) } = \Delta y / \Delta x$ \\
 %$\hat{y} = \hat{\theta}_1 + x_{12}\hat{\theta}_2$ \\
-
 
 Consider a dataset containing $n$ observations, denoted as $(y_i, x_i)^n_{i=1}$. Each observation $i$ consists of a scalar response $y_i$ and a column vector $x_i$ that holds the values for $p$ predictors (regressors), represented as $x_{ij}$ where $j = 1, \dots, p$. In the context of a linear regression model, the response variable $y_i$ is modeled as a linear combination of the regressors, influenced by an error term $\epsilon_i$:
 \begin{equation}
@@ -324,6 +329,7 @@ Cost functions do not always present themselves as neat, concave shapes. They ca
     \label{fig:gradient_descent_3}
 \end{figure}
 
+
 Fortunately, the Mean Squared Error (MSE) cost function for Linear Regression models is convex. This characteristic ensures that for any two points on the curve, the line segment joining them does not intersect the curve itself. Consequently:
 \begin{itemize}
 \item There are no local minima, only one global minimum exists.
@@ -383,17 +389,12 @@ After training, there is minimal difference between the models: these algorithms
 
 \subsubsection{Batch Gradient Descent}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=5.4in]{../figures/gradient_descent_batch}
-	\caption{Flowchart of Batch Gradient Descent.}
-	\label{fig:gradient_descent_batch}
-\end{figure}
 
 
 
 
-Batch Gradient Descent processes the entire batch of training data $\textbf{X}$ at every step, which is the origin of its name, ``batch.'' Consider again our Mean Squared Error (MSE) cost function:
+
+Batch Gradient Descent (shown in figure~\ref{fig:gradient_descent_batch}) processes the entire batch of training data $\textbf{X}$ at every step, which is the origin of its name, ``batch.'' Consider again our Mean Squared Error (MSE) cost function:
 \begin{equation}
 J = \frac{1}{m} \sum_{i=1}^{m} (\hat{y}_i - y_i)^2
 \end{equation}
@@ -401,11 +402,21 @@ For a hypothesis $h_\theta$, the MSE for the dataset $\textbf{X}$ can be compute
 \begin{equation}
 J(\textbf{X}, h_\theta) = J = \frac{1}{m} \sum_{i=1}^{m} (\pmb{\theta}^\text{T}\textbf{x}^{(i)} - y^{(i)})^2
 \end{equation}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=5.3in]{../figures/gradient_descent_batch}
+	\caption{Flowchart of Batch Gradient Descent.}
+	\label{fig:gradient_descent_batch}
+\end{figure}
+
+
 With this foundation, we can implement gradient descent by computing the gradient of the cost function with respect to each parameter $\theta_j$. Specifically, this involves calculating how much the cost function changes when $\theta_j$ is altered slightly. This calculation is known as a partial derivative. Conceptually, it is akin to determining ``the slope of the mountain under my feet if I face east,'' then repeating the question facing north, and similarly for any other direction in a higher-dimensional space. The partial derivative of the cost function with respect to parameter $\theta_j$ is computed as:
 \begin{equation}
 \frac{\partial}{\partial \theta_j} J(\theta) = \frac{2}{m} \sum_{i=1}^{m}(\pmb{\theta}^\text{T}\textbf{x}^{(i)} - y^{(i)}) x_j^{(i)}
 \label{eq:pd_cost_function}
 \end{equation}
+
 
 
 
@@ -426,6 +437,8 @@ Rather than computing each partial derivative individually, all partial derivati
 \end{center}
 Be aware that this method computes using the entire training set $\textbf{X}$ at every step of Gradient Descent, which is why the approach is named Batch Gradient Descent. Although this method can be exceedingly slow with large training sets, it performs well with numerous features, outpacing the Normal Equation in training Linear Regression models with extensive features.
 \end{mdframed}
+
+\pagebreak
 
 Once you obtain the gradient vector, which indicates the direction of ascent, the next step involves moving in the opposite direction, effectively going downhill. This is achieved by subtracting $\nabla_\theta J(\theta)$ from $\pmb{\theta}$, incorporating the learning rate $\eta$ to scale the step size:
 \begin{equation}
@@ -461,37 +474,40 @@ To identify an appropriate learning rate, a grid search can be employed. It is a
 Determining the correct number of iterations is also crucial. If set too low, the algorithm may stop far from the optimal solution. Conversely, overly high settings lead to unnecessary computations after convergence. A practical approach is to allow a large number of iterations but to halt the algorithm when the gradient vector's norm shrinks to below a small threshold $\epsilon$ (known as the tolerance), indicating proximity to the minimum.
 
 
-
-\subsubsection{Stochastic Gradient Descent}
-
-
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=5.4in]{../figures/gradient_descent_stochastic}
 	\caption{Flowchart of Stochastic Gradient Descent.}
 	\label{fig:gradient_descent_stochastic}
 \end{figure}
-Stochastic Gradient Descent (SGD) updates the model parameters after evaluating each individual training sample $x^{(i)}$ and its corresponding label $y^{(i)}$, which stands in contrast to batch gradient descent that uses the entire dataset for each update. The update rule for SGD can be expressed as:
+
+
+\subsubsection{Stochastic Gradient Descent}
+
+
+
+Stochastic Gradient Descent (shown in figure~\ref{fig:gradient_descent_stochastic}) updates the model parameters after evaluating each individual training sample $x^{(i)}$ and its corresponding label $y^{(i)}$, which stands in contrast to batch gradient descent that uses the entire dataset for each update. The update rule for SGD can be expressed as
+
+
 
 \begin{equation}
-\theta^{(\text{next step})} = \theta - \eta \nabla_\theta J(\theta; x^{(i)}; y^{(i)})
+\theta^{(\text{next step})} = \theta - \eta \nabla_\theta J(\theta; x^{(i)}; y^{(i)}).
 \end{equation}
 
 While batch gradient descent tends to perform unnecessary recalculations for large datasets by reevaluating gradients for similar examples with each update, SGD eliminates this inefficiency by updating parameters incrementally. Consequently, SGD is generally faster and adaptable for online learning.
-
 Due to its frequent and individual updates, SGD exhibits high variance in the objective function, causing significant fluctuations as illustrated in Fig.~\ref{fig:stochastic_gradient_descent_target}(b).
 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[]{../figures/stochastic_gradient_descent_target}
-	\caption{Comparison of the iterative performance of  batch and Stochastic Gradient Descent, showing: (a) how they move towards their target, and (b) the error of each method for comparable steps.}
+	\caption{Comparison of the iterative performance of Batch and Stochastic Gradient Descent, showing: (a) how they move towards their target, and (b) the error at comparable steps.}
 	\label{fig:stochastic_gradient_descent_target}
 \end{figure}
 
 
 
-
+\pagebreak
 
 
 \subsubsection{Mini-batch Gradient Descent}
@@ -518,16 +534,18 @@ Mini-batch GD's trajectory through parameter space tends to be more stable compa
 
 \subsubsection{Feature Scaling}
 
-The cost function can resemble an elongated bowl if the feature scales vary significantly. Figure~\ref{fig:gradient_descent_5} illustrates the effect of feature scaling on Gradient Descent, comparing equal scaling of features (on the left) to disparate scaling (on the right).
+The cost function can resemble an elongated bowl if the feature scales vary significantly. Figure~\ref{fig:gradient_descent_5} illustrates the effect of feature scaling on Gradient Descent. In figure~\ref{fig:gradient_descent_5}(a), Gradient Descent progresses directly towards the minimum, reaching it swiftly. However, in figure~\ref{fig:gradient_descent_5}(b) it initially moves almost orthogonally to the direction of the global minimum, followed by a lengthy traverse down a nearly flat valley, significantly delaying the convergence.
 
 \begin{figure}[H]
     \centering
     \includegraphics[]{../figures/gradient_descent_5.png }
+		\vspace{-1ex}
     \caption{Gradient descent on a 2D surface for parameters that are: (a) equally scaled, and (b) unequally scaled.}
+		\vspace{-1ex}
     \label{fig:gradient_descent_5}
 \end{figure}
 
-In figure~\ref{fig:gradient_descent_5}(a), Gradient Descent progresses directly towards the minimum, reaching it swiftly. However, in figure~\ref{fig:gradient_descent_5}(b) it initially moves almost orthogonally to the direction of the global minimum, followed by a lengthy traverse down a nearly flat valley, significantly delaying the convergence.
+
 
 Training a model can be viewed as a search through the parameter space for the combination that minimizes the cost function. When additional parameters are introduced, this space gains extra dimensions, making the optimization task more challenging. In Ordinary Least Squares Linear Regression, however, the cost surface is convex and bowl-shaped, so any descent method is guaranteed to reach the global minimum. To normalize feature scales, two common methods are employed. The are Min-max scaling and Standardization. 
 \begin{itemize}
@@ -551,7 +569,7 @@ It is crucial to apply scalers exclusively to the training data and not to the e
 \end{mdframed}
 
 
-
+\pagebreak
 
 
 
@@ -591,6 +609,7 @@ A simple linear fit will under-perform, so you first enrich the training set by 
 			\label{fig:Polynomial_2}
 		\end{figure}
 
+\pagebreak
 This data can then be incorporated into two linear models, where the slopes of the feature sets serve as the parameters for the base-line polynomial expression ($a$ and $b$ in Equation~\ref{eq:poly}) and the bias term is the offset ($c$ in Equation~\ref{eq:poly}). The results of such a polynomial fit is shown in figure~\ref{fig:Polynomial_3}.
 
 
@@ -620,7 +639,7 @@ It is important to note that Polynomial Regression can identify interrelationshi
 \end{example}
 
 
-
+\pagebreak
 \subsection{Training and Testing Data}
 
 Training a predictive model on a dataset and then testing it with the same data is a fundamental error in methodology. Such a model could simply memorize the labels of the training samples, achieving perfect performance during training but failing to make any useful predictions on new, unseen data. This phenomenon is known as overfitting. To prevent this, it is standard practice in supervised machine learning to reserve a portion of the available data as a test set, denoted as $\textbf{X}_\text{test}$ and $\textbf{y}_\text{test}$.
@@ -643,7 +662,7 @@ Training a predictive model on a dataset and then testing it with the same data 
 
 The function \texttt{sklearn.model\_selection.train\_test\_split} in scikit-learn randomly divides arrays or matrices into training and testing subsets.
 
-
+\pagebreak
 
 \subsection{Pipelines}
 
@@ -690,7 +709,7 @@ In this instance, the appropriateness of the quadratic model is clear since the 
 \label{fig:overfitting_2}
 \end{figure}
 
-Examining the model's behavior in figure~\ref{fig:overfitting_3} on the training set shows a clear trend. With only one or two samples the fit is perfect, so the error curve begins at zero. As additional observations are introduced the model can no longer capture every point exactly, partly because of measurement noise and partly because the underlying relationship is nonlinear, and consequently the training error rises. After a sufficient number of samples the curve flattens out; beyond this plateau adding further data neither markedly lowers nor raises the average error.
+Examining the model's behavior in figures~\ref{fig:overfitting_2}~and~~\ref{fig:overfitting_3} on the training set shows a clear trend. With only one or two samples the fit is perfect, so the error curve begins at zero. As additional observations are introduced the model can no longer capture every point exactly, partly because of measurement noise and partly because the underlying relationship is nonlinear, and consequently the training error rises. After a sufficient number of samples the curve flattens out; beyond this plateau adding further data neither markedly lowers nor raises the average error.
 
 \begin{figure}[H]
     \centering
