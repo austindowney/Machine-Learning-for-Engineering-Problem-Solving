@@ -1,5 +1,12 @@
-@Misc{DowneyMachineLearningEngineering,  
-  author = {Austin {R.J.} Downey},  
-  title  = {Machine Learning for Engineering Problem Solving},  
-  url    = {https://github.com/austindowney/Machine-Learning-for-Engineering-Problem-Solving},  
-}  
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+references:
+  - type: article
+    authors:
+      - family-names: Downey
+        given-names: Austin R.J.
+    title: "Machine Learning for Engineering Problem Solving: A Practical Example-driven Guide to Classical Techniques"
+    year: 2025
+    month: 7
+    doi: 10.31224/4909
+    publisher: "Open Engineering Inc"
