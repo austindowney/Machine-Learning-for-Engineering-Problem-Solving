@@ -130,7 +130,7 @@ Machine Learning, as a subset of AI, involves algorithms that improve automatica
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=4.95in]{../figures/Nobel}
-			\caption{The 2024 Nobel Prize in Physics for ``for foundational discoveries and inventions that enable machine learning with artificial neural networks'' was awarded to: (a) John Hopfield and (b) Geoffrey  Hinton. \protect\footnotemark[1]}
+			\caption{The 2024 Nobel Prize in Physics ``for foundational discoveries and inventions that enable machine learning with artificial neural networks'' was awarded to: (a) John Hopfield and (b) Geoffrey  Hinton. \protect\footnotemark[1]}
 			\label{fig:Nobel}
 		\end{figure}
 		\footnotetext[1]{The author of this text was lucky enough to attend the 2024 Nobel Prize Ceremony in Stockholm and took these pictures.}
@@ -360,7 +360,7 @@ Another key application of unsupervised learning is anomaly detection as shown i
 			\begin{figure}[H]
 				\centering
 				\includegraphics[width=\linewidth]{../figures/reinforcement_learning_control_diagram}
-				\caption{reinforcement learning control diagram}
+				\caption{Reinforcement learning diagram.}
 				\label{fig:reinforcement_learning_control_diagram}
 			\end{figure}
 			
@@ -382,12 +382,29 @@ In batch learning, the system is fully trained using the entirety of the availab
 
 To update a batch learning system with new information, such as recognizing a novel form of spam, it is necessary to develop a completely new version of the system. This version must be trained from the ground up using the entire dataset, both old and new data, before replacing the older system in production.
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{../figures/training_batch}
+	\caption{Batch learning framework with separate training and inference stages. }
+	\label{fig:training_batch}
+\end{figure}
+
+
+
 Despite these challenges, the training, evaluation, and deployment processes of a machine learning system can be automated, allowing even batch learning systems to adapt to changes. This approach is straightforward and usually effective; however, training on a full dataset can be time-consuming - often taking many hours - hence, systems are usually updated no more frequently than daily or weekly. Moreover, utilizing the full dataset requires extensive computing resources, such as CPU power, memory, disk space, and network bandwidth. For organizations with vast amounts of data, the costs of daily retraining from scratch can be prohibitively expensive.
 
 If the dataset is exceptionally large, employing a batch learning algorithm may become impractical. Additionally, in situations where autonomous learning is essential and computational resources are limited, such as with smartphone applications or extraterrestrial rovers, the need to manage large datasets and conduct lengthy training sessions daily poses significant challenges.
 		
 		
 		\subsubsection{Online Learning}
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{../figures/training_online}
+	\caption{Online learning framework where data is used to continuously training (or update / fine-tune) the model. }
+	\label{fig:training_onilne}
+\end{figure}
 
 			
 Online learning trains a model incrementally by presenting new data points one at a time or in small mini-batches. Each update is computationally light and fast, allowing the model to refresh its knowledge continuously as fresh data streams in. This approach is particularly appropriate for systems that:
@@ -411,7 +428,7 @@ A critical parameter in online learning systems is the learning rate, which dict
 				\centering
 				\includegraphics[width=6in]{../figures/cows}
 				\vspace{-1ex}
-				\caption{Training a machine learning algorithm to recognize cows may end up just learning to recognize grass. This is sometimes called ``short-cut learning''\protect\footnotemark[1].}
+				\caption{Training a machine learning algorithm to recognize cows may end up just learning to recognize grass. humorously called ``short-cut learning''\protect\footnotemark[1].}
 				\label{fig:cows}
 			\end{figure}
 
