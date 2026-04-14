@@ -32,7 +32,7 @@ plt.ylabel('y')
 #%% SVM regression
 
 svm_reg = sk.svm.SVR(kernel="rbf", degree=3, C=1, epsilon=0.8, gamma="scale")
-# Try poly kernal, and different degree, C, and epsilon values
+# Try poly kernel, and different degree, C, and epsilon values
 svm_reg.fit(X, y)
 x1 = np.linspace(-3, 3, 100).reshape(100, 1)
 y_pred = svm_reg.predict(x1)

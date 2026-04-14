@@ -285,7 +285,7 @@ Next, we will explore different methods for training a Linear Regression model t
 %
 %\end{lstlisting}
 
-
+\subsection{Gradient Descent}
 Gradient Descent is a versatile optimization algorithm capable of finding optimal solutions across a broad spectrum of problems. The core concept of Gradient Descent involves iteratively adjusting parameters to minimize a cost function \protect\footnotemark[1]. Consider the analogy of being lost in a dense fog in the mountains and seeking to descend:
 \begin{enumerate}
 \item You sense the ground's slope under your feet (the local gradient).
@@ -532,7 +532,7 @@ Mini-batch GD's trajectory through parameter space tends to be more stable compa
 
 
 
-\subsubsection{Feature Scaling}
+\subsection{Feature Scaling}
 
 The cost function can resemble an elongated bowl if the feature scales vary significantly. Figure~\ref{fig:gradient_descent_5} illustrates the effect of feature scaling on Gradient Descent. In figure~\ref{fig:gradient_descent_5}(a), Gradient Descent progresses directly towards the minimum, reaching it swiftly. However, in figure~\ref{fig:gradient_descent_5}(b) it initially moves almost orthogonally to the direction of the global minimum, followed by a lengthy traverse down a nearly flat valley, significantly delaying the convergence.
 
