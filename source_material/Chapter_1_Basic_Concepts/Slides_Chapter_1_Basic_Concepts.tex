@@ -1,82 +1,686 @@
 \documentclass[aspectratio=169]{beamer}
-\usetheme{Madrid}
+% \usetheme{Madrid}
+
+\usefonttheme{serif}
+\setbeamercolor{normal text}{fg=black}
+
+% Make all structural text black (titles, sections, etc.)
+\setbeamercolor{structure}{fg=black}
+
+% Frame titles (top title)
+\setbeamercolor{frametitle}{fg=black}
+
+% Figure caption ("Figure:")
+\setbeamercolor{caption name}{fg=black}
+\setbeamercolor{caption}{fg=black}
+
+% Section titles in footer/header
+\setbeamercolor{section in head/foot}{fg=black}
+
+% Just in case
+\setbeamercolor{title}{fg=black}
+
+
+% --- Theme setup (minimal) ---
+\usetheme{default}
+\useoutertheme{default}
+\useinnertheme{default}
+
+% Remove navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+% Define your red
+% \definecolor{myred}{RGB}{225,120,120}
+\definecolor{myred}{RGB}{115,0,10}
+
+
+% --- Custom footline ---
+\setbeamertemplate{footline}{
+\leavevmode
+
+% Thin red line (moved to TOP)
+\begin{beamercolorbox}[wd=\paperwidth,ht=0.1ex]{}
+\color{myred}\rule{\paperwidth}{0.1ex}
+\end{beamercolorbox}
+
+\hbox{
+\begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1ex]{}
+\hspace{1em}
+\insertsection
+\hfill
+\insertframenumber{} / \inserttotalframenumber
+\hspace{1em}
+\end{beamercolorbox}
+}
+}
+
+% Remove headline entirely
+\setbeamertemplate{headline}{}
+
+% Optional: clean fonts
+\setbeamerfont{footline}{size=\small}
 
 
 
-\title{Basic Concepts in Machine Learning}
-\author{Your Name}
-\date{\today}
+
+
+
+
+\title{Chapter 1: Basic Concepts in Machine Learning}
+\author{Austin R.J. Downey}
+\date{}
 
 \begin{document}
 
+\section{Machine Learning for Engineering Problem Solving}
 \frame{\titlepage}
 
+
+\section{Chapter 1~Basic Concepts in Machine Learning}
+
 %------------------------------------------------
-\begin{frame}{AI, ML, and Data Science Overlap}
-\begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{../figures/AI-vs-ML-vs-Deep-Learning}
-    \caption{Overlap between AI, Data Science, and core engineering disciplines.}
-\end{figure}
+\begin{frame}{AI, ML, and Data Science}
+\centering
+\includegraphics[width=0.65\textwidth]{../figures/AI-vs-ML-vs-Deep-Learning}
+\vspace{0.3em}
+\small \\
+Overlap between the fields of Artificial Intelligence (AI), Data science (DS), and the core engineering disciplines of Civil, Mechanical, Electrical, and Chemical Engineering.
 \end{frame}
 
 %------------------------------------------------
+
 \begin{frame}{What is Machine Learning?}
 \begin{itemize}
-    \item ML automates analytical model building.
-    \item Closely tied to data science ? extracting insights from structured and unstructured data.
-    \item Systems learn from data, identify patterns, and make decisions with minimal human intervention.
+\item Learns patterns from data
+\item Makes predictions or decisions
+\end{itemize}
+\vspace{0.5em}
+\begin{itemize}
+\item Not robots
+\item Not rule-based programming
+\end{itemize}
+\vspace{0.5em}
+\textit{Example: Spam filter}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Early AI: Expert Systems}
+\centering
+\includegraphics[width=0.7\textwidth]{../figures/expert_system}
+\vspace{0.3em}
+\small \\
+Diagram of an ``expert system'' in AI, which is a computer program that simulates the decision-making ability of a human expert by using a knowledge base and inference rules.
+\end{frame}
+
+%------------------------------------------------
+
+
+\section{1.1~Examples of Artificial Intelligence}
+\begin{frame}{Examples of Artificial Intelligence}
+\begin{itemize}
+\item \textbf{Expert systems}: Simulate decision-making using rules and knowledge bases
+\item \textbf{Chatbots}: Simulate conversation with human users
 \end{itemize}
 \end{frame}
 
 %------------------------------------------------
-\begin{frame}{Misconception: ML is Not About Robots}
+
+\begin{frame}{Examples of Machine Learning}
 \begin{itemize}
-    \item ML is often confused with robotics.
-    \item In reality, it focuses on algorithms that learn from data.
-    \item Primary goal: prediction and decision-making from patterns in data.
+\item \textbf{Legression}: Models relationships between variables
+\item \textbf{Classification}: Assigns data to categories (e.g., spam vs not spam)
+\item \textbf{Image/speech recognition}: Identify objects or convert speech to text
 \end{itemize}
 \end{frame}
 
 %------------------------------------------------
-\begin{frame}{Early ML Applications}
+
+\begin{frame}{Machine Learning in Practice}
+\centering
+\includegraphics[width=0.18\textwidth]{../figures/Symbolics3640_Modified.jpg}
+\vspace{0.3em}
+\small \\
+A Symbolics Lisp Machine, a specialized hardware platform designed to run expert systems which are a version of AI focusing on answering questions to challenging problems\protect\footnotemark[1].
+\vspace{0.3em}
+\footnotetext[1]{\tiny{Michael L. Umbricht and Carl R. Friend (Retro-Computing Society of RI), CC BY-SA 3.0 $<$https://creativecommons.org/licenses/by-sa/3.0$>$, via Wikimedia Commons}}
+\end{frame}
+
+
+%------------------------------------------------
+
+\begin{frame}{Deep Learning vs Neural Networks}
+\centering
+\includegraphics[width=0.75\textwidth]{../figures/simple_neural_network_vs_deep_learning.jpg}
+\vspace{0.3em} \\
+\small
+Simple neural network vs deep learning
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{The ImageNet Breakthrough (2012)}
+\begin{columns}
+\column{0.45\textwidth}
 \begin{itemize}
-    \item \textbf{Spam filters} ? one of the first practical ML applications.
-    \item \textbf{Speech-to-text} ? converting spoken language to written form.
-    \item \textbf{Medical diagnostics} ? predicting diseases from medical data and images.
+\item AlexNet: 60M parameters, 650k neurons
+\item Enabled by GPUs + dropout
+\item Top-5 error: 15.3% vs 26.2%
+\end{itemize}
+
+\column{0.55\textwidth}
+\centering
+\includegraphics[width=\textwidth]{../figures/imageNet_classificatoin_paper}
+\vspace{0.3em}
+\small\
+Geoffrey's 2012 paper ``ImageNet Classification with Deep Convolutional Neural Networks''.
+\end{columns}
+\end{frame}
+
+%------------------------------------------------
+
+
+
+\begin{frame}{Impact of Deep Learning}
+\centering
+\includegraphics[width=0.65\textwidth]{../figures/ImageNet-competition-results}
+\vspace{0.3em}
+\small \\
+ImageNet Competition Results showing the impact of deep learning methods on image classification.
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Recognition of Deep Learning}
+\centering
+\includegraphics[width=0.6\textwidth, trim={0 0.3cm 0 0}, clip]{../figures/Nobel}
+\vspace{0.3em}
+\small \\
+The 2024 Nobel Prize in Physics awarded to John Hopfield and Geoffrey Hinton.
+\end{frame}
+
+%------------------------------------------------
+\section{1.2~Definition of Machine Learning}
+
+
+\begin{frame}{Definition of Machine Learning}
+\begin{itemize}
+\item Systems improve with experience
+\item Learn from data, not explicit rules
+\end{itemize}
+\vspace{0.5em}
+\begin{itemize}
+\item \textbf{Arthur Samuel (1959):} ``Field of study that gives computers the ability to learn without being explicitly programmed''
+\item \textbf{Tom Mitchell (1997):} ``A computer program is said to learn from experience $E$ with respect to some task $T$ and some performance measure $P$, if its performance on $T$, as measured by $P$, improves with experience  $E$.''
 \end{itemize}
 \end{frame}
 
 %------------------------------------------------
-\begin{frame}{Key ML Concepts \& Terminologies}
+
+\begin{frame}{Learning as a Function}
+\centering
+
+\begin{equation*}
+Y = f(X)
+\end{equation*}
+\vspace{0.3em}
+\begin{equation*}
+Y = f(X) + e
+\end{equation*}
+\vspace{0.3em}
 \begin{itemize}
-    \item \textbf{Supervised vs Unsupervised Learning}  
-    Train on labeled vs. unlabeled data.
-    \item \textbf{Online vs Batch Learning}  
-    Incremental updates vs. training all at once.
-    \item \textbf{Instance-based vs Model-based Learning}  
-    Memory-based predictions vs. generalized models.
+\item $X$: input features
+\item $Y$: output (target)
+\item $f$: unknown function
+\item $e$: error (noise)
+\end{itemize}
+\vspace{0.3em}
+\begin{itemize}
+\item Training: build the model
+\item Inference: use the model
+\end{itemize}
+\end{frame}
+
+%------------------
+
+%------------------------------------------------
+
+\begin{frame}{Supervised vs Unsupervised}
+\centering
+\includegraphics[width=0.8\textwidth]{../figures/Supervised_and_unsupervised_machine_learning.png}
+\vspace{0.3em}
+\small \\
+ Supervised vs unsupervised machine learning methods\protect\footnotemark[1]. 
+\footnotetext[1]{\tiny{ \noindent Modified from: Langs, G., Röhrich, S., Hofmanninger, J. et al., CC BY 4.0 $<$https://creativecommons.org/licenses/by/4.0$>$, via Wikimedia Commons}}
+\end{frame}
+
+
+
+%------------------------------------------------
+\section{1.3~Supervision in Machine Learning}
+
+\begin{frame}{Supervised Learning}
+\textbf{Key idea:} Data comes with labels \\
+\vspace{1em}
+Learn a mapping from inputs $\rightarrow$ outputs
+\vspace{1.5em} \\
+\textbf{Two main tasks:}
+\begin{itemize}
+\item Classification (categories)
+\item Regression (numeric values)
+\end{itemize}
+\vspace{1em} 
+\textit{Goal: generalize to new, unseen data}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Supervised Learning in Practice}
+
+Training uses labeled data, where each example includes input features and a known target.
+
+\vspace{1em}
+
+\textbf{Examples:}
+\begin{itemize}
+\item Spam filter (spam vs ham)
+\item House price prediction
+\end{itemize}
+
+\vspace{1em}
+
+\textbf{Common algorithms:}
+\begin{itemize}
+\item k-Nearest Neighbors
+\item Linear Regression
+\item Logistic Regression
+\item Support Vector Machines (SVMs)
+\item Decision Trees / Random Forests
+\end{itemize}
+
+\end{frame}
+
+
+
+
+%------------------------------------------------
+
+\begin{frame}{Unsupervised Learning}
+
+Unsupervised learning uses unlabeled data to discover structure and patterns automatically.
+
+\vspace{1em}
+
+\textbf{Key tasks:}
+\begin{itemize}
+\item \textbf{Clustering}: group similar data
+\item \textbf{Association}: discover relationships
+\item \textbf{Dimension reduction}: simplify data
+\end{itemize}
+
+\vspace{1em}
+
+\textbf{Common algorithms:}
+\begin{itemize}
+\item k-Means
+\item Hierarchical Clustering
+\item Expectation Maximization
+\end{itemize}
+
+\end{frame}
+
+
+%------------------------------------------------
+
+\begin{frame}{Unsupervised Learning Example}
+\begin{columns}
+\column{0.45\textwidth}
+\begin{itemize}
+\item Finds hidden structure
+\item No labels provided
+\item Visualization reveals patterns
+\end{itemize}
+
+\vspace{0.5em}
+
+\begin{itemize}
+\item Example: text data
+\item Words grouped by frequency/meaning
+\end{itemize}
+
+\column{0.55\textwidth}
+\centering
+\includegraphics[width=0.7\textwidth]{../figures/semantic_word_cloud}
+\vspace{0.3em}
+\small \\
+A semantic word cloud of Barack Obama's First Inaugural Address \footnotemark
+\end{columns}
+
+\footnotetext{\tiny{Modified from: GuoYongzhi, CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0, via Wikimedia Commons}}
+\end{frame}
+
+
+%------------------------------------------------
+
+\begin{frame}{Unsupervised Learning: Concepts and Methods}
+
+Unsupervised learning reveals structure in data without labels.
+
+\vspace{1em}
+
+\textbf{Key concepts:}
+\begin{itemize}
+\item \textbf{Clustering}: group similar data points
+\item \textbf{Association}: discover relationships between variables
+\item \textbf{Dimension reduction}: reduce number of variables
+\end{itemize}
+
+\vspace{1em}
+
+\textbf{Common algorithms:}
+\begin{itemize}
+\item k-Means
+\item Hierarchical Clustering (HCA)
+\item Expectation Maximization
+\end{itemize}
+
+\end{frame}
+
+
+%------------------------------------------------
+
+\begin{frame}{Anomaly Detection}
+\centering
+\includegraphics[width=0.7\textwidth]{../figures/Anomaly_detection}
+\vspace{0.3em}
+\small \\
+Anomaly Detection for a given set of data.
+
+\vspace{0.5em}
+
+Detect unusual patterns that differ from normal behavior.
+
+\vspace{0.5em}
+
+\begin{itemize}
+\item Train on normal data
+\item Identify outliers or rare events
+\item Applications: fraud detection, defects, data cleaning
+\end{itemize}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Semi-Supervised Learning}
+
+Semi-supervised learning uses a small amount of labeled data with a large amount of unlabeled data.
+
+\vspace{1em}
+
+\begin{itemize}
+\item Combines supervised and unsupervised learning
+\item Leverages structure in unlabeled data
+\end{itemize}
+
+\vspace{1em}
+
+\textbf{Example:}
+\begin{itemize}
+\item Group similar images automatically (clustering)
+\item Label a few examples
+\item Propagate labels to remaining data
+\end{itemize}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Semi-Supervised Learning Example}
+\centering
+\includegraphics[width=0.8\textwidth]{../figures/semisupervised_learning}
+\vspace{0.3em}
+\small \\
+Semisupervised learning enabling the use of a limited set of labeled data to infer the labels of larger unlabeled datasets.
+\end{frame}
+
+
+%------------------------------------------------
+
+
+
+\begin{frame}{Reinforcement Learning}
+
+Reinforcement learning trains an agent to make decisions by interacting with an environment.
+
+\vspace{1em}
+
+\begin{itemize}
+\item Observe state
+\item Take action
+\item Receive reward or penalty
+\end{itemize}
+
+\vspace{1em}
+
+\textit{Goal: learn a policy that maximizes total reward}
+
+\vspace{0.5em}
+
+\centering
+\includegraphics[width=0.8\textwidth]{../figures/reinforcement_learning_control_diagram}
+\vspace{0.3em}
+\small \\
+Reinforcement learning diagram.
+
+\end{frame}
+
+
+%------------------------------------------------
+\section{1.4~Types of Learning (Batch and Online)}
+\begin{frame}{Types of Learning}
+\begin{itemize}
+\item How models learn from data
+\item Two main approaches:
+\begin{itemize}
+\item Batch learning (offline)
+\item Online learning (incremental)
+\end{itemize}
+\item Trade-off: accuracy vs adaptability vs resources
 \end{itemize}
 \end{frame}
 
 %------------------------------------------------
-\begin{frame}{Expert Systems in AI}
-\begin{figure}
-    \centering
-    \includegraphics[width=0.9\linewidth]{../figures/expert_system}
-    \caption{Expert systems simulate human decision-making using a knowledge base and inference rules.}
-\end{figure}
-\end{frame}
 
-\begin{frame}{AI, ML, and Data Science Overlap}
+\begin{frame}{Batch Learning}
+\centering
+\includegraphics[width=0.8\textwidth]{../figures/training_batch}
+\vspace{0.3em}
+\small \\
+Batch learning framework with separate training and inference stages.
+\vspace{0.5em}
+
 \begin{itemize}
-    \item AI is the broader field, ML is a subset, and Deep Learning is a subset of ML.
-    \item Data Science intersects with all these domains.
+\item Train once on full dataset
+\item No learning after deployment
+\item Requires retraining from scratch to update
+\item Computationally expensive
 \end{itemize}
-
-\vspace{0.3cm}
-\includegraphics[width=\linewidth]{../figures/AI-vs-ML-vs-Deep-Learning}
 \end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Online Learning}
+\centering
+\includegraphics[width=0.8\textwidth]{../figures/training_online}
+\vspace{0.3em}
+\small \\
+Online learning framework where data is used to continuously training (or update / fine-tune) the model.
+\vspace{0.5em}
+
+\begin{itemize}
+\item Learns incrementally from new data
+\item Adapts continuously
+\item Works for streaming or large datasets
+\item Learning rate controls adaptation speed
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+
+\begin{frame}{Bad Data in Machine Learning}
+\centering
+\includegraphics[width=0.6\textwidth]{../figures/cows}
+\vspace{0.3em}
+\small \\ 
+Training a machine learning algorithm to recognize cows may end up just learning to recognize grass. humorously called ``short-cut learning''\protect\footnotemark[1].
+\vspace{0.5em}
+
+\begin{itemize}
+\item Models learn patterns in data — not concepts
+\item Poor or biased data $\rightarrow$ wrong conclusions
+\item Example: learns “grass” instead of “cow”
+\end{itemize}
+\footnotetext[1]{\tiny{Screen shoot of a Google image search for cows taken by the Austin Downey, all images stated to be under a creative commons license per Google search tools; also assumed to be fair use under given the educational purpose of this text, via \url{https://www.google.com/}}}
+\end{frame}
+
+%------------------------------------------------
+\section{1.5~Learning Approaches: Instance-Based and Model-Based}
+\begin{frame}{Instance-Based Learning}
+\centering
+\includegraphics[width=0.7\textwidth]{../figures/instance_based_learning}
+\vspace{0.3em}
+\small \\
+Instance-based learning where the class of a unknown instance is inferred from the its distance to data points with known labels.
+\vspace{0.5em}
+
+\begin{itemize}
+\item Memorizes training examples
+\item Uses similarity (distance) to make predictions
+\item Flexible but can be slow
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Model-Based Learning}
+\centering
+\includegraphics[width=0.7\textwidth]{../figures/model_based_learning}
+\vspace{0.3em}
+\small \\
+Model-based learning where the class of a unknown instance is inferred from its location in reference to a model trained on the data with known labels.
+\vspace{0.5em}
+
+\begin{itemize}
+\item Learns a model from data
+\item Uses model to make predictions
+\item Faster at inference, depends on model quality
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+
+\begin{frame}{Selecting Machine Learning Methods}
+\centering
+\includegraphics[width=0.85\textwidth]{../figures/ml_map}
+\vspace{0.3em}
+\small \\
+Flowchart of estimators used in the scikit learn library that intends guide users for what algorithms to use for a given case.
+\vspace{0.5em}
+\end{frame}
+
+%------------------------------------------------
+
+\section{1.6~The Unreasonable Effectiveness of Data}
+\begin{frame}{The Unreasonable Effectiveness of Data}
+\centering
+\includegraphics[width=0.7\textwidth]{../figures/data_versus_algorithms.png}
+\vspace{0.3em}
+\small \\
+Learning curves showing the importance of the amount of data.
+\vspace{0.5em}
+
+\begin{itemize}
+\item Michele Banko and Eric Brill (Microsoft, 2001), ``Scaling to Very Very Large Corpora for Natural Language Disambiguation''
+\item More data $\rightarrow$ better performance
+\item Simple models can compete with enough data
+\end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \end{document}
 

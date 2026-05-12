@@ -96,7 +96,7 @@ Machine Learning, as a subset of AI, involves algorithms that improve automatica
 		\begin{figure}[t]
 			\centering
 			\includegraphics[width=6.5in]{../figures/simple_neural_network_vs_deep_learning.jpg}
-			\caption{simple neural network vs deep learning}
+			\caption{Simple neural network vs deep learning.}
 			\label{fig:simple_neural_network_vs_deep_learning}
 		\end{figure}
 
@@ -239,8 +239,12 @@ Machine Learning, as a subset of AI, involves algorithms that improve automatica
 
 In unsupervised learning, the training data is unlabeled, and the system endeavors to learn independently without explicit guidance. For instance, consider a situation where you have extensive data on what people watch on YouTube. You might use a clustering algorithm to identify groups of similar users. However, at no point do you instruct the algorithm on which group a user belongs to; it discovers these connections autonomously. For example, it might identify that the types of videos people watch are closely linked to specific age and income metrics. Older viewers may prefer watching videos about vacations, while younger viewers might watch a lot of educational content, such as Khan Academy.
 
-Visualization algorithms such as that in Figure~\ref{fig:data_visualization}) serve as an important instance of unsupervised learning algorithms: they take in extensive, complex, and unlabeled data and produce a 2D or 3D representation that can be conveniently visualized. These algorithms strive to maintain as much of the original data structure as possible (for example, ensuring that distinct clusters in the input space do not merge in the visual output). This helps in comprehending the organizational structure of the data and potentially uncovering hidden patterns. Other Important concepts in unsupervised learning include
+Visualization algorithms such as that in Figure~\ref{fig:data_visualization}) serve as an important instance of unsupervised learning algorithms: they take in extensive, complex, and unlabeled data and produce a 2D or 3D representation that can be conveniently visualized. These algorithms strive to maintain as much of the original data structure as possible (for example, ensuring that distinct clusters in the input space do not merge in the visual output). This helps in comprehending the organizational structure of the data and potentially uncovering hidden patterns. 
+
 \pagebreak
+
+
+Other Important concepts in unsupervised learning include
 \begin{itemize}
 	\item \textbf{Clustering}, The process of identifying and grouping similar data points in larger datasets without concern for the specific outcome
 	\item \textbf{Association}, The process learning a rule-based method for discovering relations between variables data data
@@ -331,6 +335,14 @@ Another key application of unsupervised learning is anomaly detection as shown i
 			Reinforcement learning follows a distinct paradigm in which an autonomous agent repeatedly interacts with its environment. At each step the agent observes the current state, chooses and executes an action, and then receives feedback in the form of a reward or penalty; as shown in figure~\ref{fig:reinforcement_learning_control_diagram}. By sampling many such cycles the agent gradually discovers a strategy, known as a policy, that maps perceived situations to actions so as to maximise the total reward accumulated over time.
 
 			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\linewidth]{../figures/reinforcement_learning_control_diagram}
+				\caption{Reinforcement learning diagram.}
+				\label{fig:reinforcement_learning_control_diagram}
+			\end{figure}
+
+			
 %			\begin{ML_case_study}
 %				
 %			\textbf{Jean-Baptiste Mouret}
@@ -356,13 +368,7 @@ Another key application of unsupervised learning is anomaly detection as shown i
 %		\end{ML_case_study}		
 
 			
-			
-			\begin{figure}[H]
-				\centering
-				\includegraphics[width=\linewidth]{../figures/reinforcement_learning_control_diagram}
-				\caption{Reinforcement learning diagram.}
-				\label{fig:reinforcement_learning_control_diagram}
-			\end{figure}
+
 			
 			
 
