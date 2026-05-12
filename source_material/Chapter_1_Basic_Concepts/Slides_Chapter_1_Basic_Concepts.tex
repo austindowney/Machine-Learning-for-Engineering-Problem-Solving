@@ -106,46 +106,31 @@ Overlap between the fields of Artificial Intelligence (AI), Data science (DS), a
 %------------------------------------------------
 
 \begin{frame}{Early AI: Expert Systems}
-\centering
+\begin{center}
 \includegraphics[width=0.7\textwidth]{../figures/expert_system}
 \vspace{0.3em}
 \small \\
 Diagram of an ``expert system'' in AI, which is a computer program that simulates the decision-making ability of a human expert by using a knowledge base and inference rules.
-\end{frame}
+\end{center}
 
-%------------------------------------------------
-
-
-\section{1.1~Examples of Artificial Intelligence}
-\begin{frame}{Examples of Artificial Intelligence}
-\begin{itemize}
-\item \textbf{Expert systems}: Simulate decision-making using rules and knowledge bases
-\item \textbf{Chatbots}: Simulate conversation with human users
-\end{itemize}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}{Examples of Machine Learning}
-\begin{itemize}
-\item \textbf{Legression}: Models relationships between variables
-\item \textbf{Classification}: Assigns data to categories (e.g., spam vs not spam)
-\item \textbf{Image/speech recognition}: Identify objects or convert speech to text
-\end{itemize}
-\end{frame}
-
-%------------------------------------------------
-
-\begin{frame}{Machine Learning in Practice}
-\centering
-\includegraphics[width=0.18\textwidth]{../figures/Symbolics3640_Modified.jpg}
 \vspace{0.3em}
-\small \\
-A Symbolics Lisp Machine, a specialized hardware platform designed to run expert systems which are a version of AI focusing on answering questions to challenging problems\protect\footnotemark[1].
-\vspace{0.3em}
-\footnotetext[1]{\tiny{Michael L. Umbricht and Carl R. Friend (Retro-Computing Society of RI), CC BY-SA 3.0 $<$https://creativecommons.org/licenses/by-sa/3.0$>$, via Wikimedia Commons}}
-\end{frame}
+Examples of Artificial Intelligence
+\begin{itemize}
+	\item \textbf{Expert systems}: Simulate decision-making using rules and knowledge bases
+	\item \textbf{Chatbots}: Simulate conversation with human users
+\end{itemize}\end{frame}
 
+%------------------------------------------------
+
+\begin{frame}{ AI in Practice}
+	\centering
+	\includegraphics[width=0.18\textwidth]{../figures/Symbolics3640_Modified.jpg}
+	\vspace{0.3em}
+	\small \\
+	A Symbolics Lisp Machine, a specialized hardware platform designed to run expert systems which are a version of AI focusing on answering questions to challenging problems\protect\footnotemark[1].
+	\vspace{0.3em}
+	\footnotetext[1]{\tiny{Michael L. Umbricht and Carl R. Friend (Retro-Computing Society of RI), CC BY-SA 3.0 $<$https://creativecommons.org/licenses/by-sa/3.0$>$, via Wikimedia Commons}}
+\end{frame}
 
 %------------------------------------------------
 
@@ -183,7 +168,7 @@ Geoffrey's 2012 paper ``ImageNet Classification with Deep Convolutional Neural N
 
 \begin{frame}{Impact of Deep Learning}
 \centering
-\includegraphics[width=0.65\textwidth]{../figures/ImageNet-competition-results}
+\includegraphics[width=0.8\textwidth]{../figures/ImageNet-competition-results}
 \vspace{0.3em}
 \small \\
 ImageNet Competition Results showing the impact of deep learning methods on image classification.
@@ -193,7 +178,7 @@ ImageNet Competition Results showing the impact of deep learning methods on imag
 
 \begin{frame}{Recognition of Deep Learning}
 \centering
-\includegraphics[width=0.6\textwidth, trim={0 0.3cm 0 0}, clip]{../figures/Nobel}
+\includegraphics[width=0.8\textwidth, trim={0 0.3cm 0 0}, clip]{../figures/Nobel}
 \vspace{0.3em}
 \small \\
 The 2024 Nobel Prize in Physics awarded to John Hopfield and Geoffrey Hinton.
@@ -205,13 +190,13 @@ The 2024 Nobel Prize in Physics awarded to John Hopfield and Geoffrey Hinton.
 
 \begin{frame}{Definition of Machine Learning}
 \begin{itemize}
-\item Systems improve with experience
-\item Learn from data, not explicit rules
+\item \textbf{Arthur Samuel (1959):} ``Field of study that gives computers the ability to learn without being explicitly programmed''
+\item \textbf{Tom Mitchell (1997):} ``A computer program is said to learn from experience $E$ with respect to some task $T$ and some performance measure $P$, if its performance on $T$, as measured by $P$, improves with experience  $E$.''
 \end{itemize}
 \vspace{0.5em}
 \begin{itemize}
-\item \textbf{Arthur Samuel (1959):} ``Field of study that gives computers the ability to learn without being explicitly programmed''
-\item \textbf{Tom Mitchell (1997):} ``A computer program is said to learn from experience $E$ with respect to some task $T$ and some performance measure $P$, if its performance on $T$, as measured by $P$, improves with experience  $E$.''
+	\item Systems improve with experience
+	\item Learn from data, not explicit rules
 \end{itemize}
 \end{frame}
 
@@ -244,6 +229,7 @@ Y = f(X) + e
 %------------------
 
 %------------------------------------------------
+\section{1.3~Supervision in Machine Learning}
 
 \begin{frame}{Supervised vs Unsupervised}
 \centering
@@ -257,7 +243,7 @@ Y = f(X) + e
 
 
 %------------------------------------------------
-\section{1.3~Supervision in Machine Learning}
+
 
 \begin{frame}{Supervised Learning}
 \textbf{Key idea:} Data comes with labels \\
@@ -332,7 +318,7 @@ Unsupervised learning uses unlabeled data to discover structure and patterns aut
 
 %------------------------------------------------
 
-\begin{frame}{Unsupervised Learning Example}
+\begin{frame}{Unsupervised Learning in Practice}
 \begin{columns}
 \column{0.45\textwidth}
 \begin{itemize}
@@ -357,33 +343,6 @@ A semantic word cloud of Barack Obama's First Inaugural Address \footnotemark
 \end{columns}
 
 \footnotetext{\tiny{Modified from: GuoYongzhi, CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0, via Wikimedia Commons}}
-\end{frame}
-
-
-%------------------------------------------------
-
-\begin{frame}{Unsupervised Learning: Concepts and Methods}
-
-Unsupervised learning reveals structure in data without labels.
-
-\vspace{1em}
-
-\textbf{Key concepts:}
-\begin{itemize}
-\item \textbf{Clustering}: group similar data points
-\item \textbf{Association}: discover relationships between variables
-\item \textbf{Dimension reduction}: reduce number of variables
-\end{itemize}
-
-\vspace{1em}
-
-\textbf{Common algorithms:}
-\begin{itemize}
-\item k-Means
-\item Hierarchical Clustering (HCA)
-\item Expectation Maximization
-\end{itemize}
-
 \end{frame}
 
 
@@ -478,7 +437,7 @@ Reinforcement learning diagram.
 
 %------------------------------------------------
 \section{1.4~Types of Learning (Batch and Online)}
-\begin{frame}{Types of Learning}
+\begin{frame}{Types of Learning (Batch and Online)}
 \begin{itemize}
 \item How models learn from data
 \item Two main approaches:
