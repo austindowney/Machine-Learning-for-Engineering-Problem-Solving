@@ -66,12 +66,13 @@ Y = 0.5 * X**2 + X + 2 + np.random.randn(m,1)
 
 # plot the data
 plt.figure(figsize=(5,3))
-plt.grid(True)
-plt.scatter(X,Y)
+plt.grid(True,zorder=0)
+plt.scatter(X,Y, zorder=3)
 plt.xlabel('x')
 plt.ylabel('y')
+
 plt.tight_layout()
-plt.savefig('polynomial_regression_1',dpi=500)
+plt.savefig('polynomial_regression_1',dpi=300)
 
 #%% perform polynominal regression
 
@@ -110,16 +111,17 @@ print(model_intercept)
 # now if we plot the linear models on the extended set of features. 
 plt.figure(figsize=(5,3))
 plt.grid(True)
-plt.scatter(X_poly[:,0],Y,label = 'data for $X$')
-plt.scatter(X_poly[:,1],Y,marker='s',label = 'data for $X^2$')
-plt.plot(X_model,model_coefficients[0][0]*X_model + model_intercept,'--',label='polynominal fit  $X$')
+plt.scatter(X_poly[:,0],Y,label = 'data for $X$', zorder=3)
+plt.scatter(X_poly[:,1],Y,marker='s',label = 'data for $X^2$', zorder=3)
+plt.plot(X_model,model_coefficients[0][0]*X_model + model_intercept,'--',label='polynominal fit  $X$', zorder=3)
 X_model_2 = np.linspace(0,9)
-plt.plot(X_model_2,model_coefficients[0][1]*X_model_2 + model_intercept,':',label='linear fit for $X^2$',)
-plt.legend()
+plt.plot(X_model_2,model_coefficients[0][1]*X_model_2 + model_intercept,':',label='linear fit for $X^2$', zorder=3)
+plt.legend(framealpha=1)
 plt.xlabel('x')
 plt.ylabel('y')
+
 plt.tight_layout()
-plt.savefig('polynomial_regression_2',dpi=500)
+plt.savefig('polynomial_regression_2',dpi=300)
 
 
 # now that we have a parameter for x and x^2, these can be recombined into a single
@@ -127,13 +129,14 @@ plt.savefig('polynomial_regression_2',dpi=500)
 
 plt.figure(figsize=(5,3))
 plt.grid(True)
-plt.scatter(X,Y,label='data')
+plt.scatter(X,Y,label='data', zorder=3)
 plt.plot(X_model,model_coefficients[0][1]*X_model**2 + model_coefficients[0][0]*X_model + 
-         model_intercept,'r--',label='polynominal fit')
+         model_intercept,'r--',label='polynominal fit', zorder=3)
 plt.xlabel('x')
 plt.ylabel('y')
-plt.legend()
+plt.legend(framealpha=1)
+
 plt.tight_layout()
-plt.savefig('polynomial_regression_3',dpi=500)
+plt.savefig('polynomial_regression_3',dpi=300)
 
 

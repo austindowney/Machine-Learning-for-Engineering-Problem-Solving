@@ -104,17 +104,21 @@ This model comprises two parameters, $\theta_1$ and $\theta_2$, which can be adj
 \begin{center}
 \gr{Notations}
 \end{center}
-
-\begin{itemize}[itemsep=0.25ex]
-    \item $\textbf{x}$: a lowercase, bolded variable that denotes a vector.
-    \item $\textbf{X}$: an uppercase, bolded variable that represents a matrix.
-    \item $\textbf{X}$: this denotes the feature matrix, also known as the input matrix.
-    \item $\textbf{y}$: this is the label vector corresponding to the feature matrix, representing the target outputs.
-    \item $\textbf{x}^{(i)}$ represents the $i^\text{th}$ instance in the dataset $\textbf{X}$. For instance, a dataset about cats might include an entry for a specific cat named Mittens. This entry (labelled $y$) could detail several attributes such as age, weight, and length.
-    \item $h$: the hypothesis or prediction function that, given a feature vector $\textbf{X}$, outputs the predicted values $\hat{\textbf{y}} = h(\textbf{X})$.
-    \item $n$: the total number of features in the dataset, which defines the complexity or degree of the model.
-    \item $m$: the total number of instances in the dataset.
-    \item $\hat{x}$: an estimated value, indicated by a hat, and pronounced as ``$x$-hat''.
+\noindent In terms of linear algebra notation; we use:
+\begin{itemize}
+	\item $\mathbf{x}$: lowercase bold symbols denote vectors.
+	\item $\mathbf{X}$: uppercase bold symbols denote matrices.
+\end{itemize}	
+	\vspace{0.5em}
+In machine learning, we commonly use:
+\begin{itemize}	
+	\item $\mathbf{X}$: the feature matrix (input data).
+	\item $\mathbf{y}$: the target vector (labels or outputs).
+	\item $\mathbf{x}^{(i)}$: the $i^\text{th}$ instance in the dataset.
+	\item $h$: the hypothesis or prediction function, $\hat{\mathbf{y}} = h(\mathbf{X})$.
+	\item $n$: the number of features.
+	\item $m$: the number of training instances.
+	\item $\hat{x}$: an estimated value (``$x$-hat'').
 \end{itemize}
 \end{mdframed}
 
@@ -143,7 +147,7 @@ In the context of the Ames housing data, a straightforward cost function used is
 
 The MSE is also applied to minimize the error in a linear regression model, with the hypothesis $h_\theta$, trained on dataset $\textbf{X}$. This is expressed as:
 \begin{equation}
-\text{MSE}(\textbf{X},h_\theta) = J = \frac{1}{m} \sum_{i=1}^{m} (\pmb{\theta}^\text{T}\textbf{x}^{(i)}-y^{(i)})^2
+\text{MSE}(\textbf{X},h_\theta) = J = \frac{1}{m} \sum_{i=1}^{m} (\pmb{\theta}^{\top}\textbf{x}^{(i)}-y^{(i)})^2
 \end{equation}
 \noindent where the objective is to minimize the cost function by iteratively refining the values of $\pmb{\theta}$.
 
@@ -204,7 +208,7 @@ or
 
 This goal is to find $\hat{\theta}$ such that the error is minimized. Mathmatically, this is simple enough as the $\hat{\theta}$ Is the minimization of the lease-squares hyperplane, or:
 \begin{equation}
-\hat{\pmb{\theta}}=(\textbf{X}\textsuperscript{T}\textbf{X})^{-1}\textbf{X}\textsuperscript{T}\textbf{y}
+\hat{\pmb{\theta}}=(\textbf{X}^{\top}\textbf{X})^{-1}\textbf{X}^{\top}\textbf{y}
 \label{eq:normal_equation}
 \end{equation}
 Equation~\ref{eq:normal_equation} is referred to as the normal equation. Consider a simple linear model with $p = 2$, where $x_{11} = 1$. In this scenario, $x_{11}$ acts as the bias term of the equation, whereas the remaining elements of $\textbf{X}$ represent the data. Without this bias term, the solution would only address the slope of the line. Subsequently, solving for $\hat{\theta}_1$ and $\hat{\theta}_2$ yields:
