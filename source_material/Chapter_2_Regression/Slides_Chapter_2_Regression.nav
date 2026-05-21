@@ -73,8 +73,23 @@
 \headcommand {\beamer@framepages {29}{29}}
 \headcommand {\slideentry {5}{0}{2}{30/30}{}{0}}
 \headcommand {\beamer@framepages {30}{30}}
-\headcommand {\beamer@partpages {1}{30}}
-\headcommand {\beamer@subsectionpages {29}{30}}
 \headcommand {\beamer@sectionpages {29}{30}}
-\headcommand {\beamer@documentpages {30}}
-\headcommand {\gdef \inserttotalframenumber {30}}
+\headcommand {\beamer@subsectionpages {29}{30}}
+\headcommand {\sectionentry {6}{2.4~Polynomial Regression}{31}{2.4~Polynomial Regression}{0}}
+\headcommand {\slideentry {6}{0}{1}{31/31}{}{0}}
+\headcommand {\beamer@framepages {31}{31}}
+\headcommand {\slideentry {6}{0}{2}{32/32}{}{0}}
+\headcommand {\beamer@framepages {32}{32}}
+\headcommand {\slideentry {6}{0}{3}{33/33}{}{0}}
+\headcommand {\beamer@framepages {33}{33}}
+\headcommand {\slideentry {6}{0}{4}{34/34}{}{0}}
+\headcommand {\beamer@framepages {34}{34}}
+\headcommand {\slideentry {6}{0}{5}{35/35}{}{0}}
+\headcommand {\beamer@framepages {35}{35}}
+\headcommand {\slideentry {6}{0}{6}{36/36}{}{0}}
+\headcommand {\beamer@framepages {36}{36}}
+\headcommand {\beamer@partpages {1}{36}}
+\headcommand {\beamer@subsectionpages {31}{36}}
+\headcommand {\beamer@sectionpages {31}{36}}
+\headcommand {\beamer@documentpages {36}}
+\headcommand {\gdef \inserttotalframenumber {36}}

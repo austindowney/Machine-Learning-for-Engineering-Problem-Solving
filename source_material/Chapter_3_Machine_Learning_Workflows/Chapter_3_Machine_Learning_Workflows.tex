@@ -1,0 +1,235 @@
+\documentclass[12pt,letter]{article}
+\usepackage{../downey_format}
+
+\begin{document}
+	
+	% set the section number, along with figure and equation numbers
+	\setcounter{section}{2}	
+	\setcounter{figure}{0}   
+	\renewcommand\thefigure{\thesection.\arabic{figure}}
+	\setcounter{equation}{0}   
+	\renewcommand\theequation{\thesection.\arabic{equation}}
+\section{Machine Learning Workflows}
+
+Machine learning workflows involve the sequence of steps used to prepare data, train models, and evaluate performance. In practice, successful machine learning applications often depend as much on data preparation and feature engineering as on the learning algorithm itself.
+
+In this chapter, we introduce common workflows used in machine learning, including feature engineering, training and testing procedures, pipelines, and methods for improving model generalization.
+
+\subsection{Feature Engineering}
+
+Feature engineering is the process of transforming raw data into informative inputs that can be used by machine learning algorithms. Carefully designed features can significantly improve model performance and help capture important physical relationships in engineering data.
+
+\subsubsection{Time-Series Features}
+
+Many engineering systems generate data that varies over time, such as sensor measurements, vibration signals, or telemetry data. Common time-series features include moving averages, lagged values, rolling statistics, derivatives, and frequency-based quantities extracted from signal analysis techniques such as the Fourier transform.
+
+\subsubsection{Statistical Features}
+
+Statistical features summarize important properties of a dataset or signal using descriptive measures. Common examples include the mean, variance, standard deviation, minimum, maximum, skewness, and kurtosis, which can help characterize trends, variability, and abnormal behavior in engineering systems.
+
+
+
+\pagebreak
+\subsection{Training and Testing Data}
+
+Training a predictive model on a dataset and then testing it with the same data is a fundamental error in methodology. Such a model could simply memorize the labels of the training samples, achieving perfect performance during training but failing to make any useful predictions on new, unseen data. This phenomenon is known as overfitting. To prevent this, it is standard practice in supervised machine learning to reserve a portion of the available data as a test set, denoted as $\textbf{X}_\text{test}$ and $\textbf{y}_\text{test}$.
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[]{../figures/training_test_datasets}
+			\caption{Splitting data up into training and testing subsets.}
+			\label{fig:training_test_datasets}
+		\end{figure}
+
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[]{../figures/training_validation_test_datasets}
+			\caption{Splitting data up into training, validation, and testing subsets.}
+			\label{fig:training_validation_test_datasets}
+		\end{figure}
+
+
+The function \texttt{sklearn.model\_selection.train\_test\_split} in scikit-learn randomly divides arrays or matrices into training and testing subsets.
+
+\pagebreak
+
+\subsection{Pipelines}
+
+
+Pipelines in scikit-learn streamline the process by sequentially applying a list of transformations followed by a final estimator to a dataset. Employing pipelines allows for the integration of multiple processing steps, which can then be cross-validated together while experimenting with various parameters. Fig.~\ref{fig:AutoML_diagram} illustrates a typical pipeline configuration in scikit-learn.
+
+
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=6.5in]{../figures/AutoML_diagram}
+			\caption{Pipeline setup for the automated deployment of pre-processing and modeling steps.\protect\footnotemark[1]}
+			\label{fig:AutoML_diagram}
+		\end{figure}
+
+
+\footnotetext[1]{Modified from PopovaZhuhadar, CC BY-SA 4.0 $<$https://creativecommons.org/licenses/by-sa/4.0$>$, via Wikimedia Commons}
+
+\subsection{Learning Curves}
+
+Performing Polynomial Regression with a high degree typically allows for a closer fit to the training data compared to simple Linear Regression. For instance, Figure~\ref{fig:overfitting_1} demonstrates the application of a 30-degree polynomial model to a set of training data, contrasting it with both a linear model and a quadratic model (2\textsuperscript{nd}-degree polynomial). Observe how the 30-degree polynomial model contorts to closely match the training instances.
+\begin{itemize}
+\item The linear model exhibits underfitting.
+\item The high-degree Polynomial Regression model drastically overfits the training data.
+\item Among these, the quadratic model is likely to generalize best.
+\end{itemize}
+In this instance, the appropriateness of the quadratic model is clear since the data was initially generated using such a model. However, in real-world scenarios where the underlying function of the data is unknown, determining the optimal complexity for your model can be challenging. How can you ascertain whether your model is overfitting or underfitting the data?
+
+\begin{figure}[h]
+\centering
+\includegraphics[]{../figures/overfitting_1.png}
+\caption{Polynomial regression showing underfitting (degree=1), a respectable model fit (degree=2), and overfitting (degree=30).}
+\label{fig:overfitting_1}
+\end{figure}
+
+
+
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[]{../figures/overfitting_2.png}
+\caption{Learning curves for the underfitting linear model (degree=1) where underfitting is evident because both curves have plateaued; they are close together and relatively high.}
+\label{fig:overfitting_2}
+\end{figure}
+
+Examining the model's behavior in figures~\ref{fig:overfitting_2}~and~~\ref{fig:overfitting_3} on the training set shows a clear trend. With only one or two samples the fit is perfect, so the error curve begins at zero. As additional observations are introduced the model can no longer capture every point exactly, partly because of measurement noise and partly because the underlying relationship is nonlinear, and consequently the training error rises. After a sufficient number of samples the curve flattens out; beyond this plateau adding further data neither markedly lowers nor raises the average error.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[]{../figures/overfitting_3.png}
+    \caption{Learning curves for the overfitting polynomial model (degree=20) showing a significant gap between the curves, which indicates better performance on the training data than on the validation data.}
+    \label{fig:overfitting_3}
+\end{figure}
+
+Inspection of the validation curve in figure~\ref{fig:overfitting_3}  tells a complementary story. With only a handful of training samples the model cannot generalize, so the validation error starts high. As more examples become available it learns progressively better patterns and the error falls. Eventually, though, the simple linear hypothesis is unable to capture the data's full complexity, causing the decline to flatten out; the validation curve plateaus at nearly the same level as the training curve. Their close proximity and uniformly large values are characteristic of an underfitting model.
+
+
+Figure~\ref{fig:overfitting_3} displays the learning curves for a model fitted with a 20\textsuperscript{th}-degree polynomial. The overall shape resembles the curves seen earlier, yet two key differences stand out. First, the error on the training set is far lower than that achieved by the Linear Regression model, demonstrating the polynomial's extra flexibility. Second, a pronounced gap separates the training and validation curves, which means the model performs much better on the data it has already seen; this divergence is the hallmark of overfitting. Expanding the training set could reduce the gap, but without additional regularization the risk of overfitting would remain.
+
+
+Next, let's apply the code using a 2\textsuperscript{nd} order polynomial, which accurately captures the essence of the data without underfitting or overfitting. These results are shown in Figure~\ref{fig:overfitting_4}. Here it can be seen that the training and validation curves again meet after converging, showing a well-fit model.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[]{../figures/overfitting_4.png}
+    \caption{Learning curves for the optimal polynomial model (degree=2) showing well-aligned curves that plateau at a relatively low error level.}
+    \label{fig:overfitting_4}
+\end{figure}
+
+
+
+\begin{example}
+\textbf{Learning Curves}
+
+\noindent This example compares learning curves for linear and polynomial regression models. By plotting training and validation errors as the training set grows, it illustrates how model complexity impacts bias and variance, and helps identify underfitting and overfitting behavior.
+\end{example}
+
+
+
+
+\subsection{Regularized Linear Models}
+Overfitting is frequently curbed by regularizing the model, meaning you introduce constraints that reduce its effective degrees of freedom and make it harder to memories noise. In a polynomial setting you can achieve this simply by choosing a lower-degree polynomial, while in a linear model you typically add a penalty that discourages large coefficient values. This naturally raises the question: how is regularization expressed mathematically?
+
+
+\subsubsection{Ridge Regression}
+
+% \todo{Clarify the benefits of ridge regression and refine the description.}
+
+
+
+Ridge Regression modifies Linear Regression by adding a regularization term to the cost function, which compels the learning algorithm to fit the data while keeping the model weights as small as possible. The updated cost-function is
+\begin{equation}
+J(\theta) = \text{MSE}(\theta) + \alpha \frac{1}{2} \sum_{i=1}^{n} \theta_i^2.
+\label{eq:ridge_regression}
+\end{equation}
+The hyperparameter $\alpha$ dictates the degree of regularization. If $\alpha = 0$, Ridge Regression reduces to plain Linear Regression. If $\alpha$ is very high, the model weights are significantly shrunk, resulting in a nearly flat line through the mean of the data. Equation~\ref{eq:ridge_regression} outlines the cost function for Ridge Regression. The bias term $\theta_0$ is not regularized, as indicated by the summation starting from $i = 1$.
+
+\begin{mdframed}[middlelinewidth=0.5mm]
+\begin{center}
+\bl{NOTE}
+\end{center}
+The regularization term is only included during the training phase. After training, the model's performance should be evaluated based on the unregularized performance measure.
+\end{mdframed}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6.5in]{../figures/ridge_regression.png}
+    \caption{Visualization of Ridge Regression models with varying $\alpha$ values.}
+    \label{fig:ridge_regression}
+\end{figure}
+
+Figure~\ref{fig:ridge_regression} illustrates various Ridge models trained on linear data, showcasing different $\alpha$ value. In Figure~\ref{fig:ridge_regression}(a), models are purely Ridge Regression, leading to linear predictions. In Figure~\ref{fig:ridge_regression}(b), the data undergoes Polynomial Regression with Ridge regularization. To do this, the data is first expanded using \texttt{PolynomialFeatures(degree=10)}, then scaled with \texttt{StandardScaler}, and finally, Ridge models are applied to these transformed features.
+
+
+Increasing $\alpha$ results in flatter (i.e., more reasonable and less extreme) predictions, thereby reducing the model's variance but increasing its bias. Ridge Regression can be performed using a closed-form solution or through Gradient Descent, similar to Linear Regression. The pros and cons for each method mirror those discussed previously. The closed-form solution, an extension of the normal equation, is given by:
+\begin{equation}
+\hat{\theta} = (X^\text{T} \cdot X + \alpha A)^{-1} \cdot X^\text{T} \cdot y
+\end{equation}
+where $\alpha$ influences the regularization and $A$ is an $n \times n$ identity matrix with the top-left value replaced by 0 to exclude the bias term. When using Gradient Descent, the derivative of the cost function guides the adjustment toward optimal model parameters.
+
+\begin{example}
+\textbf{Ridge Regression}
+
+\noindent This example demonstrates Ridge Regression as a regularized alternative to linear regression. A high-degree polynomial model is fit to noisy data using a pipeline with Ridge regularization, showing how the regularization term reduces overfitting and stabilizes the model.
+\end{example}
+
+
+%\subsubsection{Lasso Regression}
+%
+%\rd{Discuses other types of regularization.}
+%
+%
+%
+%\subsubsection{Elastic Net}
+%
+%\rd{Discuses other types of regularization.}
+
+\subsection{Early Stopping}
+
+An alternative approach to regularizing iterative learning methods 
+(such as Gradient Descent) is to halt training as soon as the validation error hits its lowest point, a strategy known as early stopping. Figure~\ref{fig:early_stopping} illustrates a complex model, specifically a high-degree Polynomial Regression model, being refined through Batch Gradient Descent. Over the course of training, as epochs progress, the model's prediction error (RMSE) on both the training and validation sets decreases. However, after some time, the validation error ceases to decline and begins to increase, signaling that the model is beginning to overfit the training data. By implementing early stopping, training is terminated the moment the validation error reaches its minimum. Geoffrey Hinton praised this method stating, ``Early stopping (is) beautiful free lunch'' due to its simplicity \protect\footnotemark[1].
+
+\footnotetext[1]{Pennington, Jeffrey, Richard Socher, and Christopher D. Manning. ``Glove: Global vectors for word representation.'' Proceedings of the 2014 conference on empirical methods in natural language processing (EMNLP). 2014.}
+
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=6in]{../figures/early_stopping.png}
+			\caption{An example showing how early stopping can result in a better model as it does not allow for the over-fitting of the training set.}
+			\label{fig:early_stopping}
+		\end{figure}
+
+
+\begin{example}
+\textbf{Early Stopping}
+
+\noindent This example uses a high-degree polynomial model trained with stochastic gradient descent to demonstrate early stopping. By tracking training and validation errors across epochs, it highlights how halting training early can prevent overfitting and improve generalization.
+\end{example}
+
+
+\pagebreak
+\includepdf[pages=1, width= 0.95\textwidth, pagecommand = {\subsection{Examples} 
+\subsubsection*{Example 3.1}\vspace{0.5em}}]{../code/example_3.1_learning_curves.pdf}
+\includepdf[pages=2, width= 0.95\textwidth, pagecommand = {\vspace{0.5em}}]{../code/example_3.1_learning_curves.pdf}
+
+\includepdf[pages=-, width= 0.95\textwidth, pagecommand = {\subsubsection*{Example 3.2}\vspace{0.5em}}]{../code/example_3.2_ridge_regression.pdf}
+
+\includepdf[pages=1, width= 0.95\textwidth, pagecommand = {\subsubsection*{Example 3.3}\vspace{0.5em}}]{../code/example_3.3_early_stopping.pdf}
+\includepdf[pages=2, width= 0.95\textwidth, pagecommand = {\vspace{0.5em}}]{../code/example_3.3_early_stopping.pdf}
+
+
+
+
+
+
+
+
+
+\end{document}

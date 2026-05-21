@@ -77,7 +77,7 @@
 
 
 
-\title{Chapter~2:~Regression}
+\title{Chapter~2~Regression}
 \author{Austin R.J. Downey}
 \date{}
 
@@ -982,55 +982,210 @@ In machine learning, we commonly use:
 	\end{columns}
 \end{frame}
 
+%------------------------------------------------
 
+\section{2.4~Polynomial Regression}
 
+\begin{frame}{Polynomial Regression}
+	\begin{columns}
+		
+		\column{0.48\textwidth}
+		
+		What if the data is not linear?
+		
+		\vspace{0.5em}
+		
+		A quadratic model can represent curved behavior:
+		
+		\[
+		\hat{y} = ax^2 + bx + c
+		\]
+		
+		\vspace{0.5em}
+		
+		\begin{itemize}
+			\item Linear models underfit nonlinear data
+			\item Polynomial terms allow curved fits
+			\item Still linear in the parameters
+		\end{itemize}
+		
+		\column{0.52\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{../figures/polynomial_regression_1}
+		
+		\vspace{0.3em}
+		{\small Dataset generated from a quadratic relationship.}
+		
+	\end{columns}
+\end{frame}
 
+%------------------------------------------------
 
+\begin{frame}{Feature Expansion}
+	\begin{columns}
+		
+		\column{0.48\textwidth}
+		
+		Polynomial regression works by expanding the feature space.
+		
+		\vspace{0.5em}
+		
+		For example:
+		
+		\[
+		x \rightarrow [x,\; x^2]
+		\]
+		
+		\vspace{0.5em}
+		
+		\begin{itemize}
+			\item Add higher-order terms as new features
+			\item Train a linear model on the expanded data
+			\item Allows nonlinear behavior
+		\end{itemize}
+		
+		\column{0.52\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{../figures/polynomial_regression_2}
+		
+		\vspace{0.3em}
+		{\small Linear fits to the expanded feature set.}
+		
+	\end{columns}
+\end{frame}
 
+%------------------------------------------------
 
+\begin{frame}{Polynomial Model Fit}
+	\begin{columns}
+		
+		\column{0.48\textwidth}
+		
+		The learned coefficients combine into:
+		
+		\[
+		\hat{y} = ax^2 + bx + c
+		\]
+		
+		\vspace{0.5em}
+		
+		\begin{itemize}
+			\item $a$: quadratic term
+			\item $b$: linear term
+			\item $c$: bias/intercept
+		\end{itemize}
+		
+		\vspace{0.5em}
+		
+		The resulting model can approximate curved data.
+		
+		\column{0.52\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{../figures/polynomial_regression_3}
+		
+		\vspace{0.3em}
+		{\small Polynomial regression fit.}
+		
+	\end{columns}
+\end{frame}
 
+%------------------------------------------------
 
+\begin{frame}{Polynomial Features}
+	
+	Polynomial regression can also model feature interactions.
+	
+	\vspace{0.5em}
+	
+	Example with two features $a$ and $b$:
+	
+	\[
+	[a,\; b]
+	\]
+	
+	Degree-3 expansion:
+	
+	\[
+	[a,\; b,\; a^2,\; b^2,\; a^3,\; b^3,\; ab,\; a^2b,\; ab^2]
+	\]
+	
+	\vspace{0.5em}
+	
+	\begin{itemize}
+		\item Captures nonlinear relationships
+		\item Captures interactions between variables
+		\item Implemented with:
+	\end{itemize}
+	
+	\[
+	\texttt{PolynomialFeatures(degree=d)}
+	\]
+	
+\end{frame}
 
+%------------------------------------------------
 
+\begin{frame}{Combinatorial Explosion}
+	
+	\begin{alertblock}{Warning}
+		Polynomial feature expansion can rapidly increase the number of features.
+	\end{alertblock}
+	
+	\vspace{0.5em}
+	
+	Number of expanded features:
+	
+	\[
+	\frac{(n+d)!}{d!n!}
+	\]
+	
+	\vspace{0.5em}
+	
+	\begin{itemize}
+		\item $n$: original number of features
+		\item $d$: polynomial degree
+	\end{itemize}
+	
+	\vspace{0.5em}
+	
+	Higher polynomial degrees can:
+	\begin{itemize}
+		\item Increase memory usage
+		\item Slow training
+		\item Cause overfitting
+	\end{itemize}
+	
+\end{frame}
 
+%------------------------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\begin{frame}{Example 2.2: Polynomial Regression}
+	
+	\begin{itemize}
+		\item Fit a nonlinear dataset using polynomial regression
+		\item Add $x^2$ as an additional feature
+		\item Train a linear model on the expanded feature set
+	\end{itemize}
+	
+	\vspace{0.5em}
+	
+	Demonstrates how:
+	\begin{itemize}
+		\item Linear models can approximate curved relationships
+		\item Polynomial terms improve model flexibility
+		\item The resulting fit compares to the original data
+	\end{itemize}
+	
+	\vspace{0.5em}
+	
+	Tools used:
+	\[
+	\texttt{PolynomialFeatures}
+	\qquad
+	\texttt{LinearRegression}
+	\]
+	
+\end{frame}
 
 
 

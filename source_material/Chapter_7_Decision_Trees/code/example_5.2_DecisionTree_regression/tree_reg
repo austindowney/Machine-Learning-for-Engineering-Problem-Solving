@@ -1,0 +1,33 @@
+digraph Tree {
+node [shape=box, style="filled, rounded", color="black", fontname="helvetica"] ;
+edge [fontname="helvetica"] ;
+0 [label="x[0] <= 0.492\nsquared_error = 2.255\nsamples = 200\nvalue = 2.499", fillcolor="#f2be99"] ;
+1 [label="x[0] <= 0.214\nsquared_error = 0.474\nsamples = 91\nvalue = 1.057", fillcolor="#fae8db"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="x[0] <= 0.116\nsquared_error = 0.108\nsamples = 45\nvalue = 0.464", fillcolor="#fef9f6"] ;
+1 -> 2 ;
+3 [label="squared_error = 0.041\nsamples = 29\nvalue = 0.266", fillcolor="#ffffff"] ;
+2 -> 3 ;
+4 [label="squared_error = 0.028\nsamples = 16\nvalue = 0.824", fillcolor="#fcefe5"] ;
+2 -> 4 ;
+5 [label="x[0] <= 0.297\nsquared_error = 0.153\nsamples = 46\nvalue = 1.636", fillcolor="#f7d7c0"] ;
+1 -> 5 ;
+6 [label="squared_error = 0.01\nsamples = 18\nvalue = 1.212", fillcolor="#f9e3d4"] ;
+5 -> 6 ;
+7 [label="squared_error = 0.055\nsamples = 28\nvalue = 1.909", fillcolor="#f5cfb4"] ;
+5 -> 7 ;
+8 [label="x[0] <= 0.733\nsquared_error = 0.556\nsamples = 109\nvalue = 3.703", fillcolor="#ea9b62"] ;
+0 -> 8 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+9 [label="x[0] <= 0.608\nsquared_error = 0.152\nsamples = 54\nvalue = 3.054", fillcolor="#eeae80"] ;
+8 -> 9 ;
+10 [label="squared_error = 0.034\nsamples = 24\nvalue = 2.673", fillcolor="#f1b991"] ;
+9 -> 10 ;
+11 [label="squared_error = 0.037\nsamples = 30\nvalue = 3.359", fillcolor="#eca572"] ;
+9 -> 11 ;
+12 [label="x[0] <= 0.852\nsquared_error = 0.135\nsamples = 55\nvalue = 4.339", fillcolor="#e78945"] ;
+8 -> 12 ;
+13 [label="squared_error = 0.033\nsamples = 22\nvalue = 3.953", fillcolor="#e99456"] ;
+12 -> 13 ;
+14 [label="squared_error = 0.036\nsamples = 33\nvalue = 4.597", fillcolor="#e58139"] ;
+12 -> 14 ;
+}
