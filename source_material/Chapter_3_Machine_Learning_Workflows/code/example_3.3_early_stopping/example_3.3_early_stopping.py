@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Example 2.5
+Example 3.3
 Early Stopping
 Machine Learning for Engineering Problem Solving
 @author: Austin Downey
@@ -13,7 +13,6 @@ IP.get_ipython().run_line_magic('reset', '-sf')
 import numpy as np
 import matplotlib.pyplot as plt
 import sklearn as sk
-
 
 plt.close('all')
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Example 2.4
+Example 3.2
 Ridge Regression
 Machine Learning for Engineering Problem Solving
 @author: Austin Downey

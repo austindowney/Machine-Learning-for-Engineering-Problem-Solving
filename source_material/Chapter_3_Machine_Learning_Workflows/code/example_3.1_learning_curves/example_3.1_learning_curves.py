@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Example 2.3
+Example 3.1
 Learning curves
 Machine Learning for Engineering Problem Solving
 @author: Austin Downey

@@ -9,27 +9,228 @@
 	\renewcommand\thefigure{\thesection.\arabic{figure}}
 	\setcounter{equation}{0}   
 	\renewcommand\theequation{\thesection.\arabic{equation}}
+
+
 \section{Machine Learning Workflows}
 
-Machine learning workflows involve the sequence of steps used to prepare data, train models, and evaluate performance. In practice, successful machine learning applications often depend as much on data preparation and feature engineering as on the learning algorithm itself.
+Machine learning workflows describe the sequence of steps used to transform raw engineering data into a trained and evaluated predictive model. Although the learning algorithm is important, successful machine learning applications often depend just as much on the quality of the data, the choice of features, and the way the model is evaluated. A well-organized workflow helps ensure that the model learns meaningful patterns rather than noise or accidental structure in the data.
 
-In this chapter, we introduce common workflows used in machine learning, including feature engineering, training and testing procedures, pipelines, and methods for improving model generalization.
+Figure~\ref{fig:ml_workflow} illustrates a common machine learning workflow. The process begins by collecting data from experiments, sensors, simulations, or existing records. The data are then inspected and cleaned to identify missing values, outliers, inconsistent units, or other quality issues. After this preparation step, feature engineering is used to convert the raw data into informative inputs for the model. The model is then trained using a portion of the available data and tested using data that were not used during training.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=6.5in]{../figures/ML_workflow}
+	\caption{A typical machine learning workflow for engineering applications.}
+	\label{fig:ml_workflow}
+\end{figure}
+
+The final step is improvement. If the model does not perform well enough, the workflow is repeated by revisiting earlier decisions. This may involve collecting more data, improving the data-cleaning process, changing the engineered features, tuning model parameters, or selecting a different learning algorithm. For this reason, machine learning should be viewed as an iterative process rather than a single pass through the data.
+
+A typical workflow can be summarized as follows:
+
+\begin{enumerate}
+	\item \textbf{Collect data:} Gather measurements, simulations, experimental observations, or operational records.
+	\item \textbf{Inspect and clean data:} Check the data for missing values, outliers, incorrect units, noise, and obvious errors.
+	\item \textbf{Engineer features:} Transform the raw data into informative inputs that capture important patterns or physical behavior.
+	\item \textbf{Train model:} Fit a machine learning model using the training data.
+	\item \textbf{Test model:} Evaluate the trained model using data that were not used during training.
+	\item \textbf{Improve model:} Refine the data, features, model settings, or learning algorithm based on the test results.
+\end{enumerate}
+
+
 
 \subsection{Feature Engineering}
+\label{sec:feature_engineering}
 
-Feature engineering is the process of transforming raw data into informative inputs that can be used by machine learning algorithms. Carefully designed features can significantly improve model performance and help capture important physical relationships in engineering data.
+Feature engineering is the process of transforming raw data into informative inputs that can be used by machine learning algorithms. Carefully designed features can significantly improve model performance and help capture important physical relationships in engineering data. 
+
+
+Figure~\ref{fig:feature_engineering_roadmap} illustrates how raw engineering data can be transformed into a feature vector for machine learning. The features shown in this section are not the only features that can be extracted from data. Other useful inputs may include categorical features, countable features, indicator variables, domain-specific quantities, or features created from simulations and experiments. However, statistical, time-series, and frequency-domain features provide a useful starting point for building informative features from many engineering datasets.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=6.5in]{../figures/feature_engineering}
+	\caption{Feature engineering transforms raw engineering data into informative model inputs. Features may summarize the statistical properties, time-dependent behavior, or frequency content of the data.}
+	\label{fig:feature_engineering_roadmap}
+\end{figure}
+\subsubsection{Statistical Features}
+
+Statistical features summarize the distribution of values within a dataset, observation, or time window. These features are useful for describing the overall magnitude, variability, symmetry, and peak behavior of the data. Although statistical features are often computed from time-series measurements, they do not necessarily depend on the order of the samples in time.
+
+Let \(x_i\) represent the \(i\)th value in a set of \(N\) measurements, let \(\bar{x}\) represent the mean value, and let \(s\) represent the sample standard deviation. Table~\ref{tab:statistical_features} lists a number of statistical features relevant in engineering. 
+
+\begin{table}[H]
+	\centering
+	\caption{Common statistical features for engineering data.}
+	\label{tab:statistical_features}
+	\begin{tabular}{p{0.06\textwidth} p{0.22\textwidth} p{0.25\textwidth} p{0.37\textwidth}}
+		\hline
+		\textbf{No.} & \textbf{Feature} & \textbf{Equation} & \textbf{Physical Interpretation} \\
+		\hline
+		S1 & Maximum value 
+		& \(\displaystyle \max(x_i)\) 
+		& The maximum value captures the largest response in the signal. \\
+		
+		S2 & Minimum value 
+		& \(\displaystyle \min(x_i)\) 
+		& The minimum value captures the smallest response in the signal. \\
+		
+		S3 & Mean value 
+		& \(\displaystyle \bar{x}=\frac{1}{N}\sum_{i=1}^{N}x_i\) 
+		& The mean value describes the average level of the signal. \\
+		
+		S4 & Absolute mean value 
+		& \(\displaystyle \frac{1}{N}\sum_{i=1}^{N}|x_i|\) 
+		& The absolute mean value describes the average magnitude of the signal. \\
+		
+		S5 & Root mean square value 
+		& \(\displaystyle x_{\mathrm{rms}}=\sqrt{\frac{1}{N}\sum_{i=1}^{N}x_i^2}\) 
+		& The root mean square value describes the effective signal magnitude. \\
+		
+		S6 & Standard deviation 
+		& \(\displaystyle s=\sqrt{\frac{1}{N-1}\sum_{i=1}^{N}(x_i-\bar{x})^2}\) 
+		& The standard deviation describes how much the signal varies. \\
+		
+		S7 & Skewness 
+		& \(\displaystyle \frac{1}{N}\sum_{i=1}^{N}\left(\frac{x_i-\bar{x}}{s}\right)^3\) 
+		& Skewness describes whether the signal is biased toward one side. \\
+		
+		S8 & Kurtosis 
+		& \(\displaystyle \frac{1}{N}\sum_{i=1}^{N}\left(\frac{x_i-\bar{x}}{s}\right)^4\) 
+		& Kurtosis describes whether the signal contains sharp peaks or outliers. \\
+		
+		S9 & Shape factor 
+		& \(\displaystyle \frac{x_{\mathrm{rms}}}{\frac{1}{N}\sum_{i=1}^{N}|x_i|}\) 
+		& The shape factor compares the effective magnitude to the average magnitude. \\
+		
+		S10 & Crest factor 
+		& \(\displaystyle \frac{\max(|x_i|)}{x_{\mathrm{rms}}}\) 
+		& The crest factor compares the largest peak to the effective signal level. \\
+		
+		S11 & Impulse factor 
+		& \(\displaystyle \frac{\max(|x_i|)}{\frac{1}{N}\sum_{i=1}^{N}|x_i|}\) 
+		& The impulse factor compares the largest peak to the average magnitude. \\
+		\hline
+	\end{tabular}
+\end{table}
+
 
 \subsubsection{Time-Series Features}
 
-Many engineering systems generate data that varies over time, such as sensor measurements, vibration signals, or telemetry data. Common time-series features include moving averages, lagged values, rolling statistics, derivatives, and frequency-based quantities extracted from signal analysis techniques such as the Fourier transform.
+Time-series features describe how a signal changes with time. Unlike statistical features, these features depend on the order of the samples. They are useful when the timing, trend, persistence, or local variation of the signal contains important information.
 
-\subsubsection{Statistical Features}
+Table~\ref{tab:time_series_features} lists a number of time-series features relevant in engineering. Let \(x_i\) represent the signal value at time index \(i\), let \(\Delta t\) represent the sampling interval, let \(k\) represent a lag, and let \(w\) represent the number of samples in a moving window. The local mean over a window is denoted as \(\bar{x}_{i,w}\).
 
-Statistical features summarize important properties of a dataset or signal using descriptive measures. Common examples include the mean, variance, standard deviation, minimum, maximum, skewness, and kurtosis, which can help characterize trends, variability, and abnormal behavior in engineering systems.
+
+
+\begin{table}[H]
+	\centering
+	\caption{Common time-series features for engineering data.}
+	\label{tab:time_series_features}
+	\begin{tabular}{p{0.05\textwidth} p{0.25\textwidth} p{0.30\textwidth} p{0.30\textwidth}}
+		\hline
+		\textbf{No.} & \textbf{Feature} & \textbf{Equation} & \textbf{Physical Interpretation} \\
+		\hline
+		T1 & Lagged value 
+		& \(\displaystyle x_{i-k}\) 
+		& A lagged value captures the recent history of the signal. \\
+		
+		T2 & First difference 
+		& \(\displaystyle x_i-x_{i-1}\) 
+		& The first difference captures the step-to-step change in the signal. \\
+		
+		T3 & Rate of change 
+		& \(\displaystyle \frac{x_i-x_{i-1}}{\Delta t}\) 
+		& The rate of change describes how quickly the signal changes with time. \\
+		
+		T4 & Moving average 
+		& \(\displaystyle \frac{1}{w}\sum_{j=i-w+1}^{i}x_j\) 
+		& The moving average captures the local trend of the signal. \\
+		
+		T5 & Rolling standard deviation 
+		& \(\displaystyle \sqrt{\frac{1}{w-1}\sum_{j=i-w+1}^{i}(x_j-\bar{x}_{i,w})^2}\) 
+		& The rolling standard deviation captures local variability. \\
+		
+		T6 & Rolling maximum 
+		& \(\displaystyle \max(x_{i-w+1},\ldots,x_i)\) 
+		& The rolling maximum captures recent peak behavior. \\
+		
+		T7 & Rolling minimum 
+		& \(\displaystyle \min(x_{i-w+1},\ldots,x_i)\) 
+		& The rolling minimum captures recent low-response behavior. \\
+		
+		T8 & Zero-crossing rate 
+		& \(\displaystyle \frac{1}{w-1}\sum_{j=i-w+2}^{i}\mathbb{I}(x_jx_{j-1}<0)\) 
+		& The zero-crossing rate captures how often the signal changes sign \protect\footnotemark[1]. \\
+		\hline
+	\end{tabular}
+\end{table}
+
+
+
+
+\footnotetext[1]{\(\mathbb{I}(\cdot)\) is an indicator function that equals 1 when the condition is true and 0 otherwise.}
+
+
+
+\subsubsection{Frequency-Domain Features}
+
+Frequency-domain features describe how the content of a signal is distributed across frequency. These features are commonly extracted by applying a Fourier transform to a measured signal and then summarizing the resulting spectrum. Table~\ref{tab:frequency_domain_features} lists a number of frequency-domain features relevant in engineering. They are useful when the important behavior in the data is related to oscillations, repeating patterns, or changes in the balance between slow and rapid variations. 
+
+Let \(P(f)\) represent the power spectrum of the signal at frequency \(f\), and let \(B_L\), \(B_M\), and \(B_H\) represent the low-, middle-, and high-frequency bands. The total spectral energy is defined as
+\begin{equation}
+E_{\mathrm{total}} = \int P(f)\,df .
+\end{equation}
+In a specific engineering application, the frequency bands should be selected based on the system being studied. When no application-specific bands are known, the usable frequency range can be divided into low-, middle-, and high-frequency regions as a starting point.
+
+\begin{table}[H]
+	\centering
+	\caption{Common frequency-domain features for engineering time-series data.}
+	\label{tab:frequency_domain_features}
+	\begin{tabular}{p{0.06\textwidth} p{0.22\textwidth} p{0.25\textwidth} p{0.37\textwidth}}
+		\hline
+		\textbf{No.} & \textbf{Feature} & \textbf{Equation} & \textbf{Physical Interpretation} \\
+		\hline
+		F1 & Dominant frequency 
+		& \(\displaystyle f_{\mathrm{dom}}=\arg\max_f P(f)\) 
+		& The dominant frequency captures the strongest periodic behavior. \\
+		
+		F2 & Spectral centroid 
+		& \(\displaystyle f_c=\frac{\int fP(f)\,df}{\int P(f)\,df}\) 
+		& The spectral centroid describes where the spectrum is centered. \\
+		
+		F3 & Spectral bandwidth 
+		& \(\displaystyle \sqrt{\frac{\int (f-f_c)^2P(f)\,df}{\int P(f)\,df}}\) 
+		& The spectral bandwidth describes how widely the energy is spread. \\
+		
+		F4 & Low-frequency energy ratio 
+		& \(\displaystyle \frac{\int_{B_\text{L}}P(f)\,df}{E_{\mathrm{total}}}\) 
+		& The low-frequency energy ratio measures the share of energy in slow behavior. \\
+		
+		F5 & Middle-frequency energy ratio 
+		& \(\displaystyle \frac{\int_{B_\text{M}}P(f)\,df}{E_{\mathrm{total}}}\) 
+		& The middle-frequency energy ratio measures the share of energy in mid-range behavior. \\
+		
+		F6 & High-frequency energy ratio 
+		& \(\displaystyle \frac{\int_{B_\text{H}}P(f)\,df}{E_{\mathrm{total}}}\) 
+		& The high-frequency energy ratio measures the share of energy in rapid behavior. \\
+		
+		F7 & High-to-low frequency energy ratio 
+		& \(\displaystyle \frac{\int_{B_\text{H}}P(f)\,df}{\int_{B_\text{L}}P(f)\,df}\) 
+		& The high-to-low frequency energy ratio compares rapid behavior to slow behavior. \\
+		
+		F8 & Peak-to-total spectral energy ratio 
+		& \(\displaystyle \frac{P(f_{\mathrm{dom}})}{E_{\mathrm{total}}}\) 
+		& The peak-to-total spectral energy ratio measures how dominant the largest frequency peak is. \\
+		\hline
+	\end{tabular}
+\end{table}
+
 
 
 
 \pagebreak
+
 \subsection{Training and Testing Data}
 
 Training a predictive model on a dataset and then testing it with the same data is a fundamental error in methodology. Such a model could simply memorize the labels of the training samples, achieving perfect performance during training but failing to make any useful predictions on new, unseen data. This phenomenon is known as overfitting. To prevent this, it is standard practice in supervised machine learning to reserve a portion of the available data as a test set, denoted as $\textbf{X}_\text{test}$ and $\textbf{y}_\text{test}$.
@@ -52,7 +253,6 @@ Training a predictive model on a dataset and then testing it with the same data 
 
 The function \texttt{sklearn.model\_selection.train\_test\_split} in scikit-learn randomly divides arrays or matrices into training and testing subsets.
 
-\pagebreak
 
 \subsection{Pipelines}
 

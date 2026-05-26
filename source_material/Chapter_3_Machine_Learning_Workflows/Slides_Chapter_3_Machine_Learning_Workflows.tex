@@ -89,11 +89,170 @@
 
 \section{Chapter~3~Machine Learning Workflows}
 
+\section{3.1~Feature Engineering}
+
+\begin{frame}{Machine Learning Workflows}
+	\begin{columns}
+		\column{0.48\textwidth}
+		
+		A machine learning workflow transforms raw data into a trained and evaluated model.
+		
+		\vspace{0.5em}
+		
+		Important steps:
+		\begin{itemize}
+			\item Collect data
+			\item Inspect and clean data
+			\item Engineer features
+			\item Train and test model
+			\item Improve model
+		\end{itemize}
+		
+		\vspace{0.5em}
+		
+		The workflow is almost always iterative.
+		
+		\column{0.52\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{../figures/ML_workflow}
+		
+		\vspace{0.3em}
+		{\small Typical machine learning workflow.}
+	\end{columns}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Feature Engineering}
+	\begin{columns}
+		\column{0.48\textwidth}
+		
+		Feature engineering transforms raw data into useful model inputs.
+		
+		\vspace{0.5em}
+		
+		Good features include quantities, categorical, or countable.
+
+		\vspace{0.5em}
+
+		They can also be extracted from signals:
+		\begin{itemize}
+			\item magnitude
+			\item variability
+			\item time-dependent behavior
+			\item frequency content
+			\item physical relationships
+		\end{itemize}
+				
+		\column{0.52\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{../figures/feature_engineering}
+		
+		\vspace{0.3em}
+		{\small Transforming raw data into a feature vector.}
+	\end{columns}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Statistical Features}
+	Statistical features summarize the distribution of values within a dataset, observation, or time window.
+	
+	\vspace{0.4em}
+	
+	\begin{table}
+		\centering
+		\scriptsize
+		\begin{tabular}{p{0.10\textwidth} p{0.34\textwidth} p{0.5\textwidth}}
+			\hline
+			\textbf{No.} & \textbf{Feature} & \textbf{Interpretation} \\
+			\hline
+			S1 & Maximum value & Largest response in the signal. \\
+			S2 & Minimum value & Smallest response in the signal. \\
+			S3 & Mean value & Average level of the signal. \\
+			S4 & Absolute mean value & Average magnitude of the signal. \\
+			S5 & Root mean square value & Effective signal magnitude. \\
+			S6 & Standard deviation & Variation in the signal. \\
+			S7 & Skewness & Bias toward one side. \\
+			S8 & Kurtosis & Sharp peaks or outliers. \\
+			S9 & Shape factor & Effective magnitude relative to average magnitude. \\
+			S10 & Crest factor & Largest peak relative to effective level. \\
+			S11 & Impulse factor & Largest peak relative to average magnitude. \\
+			\hline
+		\end{tabular}
+	\end{table}
+	
+	\vspace{0.3em}
+	
+	{\scriptsize * The full equations are provided in Table 1 of Chapter 3 in the accompanying text.}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Time-Series Features}
+	Time-series features describe how a signal changes with time.
+	
+	\vspace{0.4em}
+	
+	\begin{table}
+		\centering
+		\scriptsize
+		\begin{tabular}{p{0.10\textwidth} p{0.34\textwidth} p{0.44\textwidth}}
+			\hline
+			\textbf{No.} & \textbf{Feature} & \textbf{Interpretation} \\
+			\hline
+			T1 & Lagged value & Recent history of the signal. \\
+			T2 & First difference & Step-to-step change in the signal. \\
+			T3 & Rate of change & How quickly the signal changes with time. \\
+			T4 & Moving average & Local trend of the signal. \\
+			T5 & Rolling standard deviation & Local variability of the signal. \\
+			T6 & Rolling maximum & Recent peak behavior. \\
+			T7 & Rolling minimum & Recent low-response behavior. \\
+			T8 & Zero-crossing rate & How often the signal changes sign. \\
+			\hline
+		\end{tabular}
+	\end{table}
+	
+	\vspace{0.3em}
+	
+	{\scriptsize * The full equations are provided in Table 2 of Chapter 3 in the accompanying text.}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Frequency-Domain Features}
+	Frequency-domain features describe how signal content is distributed across frequency.
+	
+	\vspace{0.4em}
+	
+	\begin{table}
+		\centering
+		\scriptsize
+		\begin{tabular}{p{0.10\textwidth} p{0.36\textwidth} p{0.42\textwidth}}
+			\hline
+			\textbf{No.} & \textbf{Feature} & \textbf{Interpretation} \\
+			\hline
+			F1 & Dominant frequency & Strongest periodic behavior. \\
+			F2 & Spectral centroid & Center of the spectrum. \\
+			F3 & Spectral bandwidth & Spread of energy across frequency. \\
+			F4 & Low-frequency energy ratio & Share of energy in slow behavior. \\
+			F5 & Middle-frequency energy ratio & Share of energy in mid-range behavior. \\
+			F6 & High-frequency energy ratio & Share of energy in rapid behavior. \\
+			F7 & High-to-low frequency energy ratio & Rapid behavior relative to slow behavior. \\
+			F8 & Peak-to-total spectral energy ratio & Dominance of the largest frequency peak. \\
+			\hline
+		\end{tabular}
+	\end{table}
+	
+	\vspace{0.3em}
+	
+	{\scriptsize * The full equations are provided in Table 3 of Chapter 3 in the accompanying text.}
+\end{frame}
 
 
 %------------------------------------------------
 
-\section{2.5~Training and Testing Data}
+\section{3.2~Training and Testing Data}
 
 \begin{frame}{Overfitting}
 	
@@ -219,7 +378,7 @@
 
 %------------------------------------------------
 
-\section{2.6~Pipelines}
+\section{3.3~Pipelines}
 
 
 \begin{frame}{Machine Learning Pipelines}
@@ -261,7 +420,7 @@
 
 %------------------------------------------------
 
-\section{2.7~Learning Curves}
+\section{3.4~Learning Curves}
 
 
 \begin{frame}{Learning Curves}
@@ -456,7 +615,7 @@
 
 %------------------------------------------------
 
-\begin{frame}{Example 2.3: Learning Curves}
+\begin{frame}{Example 3.1: Learning Curves}
 	
 	\begin{itemize}
 		\item Compare learning curves for:
@@ -487,7 +646,7 @@
 \end{frame}
 
 %------------------------------------------------
-\section{2.8~Regularized Linear Models}
+\section{3.5~Regularized Linear Models}
 
 \begin{frame}{Regularized Linear Models}
 	
@@ -568,7 +727,7 @@
 
 %------------------------------------------------
 
-\begin{frame}{Example 2.4: Ridge Regression}
+\begin{frame}{Example 3.2: Ridge Regression}
 	
 	\begin{itemize}
 		\item Apply Ridge Regression to a high-degree polynomial model
@@ -597,7 +756,7 @@
 \end{frame}
 
 %------------------------------------------------
-\section{2.9~Early Stopping}
+\section{3.6~Early Stopping}
 
 \begin{frame}{Early Stopping}
 	\begin{columns}
@@ -643,7 +802,7 @@
 
 %------------------------------------------------
 
-\begin{frame}{Example 2.5: Early Stopping}
+\begin{frame}{Example 3.3: Early Stopping}
 	
 	\begin{itemize}
 		\item Train a high-degree polynomial model using:
