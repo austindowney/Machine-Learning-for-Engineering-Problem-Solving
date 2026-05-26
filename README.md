@@ -1,13 +1,14 @@
-# Machine Learning for Engineering Problem Solving
-## A Practical Example-driven Guide to Classical Techniques
-This text is a practical, example-driven guide to introduce classical machine learning techniques using the scikit-learn library, designed for engineers with limited to no programming experience. This preface collects the essential housekeeping information for using this text.
-
+# Machine Learning for Engineering Problem Solving: A Practical Example-driven Guide to Classical Techniques
+This text is a free, open-source textbook that introduces traditional machine learning through practical engineering examples. Designed for undergraduate engineering students and readers with limited programming experience, the text uses Python and the scikit-learn library to connect core concepts with hands-on implementation. The book is intended to serve as a self-contained introduction for a college-level machine learning course in an engineering curriculum.
 
 <p align="center">
 <img src="source_material/figures/truck.jpg" alt="drawing" width="300"/>
 </p>
 
-A current PDF version of the text can be found <a href="https://github.com/austindowney/Machine-Learning-for-Engineering-Problem-Solving/blob/main/Machine_Learning_for_Engineering_Problem_Solving.pdf">here</a>.
+## Published Version 
+The most recent published version can be found <a href="https://doi.org/10.31224/4909">here</a>.
+
+A current PDF version of the text (nightly build) can be found <a href="https://github.com/austindowney/Machine-Learning-for-Engineering-Problem-Solving/blob/main/source_material/Machine_Learning_for_Engineering_Problem_Solving.pdf">here</a>.
 
 ### Accompanying Video Lectures
 
