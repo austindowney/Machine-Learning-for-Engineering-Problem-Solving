@@ -277,12 +277,12 @@ To determine the optimal threshold, it's helpful to plot precision and recall ag
 
 Figure~\ref{fig:precision_vs_recall} reports a precision vs recall curve that is obtained by changing the threshold of the trained model. At the leftmost part of the precision-recall curve (low recall), precision is highest because the model makes very few positive predictions, and those are likely true positives. As recall increases, the model starts predicting more positives, including more false positives, which reduces precision. The shape of the curve is also important; a steep drop-off indicates that the addition of false positives happens rapidly with increasing recall, whereas a more gradual decline suggests a better balance between precision and recall.
 
-		\begin{figure}[H]
-			\centering
-			\includegraphics[width=6in]{../figures/precision_recall_curve}
-			\caption{The relationship between precision vs recall for a changing threshold value.}
-			\label{fig:precision_vs_recall}
-		\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=6in]{../figures/precision_recall_curve}
+	\caption{The relationship between precision vs recall for a changing threshold value.}
+	\label{fig:precision_vs_recall}
+\end{figure}
 
 By analyzing the curve, one can choose a threshold that balances precision and recall according to the specific needs of the application. For instance, in medical diagnosis, high recall is crucial to ensure no cases are missed, even if precision is lower. Additionally, the area under the precision-recall curve (AUC-PR) can be used to compare models. A higher area indicates a model with better performance across all thresholds.
 
@@ -293,6 +293,7 @@ By analyzing the curve, one can choose a threshold that balances precision and r
 \end{example}
 
 \pagebreak
+
 \subsection{$k$-fold Cross-validation}
 As you've likely observed, training your SGD classifier doesn't always yield consistent results in terms of model performance; hence the ``stochastic'' in stochastic gradient descent. One approach to obtaining a solution closer to the global minimum is to allow the gradient descent algorithm to iterate over more epochs. However, this poses a challenge as it's highly time-consuming and may lead to overfitting the model. Moreover, the variability in model performance makes it difficult to gauge the model's effectiveness.
 

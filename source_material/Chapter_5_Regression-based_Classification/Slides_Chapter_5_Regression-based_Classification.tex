@@ -89,7 +89,7 @@
 
 \section{Chapter~5~Regression-Based Classification}
 
-\section{3.1~Logistic Regression}
+\section{5.1~Logistic Regression}
 
 
 \begin{frame}{Regression-Based Classification}
@@ -431,42 +431,36 @@ Observations:
 %------------------------------------------------
 
 \begin{frame}{Decision Boundary}
-
-A Logistic Regression model predicts probabilities:
-
-\[
-\hat{p}=P(y=1|X)
-\]
-
-\vspace{0.5em}
-
-The classification boundary occurs when:
-
-\[
-\hat{p}=0.5
-\]
-
-\vspace{0.5em}
-
-For the Iris dataset:
-
-\begin{itemize}
-\item Decision boundary occurs near:
-\[
-\text{Petal Width}\approx 1.6\text{ cm}
-\]
-
-\item Above the boundary:
-\begin{itemize}
-\item Predict Iris-Virginica
-\end{itemize}
-
-\item Below the boundary:
-\begin{itemize}
-\item Predict not Iris-Virginica
-\end{itemize}
-\end{itemize}
-
+	
+	A Logistic Regression model predicts probabilities:
+	
+	\[
+	\hat{p}=P(y=1|X)
+	\]
+	
+	where \(P\) denotes probability. In this case, \(P(y=1|X)\) means the probability that the sample belongs to class \(1\), given the input features \(X\).
+	
+	\vspace{0.5em}
+	
+	The classification boundary occurs when:
+	
+	\[
+	\hat{p}=0.5
+	\]
+	
+	\vspace{0.5em}
+	
+	For the Iris dataset:
+	
+	\begin{itemize}
+		\item Decision boundary occurs near:
+		\[
+		\text{Petal Width}\approx 1.6\text{ cm}
+		\]
+		
+	\item Above the boundary: predict Iris-Virginica; below the boundary: predict not Iris-Virginica.
+	\end{itemize}
+	
 \end{frame}
 
 %------------------------------------------------
@@ -583,7 +577,7 @@ Features:
 \end{frame}
 
 %------------------------------------------------
-\section{3.2~Softmax Regression}
+\section{5.2~Softmax Regression}
 
 \begin{frame}{Softmax Regression}
 \begin{columns}
