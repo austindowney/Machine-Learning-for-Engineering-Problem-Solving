@@ -1,0 +1,89 @@
+\documentclass[landscape]{article}
+
+\usepackage[paperwidth=16in,paperheight=9in,margin=0in]{geometry}
+\usepackage{pdfpages}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=red,
+	urlcolor=red,
+	citecolor=red
+}
+
+\pagestyle{empty}
+
+\begin{document}
+
+%------------------------------------------------
+% Title / Table of Contents page
+%------------------------------------------------
+
+\thispagestyle{empty}
+
+\vspace*{0.8in}
+
+\begin{center}
+{\Huge Machine Learning for Engineering Problem Solving}\\[0.4in]
+{\LARGE Supplementary Slide Decks}\\[0.6in]
+{\Large Austin R.J. Downey}
+\end{center}
+
+\vspace{0.6in}
+
+\begin{center}
+\begin{minipage}{0.58\textwidth}
+\tableofcontents
+\end{minipage}
+\end{center}
+
+\clearpage
+
+%------------------------------------------------
+% Included slide PDFs
+%------------------------------------------------
+
+\includepdf[
+	pages=-,
+	fitpaper=true,
+	addtotoc={1,section,1,{Chapter 1: Basic Concepts},chap:basic}
+]{Chapter_1_Basic_Concepts/Slides_Chapter_1_Basic_Concepts.pdf}
+
+\includepdf[
+	pages=-,
+	fitpaper=true,
+	addtotoc={1,section,1,{Chapter 2: Regression},chap:regression}
+]{Chapter_2_Regression/Slides_Chapter_2_Regression.pdf}
+
+\includepdf[
+	pages=-,
+	fitpaper=true,
+	addtotoc={1,section,1,{Chapter 3: Machine Learning Workflows},chap:workflows}
+]{Chapter_3_Machine_Learning_Workflows/Slides_Chapter_3_Machine_Learning_Workflows.pdf}
+
+\includepdf[
+	pages=-,
+	fitpaper=true,
+	addtotoc={1,section,1,{Chapter 4: Classification},chap:classification}
+]{Chapter_4_Classification/Slides_Chapter_4_Classification.pdf}
+
+\includepdf[
+	pages=-,
+	fitpaper=true,
+	addtotoc={1,section,1,{Chapter 5: Regression-Based Classification},chap:regression_based_classification}
+]{Chapter_5_Regression-based_Classification/Slides_Chapter_5_Regression-based_Classification.pdf}
+
+\includepdf[
+	pages=-,
+	fitpaper=true,
+	addtotoc={1,section,1,{Chapter 6: Decision Trees},chap:decision_trees}
+]{Chapter_6_Decision_Trees/Slides_Chapter_6_Decision_Trees.pdf}
+
+\includepdf[
+	pages=-,
+	fitpaper=true,
+	addtotoc={1,section,1,{Chapter 7: Support Vector Machines},chap:svm}
+]{Chapter_7_Support_Vector_Machines/Slides_Chapter_7_Support_Vector_Machines.pdf}
+
+\end{document}
