@@ -1,9 +1,19 @@
-\documentclass[landscape]{article}
+\documentclass{article}
 
-\usepackage[paperwidth=16in,paperheight=9in,margin=0in]{geometry}
+\usepackage[
+	paperwidth=16cm,
+	paperheight=9cm,
+	margin=0.35cm
+]{geometry}
+
 \usepackage{pdfpages}
 \usepackage{xcolor}
 \usepackage{hyperref}
+\usepackage{tocloft}
+
+\setlength{\cftbeforesecskip}{0.1em}
+\setlength{\cftbeforesubsecskip}{0em}
+
 
 \hypersetup{
 	colorlinks=true,
@@ -22,18 +32,18 @@
 
 \thispagestyle{empty}
 
-\vspace*{0.8in}
+\vspace*{0.25cm}
 
 \begin{center}
-{\Huge Machine Learning for Engineering Problem Solving}\\[0.4in]
-{\LARGE Supplementary Slide Decks}\\[0.6in]
-{\Large Austin R.J. Downey}
+{\Large Machine Learning for Engineering Problem Solving}\\[0.25cm]
+{\normalsize Supplementary Slide Decks}\\[0.25cm]
+{\small Austin R.J. Downey}
 \end{center}
 
-\vspace{0.6in}
 
 \begin{center}
-\begin{minipage}{0.58\textwidth}
+\small
+\begin{minipage}{0.78\textwidth}
 \tableofcontents
 \end{minipage}
 \end{center}
