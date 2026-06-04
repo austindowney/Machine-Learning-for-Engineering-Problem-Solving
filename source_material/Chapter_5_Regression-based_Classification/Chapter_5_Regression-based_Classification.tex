@@ -22,7 +22,7 @@ Logistic Regression, sometimes called logit regression, models the probability t
 
 The predicted probability is
 \begin{equation}
-    \hat{p} = h_\theta(X) = \sigma(\theta^\text{T} \cdot X).
+    \hat{p} = h_\theta(X) = \sigma(\theta^{\top}{T} \cdot X).
 \end{equation}
 Here $\hat{p}$ is the estimated probability, and $\sigma(\cdot)$ is the sigmoid function, an $S$-shaped curve that maps any real number to the interval $(0,1)$. The logistic function is defined in Equation~\ref{eq:logistic_function} and illustrated in Figure~\ref{fig:sigmoid_function}. As before, $h_\theta(X)$ denotes the hypothesis that the input matrix $X$, augmented with a bias term, belongs to the positive class under the parameters~$\theta$.
 
@@ -49,7 +49,7 @@ Once the probability $\hat{p} = h_\theta(X)$ that an instance $X$ belongs to the
   \end{cases}
 \label{eq:model_prediction}
 \end{equation}
-Note that $\sigma(x) < 0.5$ when $x < 0$, and $\sigma(x) \ge 0.5$ when $x \ge 0$. Therefore, the Logistic Regression model predicts 0 if $\theta^\text{T} \cdot X$ is negative, and 0 if it is positive.
+Note that $\sigma(x) < 0.5$ when $x < 0$, and $\sigma(x) \ge 0.5$ when $x \ge 0$. Therefore, the Logistic Regression model predicts 0 if $\theta^{\top} \cdot X$ is negative, and 0 if it is positive.
 
 Now that we understand how logistic regression assigns probabilities and produces predictions, let's walk through a concise example that shows its training procedure and the associated cost function.
 Training seeks parameter values $\theta$ that give high predicted probabilities to positive examples ($y = 1$) and low probabilities to negative ones ($y = 0$). This aim is captured by the cost defined in equation~\ref{eq:cost_function}, which evaluates a single training sample $x$. To achieve this, we require a cost function, such as 
@@ -82,7 +82,7 @@ J(\theta) ;=; -\frac{1}{m}\sum_{i=1}^{m}\Big[y^{(i)} \log \bigl(\hat{p}^{(i)}\bi
 
 Because there is no closed-form solution for the parameters $\theta$ (embedded within $\hat{p}$), the minimum must be found with an iterative optimizer. The cost surface is convex, so gradient descent or another suitable algorithm will reach the global minimum provided the learning rate is reasonable and enough iterations are allowed. The gradient of the cost with respect to the $j^\text{th}$ parameter $\theta_j$ is given as
 \begin{equation}
-\frac{\partial J}{\partial \theta_j} ;=; \frac{1}{m} \sum_{i=1}^{m} \Bigl[\sigma \bigl(\theta^\text{T}X^{(i)}\bigr) - y^{(i)}\Bigr],x^{(i)}_{j}.
+\frac{\partial J}{\partial \theta_j} ;=; \frac{1}{m} \sum_{i=1}^{m} \Bigl[\sigma \bigl(\theta^{\top}X^{(i)}\bigr) - y^{(i)}\Bigr],x^{(i)}_{j}.
 \label{eq:Logistic_cost_function_partial_derivatives}
 \end{equation}
 
@@ -174,7 +174,7 @@ Figure~\ref{fig:Iris_dataset_decision_boundary_2D} plots petal width against pet
 
 Logistic Regression can be generalised to handle many classes in a single model, so there is no need to train and merge several binary classifiers. This multiclass version is called Softmax Regression, or Multinomial Logistic Regression. Softmax Regression provides a straightforward way to perform regression-based classification when more than two classes are present. For an input vector $\mathbf{x}$, the model first computes a score $s_k(\mathbf{x})$ for every class $k$, then turns these scores into class probabilities with the softmax (normalised exponential) function. The score is obtained exactly as in linear regression:
 \begin{equation}
-s_k(\textbf{x}) = \textbf{x}^\text{T}\pmb{\theta}^{(k)}.
+s_k(\textbf{x}) = \textbf{x}^{\top}\pmb{\theta}^{(k)}.
 \end{equation}
 Here each class has its own parameter vector $\boldsymbol{\theta}^{(k)}$, and the collection of these vectors is usually stored as the rows of a parameter matrix $\Theta$.
 
@@ -188,7 +188,7 @@ In this expression, $\mathbf{s}(\mathbf{x})$ is the vector of class scores for t
 
 Like logistic regression, a Softmax~Regression model assigns an input to the class whose predicted probability is largest, which coincides with the class that has the highest score:
 \begin{equation}
-\hat{y} = \mathop{\text{argmax}}_{k} \sigma \big(\textbf{s}(\textbf{x})\big)_k = \mathop{\text{argmax}}_{k} s_k(\textbf{x}) = \mathop{\text{argmax}}_{k} \big( (\theta^{(k)})^\text{T} \cdot \textbf{x} \big).
+\hat{y} = \mathop{\text{argmax}}_{k} \sigma \big(\textbf{s}(\textbf{x})\big)_k = \mathop{\text{argmax}}_{k} s_k(\textbf{x}) = \mathop{\text{argmax}}_{k} \big( (\theta^{(k)})^{\top} \cdot \textbf{x} \big).
 \end{equation}
 
 

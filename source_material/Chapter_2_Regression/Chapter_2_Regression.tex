@@ -235,7 +235,7 @@ Solving the model output for a input or a series of inputs can than be done simp
 
 \subsubsection{Computational Complexity}
 
-The Normal Equation calculates the inverse of $\textbf{X}^\text{T}\textbf{X}$, an $n \times n$ matrix, where $n$ represents the number of features. The computational complexity of matrix inversion generally ranges from $O(n^{2.4})$ to $O(n^3)$, depending on the specific algorithm used. Consequently, doubling the number of features would increase the computational effort by approximately $2^{2.4} \approx 5.3$ to $2^3 = 8$ times.
+The Normal Equation calculates the inverse of $\textbf{X}^{\top}\textbf{X}$, an $n \times n$ matrix, where $n$ represents the number of features. The computational complexity of matrix inversion generally ranges from $O(n^{2.4})$ to $O(n^3)$, depending on the specific algorithm used. Consequently, doubling the number of features would increase the computational effort by approximately $2^{2.4} \approx 5.3$ to $2^3 = 8$ times.
 
 
 \begin{mdframed}[middlelinewidth=0.5mm]
@@ -404,7 +404,7 @@ J = \frac{1}{m} \sum_{i=1}^{m} (\hat{y}_i - y_i)^2
 \end{equation}
 For a hypothesis $h_\theta$, the MSE for the dataset $\textbf{X}$ can be computed for each instance $\textbf{x}^{(i)}$ as follows:
 \begin{equation}
-J(\textbf{X}, h_\theta) = J = \frac{1}{m} \sum_{i=1}^{m} (\pmb{\theta}^\text{T}\textbf{x}^{(i)} - y^{(i)})^2
+J(\textbf{X}, h_\theta) = J = \frac{1}{m} \sum_{i=1}^{m} (\pmb{\theta}^{\top}\textbf{x}^{(i)} - y^{(i)})^2
 \end{equation}
 
 \begin{figure}[h]
@@ -417,7 +417,7 @@ J(\textbf{X}, h_\theta) = J = \frac{1}{m} \sum_{i=1}^{m} (\pmb{\theta}^\text{T}\
 
 With this foundation, we can implement gradient descent by computing the gradient of the cost function with respect to each parameter $\theta_j$. Specifically, this involves calculating how much the cost function changes when $\theta_j$ is altered slightly. This calculation is known as a partial derivative. Conceptually, it is akin to determining ``the slope of the mountain under my feet if I face east,'' then repeating the question facing north, and similarly for any other direction in a higher-dimensional space. The partial derivative of the cost function with respect to parameter $\theta_j$ is computed as:
 \begin{equation}
-\frac{\partial}{\partial \theta_j} J(\theta) = \frac{2}{m} \sum_{i=1}^{m}(\pmb{\theta}^\text{T}\textbf{x}^{(i)} - y^{(i)}) x_j^{(i)}
+\frac{\partial}{\partial \theta_j} J(\theta) = \frac{2}{m} \sum_{i=1}^{m}(\pmb{\theta}^{\top}\textbf{x}^{(i)} - y^{(i)}) x_j^{(i)}
 \label{eq:pd_cost_function}
 \end{equation}
 
@@ -432,7 +432,7 @@ Rather than computing each partial derivative individually, all partial derivati
 	\vdots  \\
 	\frac{\partial}{\partial \theta_n} J(\theta)
 	\end{pmatrix}
-	= \frac{2}{m} \textbf{X}^\text{T} \cdot (\textbf{X} \pmb{\theta} - \textbf{y})
+	= \frac{2}{m} \textbf{X}^{\top} \cdot (\textbf{X} \pmb{\theta} - \textbf{y})
 \end{equation}
 
 \begin{mdframed}[middlelinewidth=0.5mm]

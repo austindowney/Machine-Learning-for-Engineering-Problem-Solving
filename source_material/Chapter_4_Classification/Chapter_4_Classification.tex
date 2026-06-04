@@ -26,7 +26,7 @@ A binary classifier is a model that assigns inputs to one of two distinct classe
 Linear binary classification is a simple but powerful method used to separate data into two distinct classes by drawing a straight decision boundary---such as a line (in 2D) or hyperplane (in higher dimensions)---between them. It works by computing a weighted sum of the input features and applying a threshold to determine the output class. Mathematically, it learns a weight vector $\boldsymbol{\theta}$ and bias term $b$ such that the decision rule can be written as:
 \begin{equation}
 \hat{y} = \begin{cases}
-1 & \text{if } \boldsymbol{\theta}^\text{T} \mathbf{x} + b \geq 0 \\
+1 & \text{if } \boldsymbol{\theta}^{\top} \mathbf{x} + b \geq 0 \\
 0 & \text{otherwise}
 \end{cases}
 \end{equation}

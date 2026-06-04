@@ -370,7 +370,7 @@ Figure~\ref{fig:ridge_regression} illustrates various Ridge models trained on li
 
 Increasing $\alpha$ results in flatter (i.e., more reasonable and less extreme) predictions, thereby reducing the model's variance but increasing its bias. Ridge Regression can be performed using a closed-form solution or through Gradient Descent, similar to Linear Regression. The pros and cons for each method mirror those discussed previously. The closed-form solution, an extension of the normal equation, is given by:
 \begin{equation}
-\hat{\theta} = (X^\text{T} \cdot X + \alpha A)^{-1} \cdot X^\text{T} \cdot y
+\hat{\theta} = (X^{\top} \cdot X + \alpha A)^{-1} \cdot X^{\top} \cdot y
 \end{equation}
 where $\alpha$ influences the regularization and $A$ is an $n \times n$ identity matrix with the top-left value replaced by 0 to exclude the bias term. When using Gradient Descent, the derivative of the cost function guides the adjustment toward optimal model parameters.
 

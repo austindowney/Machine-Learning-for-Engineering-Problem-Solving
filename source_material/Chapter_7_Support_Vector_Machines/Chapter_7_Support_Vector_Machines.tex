@@ -103,15 +103,15 @@ In earlier chapters we placed every model parameter in a single vector $\boldsym
 \subsubsection{Decision Function and Predictions}
 A linear SVM classifier determines the class of a new instance $x$ by calculating the decision function
 \begin{equation}
-\textbf{w}^\text{T} \textbf{x} + b = w_1 x_1 + \cdots + w_n x_n + b.
+\textbf{w}^{\top} \textbf{x} + b = w_1 x_1 + \cdots + w_n x_n + b.
 \end{equation}
 If the outcome is positive, the predicted class $\hat{y}$ is the positive class (1); otherwise, it is the negative class (0). This is written as 
 
 \begin{equation}
   \hat{y} = 
   \begin{cases}
-  0 & \text{if } \textbf{w}^\text{T} \textbf{x} + b < 0, \\
-  1 & \text{if } \textbf{w}^\text{T} \textbf{x} + b \ge 0.
+  0 & \text{if } \textbf{w}^{\top} \textbf{x} + b < 0, \\
+  1 & \text{if } \textbf{w}^{\top} \textbf{x} + b \ge 0.
   \end{cases}
 \label{eq:Linear_SVM_classifier_prediction}
 \end{equation}
@@ -141,14 +141,14 @@ The slope of the decision function corresponds to the norm of the weight vector,
 
 To achieve a large margin while enforcing that no data points fall within the margin (hard margin), we ensure the decision function exceeds +1 for all positive training instances and is less than -1 for all negative instances. Let $t^{(i)}$ equal -1 for negative instances ($y^{(i)} = 0$) and +1 for positive ones ($y^{(i)} = 1$). The constraints then require
 \begin{equation}
-t^{(i)}(\textbf{w}^\text{T} \textbf{x}^{(i)} + b) \geq 1
+t^{(i)}(\textbf{w}^{\top} \textbf{x}^{(i)} + b) \geq 1
 \end{equation}
 for all training instances. This forms the basis of the hard margin linear SVM classifier optimization problem:
 
 \begin{equation}
 \begin{split}
-    & \underset{\textbf{w}, b}{\text{minimize}} \;\;\;\; \frac{1}{2}\textbf{w}^\text{T}\textbf{w} \\
-    & \text{subject to} \;\;\;\; t^{(i)}(\textbf{w}^\text{T}\textbf{x}^{(i)} + b) \ge 1 \; \text{for} \; i = 1, 2, \ldots, m
+    & \underset{\textbf{w}, b}{\text{minimize}} \;\;\;\; \frac{1}{2}\textbf{w}^{\top}\textbf{w} \\
+    & \text{subject to} \;\;\;\; t^{(i)}(\textbf{w}^{\top}\textbf{x}^{(i)} + b) \ge 1 \; \text{for} \; i = 1, 2, \ldots, m
 \end{split}
 \end{equation}
 
@@ -157,15 +157,15 @@ for all training instances. This forms the basis of the hard margin linear SVM c
 \begin{center}
 \bl{NOTE}
 \end{center}
-The objective function minimized is $\frac{1}{2}\textbf{w}^\text{T}\textbf{w}$, equivalent to $\frac{1}{2}\|\textbf{w}\|^2$. This formulation is chosen over minimizing $\|\textbf{w}\|$ directly because $\frac{1}{2}\|\textbf{w}\|^2$ offers a straightforward derivative, simply $\textbf{w}$, facilitating gradient calculations. In contrast, $\|\textbf{w}\|$ lacks differentiability at $\textbf{w} = 0$, posing challenges for optimization algorithms, which typically require smooth, differentiable functions to ensure effective optimization.
+The objective function minimized is $\frac{1}{2}\textbf{w}^{\top}\textbf{w}$, equivalent to $\frac{1}{2}\|\textbf{w}\|^2$. This formulation is chosen over minimizing $\|\textbf{w}\|$ directly because $\frac{1}{2}\|\textbf{w}\|^2$ offers a straightforward derivative, simply $\textbf{w}$, facilitating gradient calculations. In contrast, $\|\textbf{w}\|$ lacks differentiability at $\textbf{w} = 0$, posing challenges for optimization algorithms, which typically require smooth, differentiable functions to ensure effective optimization.
 \end{mdframed}
 
-To formulate the soft margin objective, it is necessary to introduce a slack variable $\zeta^{(i)} \geq 0$ for each instance. This variable, $\zeta^{(i)}$, quantifies the permissible margin violation for the i\textsuperscript{th} instance. Consequently, we face dual objectives: minimizing the slack variables to reduce margin violations and minimizing $\frac{1}{2}\textbf{w}^\text{T}\textbf{w}$ to maximize the margin. The hyperparameter $C$ plays a crucial role here, enabling a balance between these competing objectives. The introduction of $C$ transforms our task into a constrained optimization problem.
+To formulate the soft margin objective, it is necessary to introduce a slack variable $\zeta^{(i)} \geq 0$ for each instance. This variable, $\zeta^{(i)}$, quantifies the permissible margin violation for the i\textsuperscript{th} instance. Consequently, we face dual objectives: minimizing the slack variables to reduce margin violations and minimizing $\frac{1}{2}\textbf{w}^{\top}\textbf{w}$ to maximize the margin. The hyperparameter $C$ plays a crucial role here, enabling a balance between these competing objectives. The introduction of $C$ transforms our task into a constrained optimization problem.
 
 \begin{equation}
 \begin{split}
-    & \underset{\textbf{w}, b, \zeta}{\text{minimize}} \;\;\;\; \frac{1}{2}\textbf{w}^\text{T}\textbf{w} + C \sum_{i=1}^{m} \zeta^{(i)} \\  
-    & \text{subject to} \;\;\;\; t^{(i)}(\textbf{w}^\text{T}\textbf{x}^{(i)}+b ) \ge 1 - \zeta^{(i)} \text{ and } \zeta^{(i)} \ge 0 \text{ for } i=1, \; 2, \; \cdots,  \; m 
+    & \underset{\textbf{w}, b, \zeta}{\text{minimize}} \;\;\;\; \frac{1}{2}\textbf{w}^{\top}\textbf{w} + C \sum_{i=1}^{m} \zeta^{(i)} \\  
+    & \text{subject to} \;\;\;\; t^{(i)}(\textbf{w}^{\top}\textbf{x}^{(i)}+b ) \ge 1 - \zeta^{(i)} \text{ and } \zeta^{(i)} \ge 0 \text{ for } i=1, \; 2, \; \cdots,  \; m 
 \end{split}
 \end{equation}
 
@@ -175,7 +175,7 @@ Both hard margin and soft margin problems are examples of convex quadratic optim
 A variety of techniques available through off-the-shelf solvers can address these QP problems, though they extend beyond the scope of this text. The general formulation of a QP problem is as follows:
 \begin{equation}
 \begin{split}
-    & \underset{\textbf{p}}{\text{minimize}} \;\;\;\; \frac{1}{2}\textbf{\textbf{p}}^\text{T}\textbf{H}\textbf{p} + \textbf{f}^\text{T}\textbf{p}\\
+    & \underset{\textbf{p}}{\text{minimize}} \;\;\;\; \frac{1}{2}\textbf{\textbf{p}}^{\top}\textbf{H}\textbf{p} + \textbf{f}^{\top}\textbf{p}\\
     & \text{subject to} \;\;\;\; \textbf{A} \textbf{p} \le \textbf{b}
 \end{split}
 \label{eq:QP_problem}
@@ -239,7 +239,7 @@ SVMs offer a unique solution through a remarkable mathematical technique known a
 
 In the dual form of an SVM the explicit dot product of two input vectors  
 \begin{equation}
-\mathbf x^{\mathrm T}\mathbf z
+\mathbf x^{\top} \mathbf z
 \end{equation} 
 is replaced by a kernel function  
 \begin{equation}
@@ -249,7 +249,7 @@ where $\mathbf x$ and $\mathbf z$ are $n$-dimensional feature vectors representi
 This substitution lets the algorithm construct a linear separator in a (possibly infinite-dimensional) feature space while all calculations still occur in the original input coordinates.
 
 
-%In the dual form of an SVM the inner product $\mathbf w^\text{T}\mathbf x$ is replaced by a kernel
+%In the dual form of an SVM the inner product $\mathbf w^{\top}\mathbf x$ is replaced by a kernel
 %\begin{equation}
 %k(\mathbf x,\mathbf x),
 %\end{equation}
