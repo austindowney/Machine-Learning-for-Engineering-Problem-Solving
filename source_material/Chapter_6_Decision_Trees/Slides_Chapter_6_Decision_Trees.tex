@@ -461,22 +461,22 @@
 
 \begin{frame}{Regularizing Decision Trees}
 	
-	Decision Trees can easily overfit.
+	Decision Trees can easily overfit when they are allowed to grow too freely.
 	
 	\vspace{0.5em}
 	
-	Regularization limits how much freedom the tree has during training.
+	Regularization works by limiting the complexity of the tree.
 	
 	\vspace{0.5em}
 	
 	Important Scikit-Learn hyperparameters:
 	
 	\begin{itemize}
-		\item \texttt{max\_depth}
-		\item \texttt{min\_samples\_split}
-		\item \texttt{min\_samples\_leaf}
-		\item \texttt{max\_leaf\_nodes}
-		\item \texttt{max\_features}
+		\item \texttt{max\_depth}: limits how deep the tree can grow
+		\item \texttt{min\_samples\_split}: requires enough samples before splitting
+		\item \texttt{min\_samples\_leaf}: requires enough samples in each leaf
+		\item \texttt{max\_leaf\_nodes}: limits the number of leaf nodes
+		\item \texttt{max\_features}: limits features considered at each split
 	\end{itemize}
 	
 	\vspace{0.5em}
@@ -484,8 +484,8 @@
 	General rule:
 	
 	\begin{itemize}
-		\item Decrease \texttt{max\_*} values
-		\item Increase \texttt{min\_*} values
+		\item Increase \texttt{min\_[...]} values to require more data before splitting
+		\item Decrease \texttt{max\_[...]} values to cap tree size and complexity
 	\end{itemize}
 	
 \end{frame}
@@ -790,6 +790,8 @@
 
 % -------------------------------------------------
 
+\section{6.4~Random Forest}
+
 \begin{frame}{Instability: Feature Orientation}
 	\begin{columns}
 		
@@ -827,7 +829,7 @@
 
 % -------------------------------------------------
 
-\section{6.4~Instability}
+
 
 \begin{frame}{Instability: Training Variation}
 	\begin{columns}
@@ -870,7 +872,7 @@
 
 % -------------------------------------------------
 
-\section{6.5~Random Forest}
+
 
 \begin{frame}{Random Forests}
 	\begin{columns}

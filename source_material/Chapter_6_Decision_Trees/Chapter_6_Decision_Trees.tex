@@ -129,7 +129,11 @@ Other parameters in Scikit-Learn's DecisionTreeClassifier also influence the tre
     \item \texttt{max\_leaf\_nodes}: The maximum number of leaf nodes.
     \item \texttt{max\_features}: The maximum number of features evaluated for splitting at each node.
 \end{itemize}
-Adjusting these parameters by increasing \texttt{min\_}* values or decreasing \texttt{max\_}* values will help regularize the model.
+In general, Decision Trees can be regularized by restricting how freely they grow. 
+This is done by increasing hyperparameters that set minimum requirements, such as 
+\texttt{min\_samples\_split} or \texttt{min\_samples\_leaf}, and by decreasing 
+hyperparameters that set maximum limits, such as \texttt{max\_depth}, 
+\texttt{max\_leaf\_nodes}, or \texttt{max\_features}.
 
 Figure~\ref{fig:decision_tree_regularization} illustrates two Decision Trees trained on the moons dataset: one on the left with default hyperparameters (unrestricted) and another on the right with \texttt{min\_samples\_leaf}=4. The left model appears to be overfitting, whereas the right model, with its restrictions, likely offers better generalization.
 
@@ -243,7 +247,11 @@ Similar to classification, Decision Trees for regression can overfit if not prop
 
 
 
-\subsection{Instability}
+\subsection{Random Forest}
+
+If one Decision Tree is useful, a natural question is whether many trees can be combined to produce better models. Random Forests answer this question by averaging the predictions of many decorrelated trees.
+
+\subsubsection{Instability of Individual Trees}
 
 While Decision Trees offer simplicity, interpretability, versatility, and power, they come with certain drawbacks. A notable limitation is their preference for orthogonal decision boundaries, which makes them highly sensitive to the orientation of the data. For instance, Figure~\ref{fig:decision_tree_training_rotation} illustrates how a simple linearly separable dataset can be perfectly split by a Decision Tree in its original alignment, whereas a 45° rotation results in a convoluted decision boundary. Despite perfect fits to their respective training sets, the rotated tree's model is likely to perform poorly on unseen data. Utilizing Principal Component Analysis (PCA) can often mitigate this issue by reorienting the data more suitably.
 
@@ -268,7 +276,8 @@ More broadly, Decision Trees are sensitive to small variations in training data.
 
 
 
-\subsection{Random Forest}
+\subsubsection{Ensembling Decision Trees}
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=6.5in]{../figures/random_forest}
