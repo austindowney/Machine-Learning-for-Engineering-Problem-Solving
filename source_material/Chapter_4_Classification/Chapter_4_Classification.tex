@@ -358,7 +358,7 @@ Certain algorithms, such as Support Vector Machine classifiers, suffer from scal
 \begin{example}
 \textbf{Multiclass Regularized Linear Classifier}
 
-\noindent This example extends the use of \texttt{SGDClassifier} to multiclass classification on the MNIST dataset. It compares three approaches: One-vs-Rest (OvR), One-vs-One (OvO), and Scikit-Learn's default automatic strategy. Each method trains multiple binary classifiers to distinguish between the 10 digit classes.
+\noindent This example extends the use of \texttt{SGDClassifier} to multiclass classification on the MNIST dataset. It compares three approaches: One-vs-Rest (OvR), One-versus-One (OvO), and Scikit-Learn's default automatic strategy. Each method trains multiple binary classifiers to distinguish between the 10 digit classes.
 \end{example}
 
 
@@ -384,7 +384,7 @@ First, examine the confusion matrix. To do this, generate predictions using the 
     \centering
     \includegraphics[width=4.4in]{../figures/digit_confusion_matrix.png}
 	\vspace{-2ex}
-    \caption{Confusion matrix for the MNIST data set solved using a one-vs-one classifier with Stochastic Gradient Descent and a $k$-fold of 3.}
+    \caption{Confusion matrix for the MNIST data set solved using a one-versus-one classifier with Stochastic Gradient Descent and a $k$-fold of 3.}
     \label{fig:digit_confusion_matrix}
 \end{figure}
 
@@ -436,7 +436,7 @@ A non-linear model can learn more complex patterns by applying transformations (
 \begin{example}
 \textbf{Multiclass Confusion Matrix}
 
-\noindent This example uses a One-vs-One classifier trained with Stochastic Gradient Descent to evaluate multiclass classification performance on the MNIST dataset. It constructs a confusion matrix using 3-fold cross-validation and visualizes both the raw classification counts and the normalized error rates, helping identify which digits are most commonly misclassified.
+\noindent This example uses a One-versus-One classifier trained with Stochastic Gradient Descent to evaluate multiclass classification performance on the MNIST dataset. It constructs a confusion matrix using 3-fold cross-validation and visualizes both the raw classification counts and the normalized error rates, helping identify which digits are most commonly misclassified.
 \end{example}
 
 \pagebreak
