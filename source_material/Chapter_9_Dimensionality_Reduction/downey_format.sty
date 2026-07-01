@@ -1,0 +1,17 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{downey_format}[Course chapter formatting]
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{caption}
+\usepackage[hidelinks]{hyperref}
+\setlist[itemize]{itemsep=0.25ex,topsep=0.5ex}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.8em}
+\newenvironment{example}{\begin{mdframed}[middlelinewidth=0.4mm,backgroundcolor=black!2]\noindent\textbf{Example.}\ }{\end{mdframed}}

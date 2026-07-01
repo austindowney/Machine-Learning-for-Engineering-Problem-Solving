@@ -2,69 +2,658 @@
 \usepackage{../downey_format}
 
 
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\vct}[1]{\vec{#1}}
+\newcommand{\loss}{\mathcal{L}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\softmax}{\operatorname{softmax}}
+
 \begin{document}
-	
 
-
-	% set the section number, along with figure and equation numbers
-	\setcounter{section}{8}	
-	\setcounter{figure}{0}   
-	\renewcommand\thefigure{\thesection.\arabic{figure}}
-	\setcounter{equation}{0}   
-	\renewcommand\theequation{\thesection.\arabic{equation}}
-
-
-
-
-
-
+    % set the section number, along with figure and equation numbers
+    \setcounter{section}{8}
+    \setcounter{figure}{0}
+    \renewcommand\thefigure{\thesection.\arabic{figure}}
+    \setcounter{equation}{0}
+    \renewcommand\theequation{\thesection.\arabic{equation}}
+    \setcounter{table}{0}
+    \renewcommand\thetable{\thesection.\arabic{table}}
 
 \section{Dimensionality Reduction}
 
-Introduction to Dimensionality Reduction
+Engineering data sets often contain many measured variables. A vibration test may produce many frequency-domain features. A manufacturing line may record temperatures, pressures, motor currents, tool speeds, dimensions, and quality measurements. A simulation campaign may output many nodal displacements or stress values. These variables are rarely independent. They often move together because they are driven by a smaller number of physical effects.
 
-\subsubsection{Principal Component Analysis}
+Dimensionality reduction replaces a high-dimensional description with a lower-dimensional one. The goal is not to discard information at random. The goal is to find a smaller coordinate system that keeps the structure needed for visualization, preprocessing, compression, denoising, monitoring, or a downstream machine-learning model. Figure~\ref{fig:DimRed_overview} gives the basic idea.
 
-Explained Variance
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6.5in]{../figures/DimRed_overview.png}
+    \caption{Dimensionality reduction converts many correlated measurements into a smaller set of useful coordinates. These coordinates can support visualization, compression, denoising, preprocessing, and exploratory analysis.}
+    \label{fig:DimRed_overview}
+\end{figure}
 
-Projection onto Principal Components
+The reduced coordinates may be called scores, components, latent variables, embeddings, or reduced features. The words differ by method and by field. The common idea is that each sample is represented with fewer numbers than before.
 
-PCA for Visualization
+This chapter uses two running examples. The first is a small synthetic data set, used because its geometry is visible. The second is the Wine data set from \texttt{scikit-learn}, used because it is a concrete tabular data set with multiple measured variables and known classes. Figure~\ref{fig:DimRed_examples_synthetic_wine} shows both examples.
 
-PCA as a Preprocessing Step
+The Wine data are not mechanical engineering data, but they behave like many small engineering measurement tables. Each row is a sample. Each column is a numeric measurement. The columns have different scales and correlations. The samples also belong to known groups, which makes the reduced-coordinate plots easier to interpret.
 
-\subsubsection{t-SNE}
+\begin{table}[H]
+\centering
+\caption{Running tabular data set used in several examples.}
+\label{tab:wine_dataset_summary}
+\begin{tabular}{p{0.30\textwidth}p{0.55\textwidth}}
+\toprule
+Quantity & Value \\
+\midrule
+Data source & \texttt{sklearn.datasets.load\_wine()} \\
+Samples & $m=178$ \\
+Measured features & $d=13$ numeric measurements \\
+Known groups & $3$ classes \\
+Engineering analogy & laboratory measurements, inspection features, process variables, or material descriptors \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{mdframed}[middlelinewidth=0.5mm]
+\begin{center}
+\textbf{Notation}
+\end{center}
+
+\begin{itemize}[itemsep=0.25ex]
+    \item $\vct{x}^{(i)}\in\mathbb{R}^{d}$: column vector of $d$ measured features for sample $i$.
+    \item $\mat{X}\in\mathbb{R}^{m\times d}$: data matrix with one row per sample and one column per feature.
+    \item $m$: number of samples.
+    \item $d$: number of original features.
+    \item $r$: number of reduced dimensions, with $r<d$.
+    \item $\mat{Z}\in\mathbb{R}^{m\times r}$: reduced-coordinate matrix.
+    \item $\bar{\vct{x}}$: sample mean vector.
+    \item $\mat{S}$: sample covariance matrix.
+    \item $\vct{u}_j$: the $j^{\mathrm{th}}$ principal-component direction.
+    \item $\lambda_j$: variance explained by principal component $j$.
+\end{itemize}
+\end{mdframed}
+
+Vectors carry arrows and matrices are bold. Rows of $\mat{X}$ are samples and columns of $\mat{X}$ are measured variables. This convention matches the mini-batch notation used earlier in the course.
+
+\subsection{Why Reduce Dimension?}
+
+Dimensionality reduction is used for several related reasons.
+
+\begin{itemize}
+    \item \textbf{Visualization:} humans can inspect two or three dimensions much more easily than dozens or thousands.
+    \item \textbf{Compression:} a few coordinates can store most of the repeatable variation in a data set.
+    \item \textbf{Denoising:} low-variance directions often contain measurement noise rather than stable structure.
+    \item \textbf{Preprocessing:} a smaller feature set can make a later model faster, simpler, or more stable.
+    \item \textbf{Exploration:} clusters, trends, outliers, and operating regimes may become easier to see.
+    \item \textbf{Monitoring:} reduced coordinates can become health indicators, process states, or residual statistics.
+\end{itemize}
+
+Figure~\ref{fig:DimRed_wine_feature_matrix} shows the standardized Wine data matrix. Each row is one sample and each column is one measured feature. The figure makes the dimensionality-reduction problem concrete. The original data live in a 13-dimensional feature space, but we would like to summarize the dominant structure with only a few coordinates.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6.5in]{../figures/DimRed_wine_feature_matrix.png}
+    \caption{Standardized Wine data matrix. Each row is one sample, each column is one measured feature, and the color indicates the standardized value of that measurement. Samples are grouped by their known class labels.}
+    \label{fig:DimRed_wine_feature_matrix}
+\end{figure}
+
+High-dimensional data are difficult for three practical reasons. First, humans cannot directly plot more than two or three coordinates. Second, many machine-learning models need more samples as the number of features grows. Third, distances can become less informative when every sample has many coordinates. This does not mean that high-dimensional data are useless. It means that the data often need to be summarized before interpretation or modeling.
+
+A useful way to think about dimensionality reduction is that it tries to find a simpler coordinate system. In the original coordinate system, a sample might be described by many sensor channels or many measured variables. In the reduced coordinate system, the same sample may be described by a few modes, scores, or embedding coordinates.
+
+The rest of this chapter focuses on methods available in \texttt{scikit-learn}. The main method is principal component analysis (PCA). PCA is linear, deterministic, and interpretable. The chapter also introduces t-distributed stochastic neighbor embedding (t-SNE), a nonlinear visualization method, and isometric mapping (Isomap), a graph-based manifold method included in \texttt{scikit-learn}.
+
+\subsection{Principal Component Analysis (PCA)}
+
+Principal component analysis, or PCA, is the most important baseline for dimensionality reduction. PCA finds orthogonal directions along which the data vary the most. The first principal component points in the direction of maximum variance. The second principal component points in the next largest variance direction, subject to being orthogonal to the first. The process continues until all directions are found.
+
+A useful classroom analogy is the shadow analogy. Imagine shining light on a cloud of points and measuring the length of the shadow cast onto a line. If the line is poorly chosen, the shadow is short and many points collapse together. If the line is aligned with the long direction of the data cloud, the shadow is long and preserves more variation. PCA chooses the direction that gives the largest projected variance. Figure~\ref{fig:DimRed_pca_shadow_projection} illustrates this idea.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6.5in]{../figures/DimRed_pca_shadow_projection.png}
+    \caption{Shadow analogy for PCA. Projecting the data onto a weak direction gives a short shadow. Projecting onto the first principal component gives the largest variance shadow and the best one-dimensional linear summary.}
+    \label{fig:DimRed_pca_shadow_projection}
+\end{figure}
+
+Figure~\ref{fig:DimRed_pca_projection_geometry} shows the same idea as a coordinate rotation. The original variables are correlated, so the point cloud is elongated. PCA rotates the coordinate system so that the first new axis lies along the long direction of the cloud.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=5.8in]{../figures/DimRed_pca_projection_geometry.png}
+    \caption{PCA rotates the coordinate system toward directions of largest variance. The first principal component captures the largest possible projected variance, and the second captures the next largest orthogonal direction.}
+    \label{fig:DimRed_pca_projection_geometry}
+\end{figure}
+
+\subsubsection{Centering the Data}
+
+PCA starts by centering the data. Let the mean feature vector be
+\begin{equation}
+    \bar{\vct{x}}
+    =
+    \frac{1}{m}\sum_{i=1}^{m}\vct{x}^{(i)}.
+    \label{eq:dimred_mean_vector}
+\end{equation}
+The centered data matrix is
+\begin{equation}
+    \mat{X}_{c}
+    =
+    \mat{X}-\vct{1}_{m}\bar{\vct{x}}^{\top},
+    \label{eq:dimred_centered_matrix}
+\end{equation}
+where $\vct{1}_{m}$ is a column vector of $m$ ones. The subtraction in Equation~\eqref{eq:dimred_centered_matrix} subtracts the feature mean from every row.
+
+Centering is important because PCA is about variation around the mean. Without centering, the first component can be pulled toward the offset of the data rather than the direction of variation.
+
+\subsubsection{Covariance Matrix}
+
+After centering, PCA computes the sample covariance matrix
+\begin{equation}
+    \mat{S}
+    =
+    \frac{1}{m-1}\mat{X}_{c}^{\top}\mat{X}_{c}.
+    \label{eq:dimred_covariance_matrix}
+\end{equation}
+Because $\mat{X}_{c}\in\mathbb{R}^{m\times d}$, the covariance matrix has shape
+\begin{equation}
+    \mat{S}\in\mathbb{R}^{d\times d}.
+\end{equation}
+This is important: the covariance matrix is organized by features, not by samples. If the data matrix has 10 samples and 10 features, the covariance matrix is $10\times 10$ because there are 10 features. If the data matrix has 1000 samples and 10 features, the covariance matrix is still $10\times 10$.
+
+The entry $S_{ij}$ measures how feature $i$ and feature $j$ vary together across the $m$ samples:
+\begin{equation}
+    S_{ij}
+    =
+    \frac{1}{m-1}
+    \sum_{k=1}^{m}
+    \left(X_{ki}-\bar{x}_{i}\right)
+    \left(X_{kj}-\bar{x}_{j}\right).
+    \label{eq:dimred_covariance_entry}
+\end{equation}
+The diagonal entries are variances because a feature is being compared with itself. The off-diagonal entries are covariances between different features. Since $S_{ij}=S_{ji}$, the covariance matrix is symmetric about the diagonal. Figure~\ref{fig:DimRed_covariance_matrix_structure} shows the structure.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6.2in]{../figures/DimRed_covariance_matrix_structure.png}
+    \caption{Structure of the covariance matrix used by PCA. Diagonal entries are feature variances, off-diagonal entries are covariances between features, and the matrix is symmetric because $S_{ij}=S_{ji}$.}
+    \label{fig:DimRed_covariance_matrix_structure}
+\end{figure}
+
+Figure~\ref{fig:DimRed_wine_covariance_heatmap} shows the covariance matrix for the standardized Wine features. Since the features were standardized, the diagonal entries are one. The off-diagonal colors show which pairs of features tend to move together or in opposite directions.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=5.9in]{../figures/DimRed_wine_covariance_heatmap.png}
+    \caption{Covariance matrix for standardized Wine features. After standardization, the covariance matrix is equivalent to the correlation matrix. The diagonal entries are one, and off-diagonal entries show positive or negative feature relationships.}
+    \label{fig:DimRed_wine_covariance_heatmap}
+\end{figure}
+
+The covariance matrix is the object that PCA studies. PCA does not take eigenvectors of the raw data matrix $\mat{X}$ in this basic covariance-matrix view. Instead, it takes eigenvectors of the covariance matrix $\mat{S}$. Those eigenvectors become the principal-component directions.
+
+\subsubsection{Eigenvectors and Eigenvalues}
+
+PCA solves the eigenvalue problem
+\begin{equation}
+    \mat{S}\vct{u}_j
+    =
+    \lambda_j\vct{u}_j.
+    \label{eq:dimred_pca_eigenproblem}
+\end{equation}
+The eigenvector $\vct{u}_j$ is a principal-component direction. The eigenvalue $\lambda_j$ is the variance of the data along that direction. The eigenvalues are usually ordered so that
+\begin{equation}
+    \lambda_1\geq \lambda_2\geq \cdots \geq \lambda_d\geq 0.
+    \label{eq:dimred_ordered_eigenvalues}
+\end{equation}
+The first eigenvector $\vct{u}_1$ is the first principal component. The second eigenvector $\vct{u}_2$ is the second principal component, and so on.
+
+In practical language, PCA uses the eigenvectors as new axes. The eigenvalues are not the reduced coordinates. Instead, the eigenvalues tell us how much variance is explained by each new axis. We use the eigenvalues to decide how many eigenvectors to keep.
+
+If the first $r$ principal-component directions are kept, collect them in the loading matrix
+\begin{equation}
+    \mat{U}_{r}
+    =
+    \begin{bmatrix}
+    \vct{u}_1 & \vct{u}_2 & \cdots & \vct{u}_r
+    \end{bmatrix}
+    \in\mathbb{R}^{d\times r}.
+    \label{eq:dimred_loading_matrix}
+\end{equation}
+The reduced coordinates, or PCA scores, are
+\begin{equation}
+    \mat{Z}
+    =
+    \mat{X}_{c}\mat{U}_{r}
+    \in\mathbb{R}^{m\times r}.
+    \label{eq:dimred_pca_scores}
+\end{equation}
+Each row of $\mat{Z}$ is the reduced representation of one sample.
+
+\begin{example}
+\textbf{PCA for a sensor array.} Suppose a test fixture produces $d=80$ features per run. Many features move together because the structure has only a few dominant vibration patterns. PCA may show that the first five components explain most of the variation. Instead of training a later model on all 80 features, an engineer may train it on the first five PCA scores.
+\end{example}
+
+\subsubsection{Scaling and Standardization}
+
+PCA is sensitive to feature scale. If one feature is measured in thousands and another is measured in fractions, the large-scale feature can dominate the covariance matrix even if it is not more physically important. For engineering data, the units of measurement matter.
+
+A common preprocessing step is to standardize each feature:
+\begin{equation}
+    X_{\mathrm{std},ij}
+    =
+    \frac{X_{ij}-\mu_j}{s_j},
+    \label{eq:dimred_standardization}
+\end{equation}
+where $\mu_j$ is the mean of feature $j$ and $s_j$ is its sample standard deviation. PCA on standardized data is equivalent to PCA on the correlation matrix rather than the covariance matrix.
+
+Use centered but unscaled data when absolute variance has physical meaning. Use standardized data when variables have different units or very different numerical scales. The choice should be recorded because it changes the components.
+
+\subsubsection{Explained Variance and Scree Plots}
+
+The explained variance ratio for component $j$ is
+\begin{equation}
+    \rho_j
+    =
+    \frac{\lambda_j}{\sum_{k=1}^{d}\lambda_k}.
+    \label{eq:dimred_explained_variance_ratio}
+\end{equation}
+The cumulative explained variance after keeping $r$ components is
+\begin{equation}
+    R_r
+    =
+    \sum_{j=1}^{r}\rho_j
+    =
+    \frac{\sum_{j=1}^{r}\lambda_j}{\sum_{k=1}^{d}\lambda_k}.
+    \label{eq:dimred_cumulative_explained_variance}
+\end{equation}
+
+A scree plot shows the explained variance for each component. Figure~\ref{fig:DimRed_wine_scree_plot} shows the scree plot for the standardized Wine data. The bars show individual explained variance ratios, and the line shows cumulative explained variance.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6.0in]{../figures/DimRed_wine_scree_plot.png}
+    \caption{Scree plot for the standardized Wine data. Bars show the variance explained by each principal component, and the line shows cumulative explained variance.}
+    \label{fig:DimRed_wine_scree_plot}
+\end{figure}
+
+A common rule is to keep enough components to explain a selected fraction of variance, such as 90\% or 95\%. This rule is convenient, but it is not universal. Low-variance components can still matter if they contain fault signatures, rare events, or safety-critical effects. Explained variance should be combined with engineering judgment.
+
+\subsubsection{Projection, Scores, and Loadings}
+
+Projection is the step that converts original features into PCA scores. For one centered sample $\vct{x}_{c}$, the score on principal component $j$ is
+\begin{equation}
+    z_j
+    =
+    \vct{u}_j^{\top}\vct{x}_{c}.
+    \label{eq:dimred_single_score}
+\end{equation}
+The vector of the first $r$ scores is
+\begin{equation}
+    \vct{z}
+    =
+    \mat{U}_{r}^{\top}\vct{x}_{c}
+    \in\mathbb{R}^{r}.
+    \label{eq:dimred_single_score_vector}
+\end{equation}
+For a batch of samples, the matrix form is Equation~\eqref{eq:dimred_pca_scores}.
+
+The loadings in $\mat{U}_r$ tell how the original variables contribute to the principal components. Large positive or negative loading values indicate that a feature strongly affects that component. Figure~\ref{fig:DimRed_wine_pca_loadings} shows the first three loading vectors for the Wine data.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6.5in]{../figures/DimRed_wine_pca_loadings.png}
+    \caption{PCA loadings for the first three components of the standardized Wine data. Loadings describe how the original measured features contribute to each principal component.}
+    \label{fig:DimRed_wine_pca_loadings}
+\end{figure}
+
+Figure~\ref{fig:DimRed_wine_pca_scores} shows the Wine samples plotted using the first two PCA scores. The classes were not used to fit PCA, but they are shown in the plot so that the structure can be inspected.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=5.8in]{../figures/DimRed_wine_pca_scores.png}
+    \caption{PCA score plot for the standardized Wine data. Each point is one sample projected onto the first two principal components. Class labels are shown only for interpretation.}
+    \label{fig:DimRed_wine_pca_scores}
+\end{figure}
+
+A PCA score plot should be read carefully. If two classes are separated in the first two principal components, that is useful evidence. If they overlap, it does not prove that the classes are inseparable. The class information may lie in lower-variance directions, or the separation may require a nonlinear model.
+
+\subsubsection{Reconstruction}
+
+PCA can approximately reconstruct the original data from the retained scores. The reconstruction from $r$ components is
+\begin{equation}
+    \hat{\mat{X}}
+    =
+    \mat{Z}\mat{U}_{r}^{\top}
+    +
+    \vct{1}_{m}\bar{\vct{x}}^{\top}.
+    \label{eq:dimred_pca_reconstruction}
+\end{equation}
+The reconstruction error matrix is
+\begin{equation}
+    \mat{E}
+    =
+    \mat{X}-\hat{\mat{X}}.
+    \label{eq:dimred_reconstruction_error_matrix}
+\end{equation}
+If $r=d$, the reconstruction is exact for centered data. If $r<d$, the reconstruction keeps only the variation captured by the retained components.
+
+Figure~\ref{fig:DimRed_pca_reconstruction_error} shows the Wine reconstruction error as the number of retained PCA components increases. More components produce lower reconstruction error, but the cost is a less compact representation.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=5.8in]{../figures/DimRed_pca_reconstruction_error.png}
+    \caption{PCA reconstruction error for the standardized Wine data. Keeping more principal components lowers the reconstruction error because more directions of variation are retained.}
+    \label{fig:DimRed_pca_reconstruction_error}
+\end{figure}
+
+A useful optimization view is that PCA chooses the rank-$r$ linear approximation that minimizes squared reconstruction error:
+\begin{equation}
+    \mat{U}_{r}^{*}
+    =
+    \operatorname*{arg\,min}_{\mat{U}_{r}^{\top}\mat{U}_{r}=\mat{I}}
+    \left\|
+    \mat{X}_{c}-\mat{X}_{c}\mat{U}_{r}\mat{U}_{r}^{\top}
+    \right\|_{F}^{2}.
+    \label{eq:dimred_pca_least_squares}
+\end{equation}
+This is why PCA is often the first baseline for compression and denoising.
+
+\subsubsection{Denoising}
+
+PCA can remove noise when the repeatable structure lies in a low-dimensional subspace and the noise is spread across many directions. The basic workflow is
+\begin{equation}
+    \mat{X}
+    \quad\longrightarrow\quad
+    \mat{Z}=\mat{X}_{c}\mat{U}_{r}
+    \quad\longrightarrow\quad
+    \hat{\mat{X}}=\mat{Z}\mat{U}_{r}^{\top}+\vct{1}_{m}\bar{\vct{x}}^{\top}.
+\end{equation}
+The low-dimensional scores keep dominant patterns. The reconstruction removes some variation that is not captured by those patterns.
+
+Figure~\ref{fig:DimRed_pca_denoising} shows a synthetic signal example. The noisy measurements are projected into a small PCA space and reconstructed. The reconstruction follows the repeatable structure more closely than the raw noisy signals.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6.5in]{../figures/DimRed_pca_reconstruction_denoising.png}
+    \caption{PCA denoising by reconstruction. The noisy signals are projected into a small PCA subspace and reconstructed, keeping dominant repeatable structure while suppressing part of the noise.}
+    \label{fig:DimRed_pca_denoising}
+\end{figure}
+
+For engineering data, PCA denoising is useful only when the low-dimensional assumption is reasonable. It can fail if the discarded components contain rare but important damage, faults, or transient behavior.
+
+\subsubsection{PCA as a Preprocessing Step}
+
+PCA can also be used before a supervised model. The workflow is usually
+\begin{equation}
+    \mat{X}
+    \quad\longrightarrow\quad
+    \text{scaling}
+    \quad\longrightarrow\quad
+    \mat{Z}=\mat{X}_{c}\mat{U}_{r}
+    \quad\longrightarrow\quad
+    \text{downstream model}.
+    \label{eq:dimred_pca_preprocessing_workflow}
+\end{equation}
+The downstream model may be logistic regression, support vector machines, random forests, Gaussian processes, neural networks, or a clustering method.
+
+Figure~\ref{fig:DimRed_pca_preprocessing_accuracy} shows a simple Wine classification example. A \texttt{scikit-learn} pipeline standardizes the features, projects them onto $r$ PCA components, and trains logistic regression. The figure shows cross-validation accuracy as $r$ changes.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6.0in]{../figures/DimRed_pca_preprocessing_accuracy.png}
+    \caption{Wine classification accuracy after PCA preprocessing. A small number of principal components can be enough for strong performance, but the number of components should be selected using validation data.}
+    \label{fig:DimRed_pca_preprocessing_accuracy}
+\end{figure}
+
+For preprocessing, PCA must be fit only on the training data. The same scaling values and principal-component directions are then applied to validation, test, and future samples. Fitting PCA on the full data set before splitting can leak information from the test set into the training process.
+
+\begin{example}
+\textbf{PCA before regression.} Suppose the goal is to predict fatigue life from 200 descriptors of a loading history. A small data set makes direct regression unstable. PCA can reduce the descriptors to 10 scores, and the regression model can be trained on those scores. The scaler, PCA model, and regression model must all be fit using training data only.
+\end{example}
+
+\subsubsection{PCA Residuals and Anomalies}
+
+PCA can help anomaly detection by measuring how well a sample is represented by a normal-data subspace. For sample $i$, define the squared reconstruction residual
+\begin{equation}
+    Q_i
+    =
+    \left\|
+    \vct{x}^{(i)}-\hat{\vct{x}}^{(i)}
+    \right\|_2^2.
+    \label{eq:dimred_pca_residual}
+\end{equation}
+A large value of $Q_i$ means that the sample is not well represented by the retained PCA components. This may indicate a sensor problem, a new operating condition, a data-entry error, or a fault mode.
+
+The residual should not be treated as proof of a specific failure. It is a screening statistic. The engineering interpretation still depends on the sensors, operating conditions, and known failure mechanisms.
+
+\subsection{t-distributed Stochastic Neighbor Embedding (t-SNE)}
+
+t-distributed stochastic neighbor embedding, usually written t-SNE, is a nonlinear dimensionality-reduction method used mostly for visualization. It tries to place points in two or three dimensions so that nearby points in the original space remain nearby in the embedding.
+
+The important word is nearby. t-SNE is designed to preserve local neighborhoods, not global distances. If two clusters appear far apart in a t-SNE plot, that distance should not be interpreted as a calibrated physical distance. The method is better at showing local groupings than at preserving the full geometry of the original feature space.
+
+Figure~\ref{fig:DimRed_tsne_wine_pca_comparison} compares PCA and t-SNE on the standardized Wine data. PCA gives a linear variance-based projection. t-SNE gives a nonlinear local-neighborhood view.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6.5in]{../figures/DimRed_tsne_local_neighbors.png}
+    \caption{Wine data viewed with PCA and t-SNE. PCA preserves global linear variance, while t-SNE emphasizes local neighborhood structure.}
+    \label{fig:DimRed_tsne_wine_pca_comparison}
+\end{figure}
+
+A simplified view of t-SNE is as follows. In the original high-dimensional space, define a probability that point $i$ chooses point $j$ as a neighbor. Points that are close have larger probabilities. In the low-dimensional space, define a second set of neighbor probabilities. t-SNE then moves the low-dimensional points to make those two probability distributions similar.
+
+The high-dimensional conditional probability is often written as
+\begin{equation}
+    p_{j|i}
+    =
+    \frac{
+    \exp\left(-\left\|\vct{x}^{(i)}-\vct{x}^{(j)}\right\|_2^2/(2\sigma_i^2)\right)
+    }
+    {
+    \sum_{k\neq i}\exp\left(-\left\|\vct{x}^{(i)}-\vct{x}^{(k)}\right\|_2^2/(2\sigma_i^2)\right)
+    }.
+    \label{eq:dimred_tsne_high_prob}
+\end{equation}
+The bandwidth $\sigma_i$ is chosen so that each point has a roughly specified number of effective neighbors. This number is controlled by a parameter called perplexity.
+
+In the low-dimensional map, t-SNE uses heavy-tailed similarities. If $\vct{z}^{(i)}$ and $\vct{z}^{(j)}$ are embedded points, a common low-dimensional similarity is
+\begin{equation}
+    q_{ij}
+    =
+    \frac{
+    \left(1+\left\|\vct{z}^{(i)}-\vct{z}^{(j)}\right\|_2^2\right)^{-1}
+    }
+    {
+    \sum_{k\neq l}\left(1+\left\|\vct{z}^{(k)}-\vct{z}^{(l)}\right\|_2^2\right)^{-1}
+    }.
+    \label{eq:dimred_tsne_low_prob}
+\end{equation}
+The t-SNE objective minimizes a mismatch between high-dimensional and low-dimensional neighborhood probabilities:
+\begin{equation}
+    C
+    =
+    \sum_i\sum_j
+    p_{ij}\log\left(\frac{p_{ij}}{q_{ij}}\right).
+    \label{eq:dimred_tsne_kl}
+\end{equation}
+This is a Kullback--Leibler divergence. The details are less important than the interpretation: t-SNE tries to keep neighbors together.
+
+Important t-SNE settings include:
+\begin{itemize}
+    \item \textbf{Perplexity:} controls the effective neighborhood size.
+    \item \textbf{Learning rate:} controls the optimization step size.
+    \item \textbf{Initialization:} different starts can produce different layouts.
+    \item \textbf{Random seed:} the same data can produce different plots if the seed changes.
+\end{itemize}
+
+Figure~\ref{fig:DimRed_tsne_perplexity} shows the effect of perplexity on a synthetic data set. The same data can look different when the neighborhood scale changes.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6.5in]{../figures/DimRed_tsne_wine_perplexity.png}
+    \caption{Effect of perplexity in t-SNE. Perplexity changes the effective neighborhood size, so visual layouts should be interpreted as exploratory summaries rather than exact geometric maps.}
+    \label{fig:DimRed_tsne_perplexity}
+\end{figure}
+
+\begin{example}
+\textbf{t-SNE for inspection features.} An engineer may extract feature vectors from images of manufactured parts and then plot those features with t-SNE. If images with similar defect patterns form neighborhoods, the plot can help organize inspection data. The plot should be used for exploration, not as a calibrated measurement of distance between defects.
+\end{example}
 
 
-\subsubsection{UMAP}
+\subsection{Isometric Mapping (Isomap)}
+
+Isometric mapping, or Isomap, is another nonlinear dimensionality-reduction method included in \texttt{scikit-learn}. It is useful as a basic graph-based method because it extends classical multidimensional scaling with neighborhood information. Instead of measuring distance only by straight-line Euclidean distance in the original feature space, Isomap builds a nearest-neighbor graph and estimates distances along that graph.
+
+A simplified Isomap workflow is:
+\begin{enumerate}[itemsep=0.25ex]
+    \item choose a distance metric in the original space;
+    \item connect each sample to nearby samples;
+    \item estimate shortest-path distances along the neighbor graph;
+    \item find low-dimensional coordinates that preserve those graph distances.
+\end{enumerate}
+
+This can help when the data lie on a curved low-dimensional surface. Figure~\ref{fig:DimRed_isomap_swiss_roll} shows the classic idea. A rolled surface is nonlinear in the original three-dimensional coordinates. Isomap tries to unroll the surface by preserving distances along the neighborhood graph.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6.5in]{../figures/DimRed_isomap_swiss_roll.png}
+    \caption{Isomap on a synthetic rolled surface. The method builds a neighborhood graph and finds coordinates that preserve distances along the graph, which can reveal curved low-dimensional structure.}
+    \label{fig:DimRed_isomap_swiss_roll}
+\end{figure}
+
+Isomap is still an exploratory method. Its results depend on the number of neighbors and on whether the graph captures a meaningful manifold. If too few neighbors are used, the graph can break apart. If too many neighbors are used, the graph can behave more like ordinary Euclidean geometry.
+
+Figure~\ref{fig:DimRed_method_comparison_wine} compares PCA, t-SNE, and Isomap on the standardized Wine data. The methods give different views because they preserve different types of structure.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6.5in]{../figures/DimRed_method_comparison_wine.png}
+    \caption{The same standardized Wine data viewed with PCA, t-SNE, and Isomap. PCA preserves global linear variance, t-SNE emphasizes local neighborhoods, and Isomap attempts to preserve graph-based geodesic distances.}
+    \label{fig:DimRed_method_comparison_wine}
+\end{figure}
+
+Table~\ref{tab:dimred_method_comparison} summarizes the methods discussed in this chapter.
+
+\begin{table}[H]
+\centering
+\caption{Practical comparison of dimensionality-reduction methods used in this chapter.}
+\label{tab:dimred_method_comparison}
+\begin{tabular}{p{0.18\textwidth}p{0.24\textwidth}p{0.27\textwidth}p{0.21\textwidth}}
+\toprule
+Method & Preserves & Typical use & Main caution \\
+\midrule
+PCA & global linear variance & preprocessing, denoising, compression, baseline visualization & linear only; sensitive to feature scaling \\
+t-SNE & local neighborhoods & exploratory two-dimensional visualization & global distances and cluster sizes can mislead \\
+Isomap & neighborhood-graph distances & nonlinear visualization and manifold exploration & depends strongly on neighborhood graph quality \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For an engineering workflow, a sensible sequence is to start with PCA. It is fast, deterministic, and interpretable. Then use t-SNE or Isomap for exploratory visualization if PCA does not reveal useful visual structure. Hard engineering claims should be validated with a task-specific model, not with a two-dimensional plot alone.
+
+\subsection{Practical Workflow}
+
+A clean dimensionality-reduction workflow should separate model fitting from evaluation. Figure~\ref{fig:DimRed_workflow} summarizes the main steps.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6.5in]{../figures/DimRed_workflow.png}
+    \caption{Dimensionality-reduction workflow for engineering data. Scaling and PCA should be fit on the training data and then reused for validation, test, and future samples.}
+    \label{fig:DimRed_workflow}
+\end{figure}
+
+The following checklist is a good default.
+
+\begin{enumerate}[itemsep=0.25ex]
+    \item \textbf{Define the goal.} Decide whether the reduced coordinates are for visualization, compression, denoising, anomaly detection, or downstream prediction.
+    \item \textbf{Split the data.} Keep training, validation, and test data separate when a later model will be evaluated.
+    \item \textbf{Scale using training data.} Estimate means and standard deviations only from the training set.
+    \item \textbf{Fit the reducer.} Fit PCA or another dimensionality-reduction method on the appropriate data subset.
+    \item \textbf{Transform or embed.} Compute reduced coordinates.
+    \item \textbf{Inspect.} Check plots, explained variance, loadings, residuals, clusters, and known operating conditions.
+    \item \textbf{Validate.} Measure performance on the actual engineering task.
+\end{enumerate}
+
+For PCA, transforming a new sample is straightforward:
+\begin{equation}
+    \vct{z}_{\mathrm{new}}
+    =
+    \mat{U}_{r}^{\top}\left(\vct{x}_{\mathrm{new}}-\bar{\vct{x}}_{\mathrm{train}}\right).
+    \label{eq:dimred_new_sample_projection}
+\end{equation}
+If standardization was used, the new sample must be standardized with the training means and training standard deviations before projection.
+
+For t-SNE and Isomap, the reduced coordinates are usually treated as visualization outputs. They are excellent for exploring data structure, but they are not always the right choice for a production preprocessing step. PCA is the safer first choice when future samples must be transformed in a repeatable engineering workflow.
 
 
+\subsection{Implementation in \texttt{scikit-learn}}
 
+For most engineering projects, dimensionality reduction should be implemented as part of a reproducible preprocessing pipeline. A PCA pipeline for the Wine example has the form
+\begin{equation}
+\texttt{StandardScaler()}
+\quad\rightarrow\quad
+\texttt{PCA(n\_components=r)}
+\quad\rightarrow\quad
+\texttt{LogisticRegression()}.
+\end{equation}
+The scaler estimates the training feature means and standard deviations. PCA estimates the principal-component directions from the scaled training data. The classifier is then trained on the PCA scores.
 
+A key implementation detail is the difference between \texttt{fit}, \texttt{transform}, and \texttt{fit\_transform}. The method \texttt{fit} estimates parameters from data. For PCA, those parameters include the feature means and loading vectors. The method \texttt{transform} applies the already fitted transformation to data. The method \texttt{fit\_transform} does both at once and is usually used only on the training data.
 
+\begin{table}[H]
+\centering
+\caption{Common \texttt{scikit-learn} classes for the methods used in this chapter.}
+\label{tab:dimred_sklearn_classes}
+\begin{tabular}{p{0.30\textwidth}p{0.50\textwidth}}
+\toprule
+Method & Typical class \\
+\midrule
+Feature standardization & \texttt{sklearn.preprocessing.StandardScaler} \\
+Principal component analysis & \texttt{sklearn.decomposition.PCA} \\
+t-distributed stochastic neighbor embedding & \texttt{sklearn.manifold.TSNE} \\
+Isometric mapping & \texttt{sklearn.manifold.Isomap} \\
+Pipeline construction & \texttt{sklearn.pipeline.Pipeline} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
+The usual pattern for supervised evaluation is:
+\begin{enumerate}[itemsep=0.25ex]
+    \item split the data into training and test sets;
+    \item build a pipeline containing scaling, dimensionality reduction, and the downstream model;
+    \item fit the pipeline on the training data only;
+    \item evaluate the full pipeline on validation or test data;
+    \item choose the number of components using validation performance and engineering judgment.
+\end{enumerate}
 
+For t-SNE and Isomap, the output is usually treated as an exploratory visualization. PCA is usually the first choice when the reduced coordinates must be reused for future samples in a production workflow.
 
+\subsection{Common Mistakes}
 
+Dimensionality reduction is easy to run and easy to overinterpret. Common mistakes include:
 
+\begin{itemize}
+    \item fitting scaling or PCA before the train-test split;
+    \item treating t-SNE cluster distances as physical distances;
+    \item choosing the number of PCA components only from a fixed variance rule;
+    \item ignoring units and feature scaling;
+    \item using a pretty two-dimensional plot as proof of model performance;
+    \item forgetting that rare but important events may lie in low-variance directions;
+    \item assuming that nonlinear embeddings preserve all structure in the original data.
+\end{itemize}
 
+The reduced coordinates should be evaluated in the context of the engineering task. If the task is visualization, the plot should be stable and interpretable. If the task is preprocessing, the downstream model should improve or become simpler. If the task is anomaly detection, the method should be tested on known anomalies or realistic fault scenarios.
 
+\subsection{Summary}
 
+Dimensionality reduction provides a bridge between raw high-dimensional data and interpretable, efficient machine-learning workflows. PCA gives a linear, variance-based coordinate system and is the main baseline. PCA uses the covariance matrix of centered data, finds the eigenvectors of that covariance matrix, and uses the eigenvalues to determine explained variance. Projection, reconstruction, and residuals make PCA useful for visualization, denoising, compression, preprocessing, and monitoring.
 
+t-SNE gives a nonlinear local-neighborhood visualization. It is useful for exploring high-dimensional data, but global distances and cluster sizes should be interpreted cautiously. Isomap introduces graph-based manifold learning within \texttt{scikit-learn}. It can reveal nonlinear neighborhood structure, but it depends on how the neighborhood graph is built.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+The main engineering lesson is simple: use dimensionality reduction to summarize data, not to hide assumptions. Always record how the reducer was fit, how the data were scaled, how many dimensions were kept, and how the reduced coordinates were evaluated.
 
 \end{document}
-
